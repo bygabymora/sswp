@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export default function Testimonio({ testimonial }) {
   return (
-    <div className="testimonial-container" id="testimonios">
+    <div className="testimonial-container">
       <div className="avatar-container">
         <Image
           src={testimonial?.avatar}

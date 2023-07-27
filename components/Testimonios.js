@@ -7,7 +7,7 @@ export default function Testimonios() {
 
   return (
     <>
-      <div className="my-9">
+      <div className="my-9" id="testimonios">
         <Carousel
           showArrows={true}
           showThumbs={false}

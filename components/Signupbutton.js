@@ -109,12 +109,12 @@ const SignupButton = () => {
                 <Menu.Items className="bg-white grid grid-cols-1 dropdown-menu">
                   <Menu.Item>
                     <DropdownLink href="/Login" className="dropdown-link">
-                      Login
+                      Ingresa
                     </DropdownLink>
                   </Menu.Item>
                   <Menu.Item>
                     <DropdownLink href="/Register" className="dropdown-link">
-                      Register
+                      Registrate
                     </DropdownLink>
                   </Menu.Item>
                 </Menu.Items>
