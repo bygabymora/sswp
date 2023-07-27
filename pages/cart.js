@@ -33,11 +33,12 @@ function CartScreen() {
     <Layout title="Cart">
       <h1 className="mb-4 text-xl">Tu Carrito</h1>
       {cartItems.length === 0 ? (
-        <div>
+        <div className="mb-11 ">
           Tu carrito está vacío,{' '}
           <Link className="font-bold underline" href="/products">
             ¡Ve a comprar!
           </Link>
+          <br />
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 md:grid-cols-4 md:gap-5 md:m-4">
