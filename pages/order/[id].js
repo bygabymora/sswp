@@ -84,7 +84,7 @@ function OrderScreen() {
     isDelivered,
     deliveredAt,
   } = order;
-  const discountAmount = itemsPrice * 0.015;
+  const discountAmount = itemsPrice * 0.03;
 
   const handleCheckout = async () => {
     try {
@@ -128,7 +128,7 @@ function OrderScreen() {
           details
         );
         dispatch({ type: 'PAY_SUCCESS', payload: data });
-        toast.success('Order is paid successfully');
+        toast.success('La orden ha sido pagada exitosamente');
 
         // Mark payment as complete and show success message
         setPaymentComplete(true);
@@ -164,37 +164,37 @@ function OrderScreen() {
         <div className="grid md:grid-cols-4 md:gap-2">
           <div className="overflow-x-auto md:col-span-3">
             <div className="card  p-3">
-              <h2 className="mb-2 text-lg">Shipping Address</h2>
+              <h2 className="mb-2 text-lg">Dirección de envío</h2>
               <div>
                 {shippingAddress.fullName}, {shippingAddress.address},{' '}
                 {shippingAddress.city}, {shippingAddress.postalCode},{' '}
                 {shippingAddress.state}
               </div>
               {isDelivered ? (
-                <div className="alert-success">Delivered at {deliveredAt}</div>
+                <div className="alert-success">Enviado el {deliveredAt}</div>
               ) : (
-                <div className="alert-error">Not delivered</div>
+                <div className="alert-error">No enviado</div>
               )}
             </div>
 
             <div className="card p-5">
-              <h2 className="mb-2 text-lg">Payment Method</h2>
+              <h2 className="mb-2 text-lg">Método de pago</h2>
               <div>{paymentMethod}</div>
               {isPaid ? (
-                <div className="alert-success">Paid at {paidAt}</div>
+                <div className="alert-success">Pagado el {paidAt}</div>
               ) : (
-                <div className="alert-error">Not paid</div>
+                <div className="alert-error">No pagado</div>
               )}
             </div>
 
             <div className="card overflow-x-auto p-5">
-              <h2 className="mb-2 text-lg">Order Items</h2>
+              <h2 className="mb-2 text-lg">Productos</h2>
               <table className="min-w-full">
                 <thead className="border-b">
                   <tr>
-                    <th className="px-5 text-left">Item</th>
-                    <th className="    p-5 text-right">Quantity</th>
-                    <th className="  p-5 text-right">Price</th>
+                    <th className="px-5 text-left">Producto</th>
+                    <th className="    p-5 text-right">Cantidad</th>
+                    <th className="  p-5 text-right">Precio</th>
                     <th className="p-5 text-right">Subtotal</th>
                   </tr>
                 </thead>
@@ -229,7 +229,7 @@ function OrderScreen() {
           </div>
           <div>
             <div className="card p-2">
-              <h2 className="mb-2 text-lg">Order Summary</h2>
+              <h2 className="mb-2 text-lg">Resumen</h2>
               <ul>
                 <li>
                   <div className="mb-2 px-3 flex justify-between">
@@ -239,14 +239,14 @@ function OrderScreen() {
                 </li>
                 <li>
                   <div className="mb-2 px-3 flex justify-between">
-                    <div>Tax</div>
+                    <div>Impuestos</div>
                     <div>${taxPrice}</div>
                   </div>
                 </li>
-                {paymentMethod === 'Pay by Wire' ? (
+                {paymentMethod === 'Nequi-Daviplata' ? (
                   <li>
                     <div className="mb-2 px-3 flex justify-between">
-                      <div>Discount</div>
+                      <div>Descuento</div>
                       <div>- ${discountAmount}</div>
                     </div>
                   </li>
@@ -256,26 +256,27 @@ function OrderScreen() {
                     <div>Total</div>
                     <div>${totalPrice}</div>
                   </div>
+                  <br />
                 </li>
                 {!isPaid && (
                   <li className="buttons-container text-center mx-auto">
                     {paymentMethod === 'Stripe' ? (
                       <button
-                        className="primary-button w-full"
+                        className="primary-button w-full mt-2"
                         onClick={handleCheckout}
                       >
-                        Checkout with Stripe
+                        Pago con Mercadopago
                       </button>
-                    ) : paymentMethod === 'Pay by Wire' ? (
-                      <button
-                        className="primary-button w-full"
-                        onClick={handleCheckout}
+                    ) : paymentMethod === 'Nequi-Daviplata' ? (
+                      <Link
+                        className="primary-button w-full mt-2"
+                        href="/ManufacturerForm"
                       >
-                        Pay by Wire
-                      </button>
+                        Nequi-Daviplata
+                      </Link>
                     ) : paymentMethod === 'Paypal' ? (
                       isPending ? (
-                        <div>Loading...</div>
+                        <div>Cargando...</div>
                       ) : (
                         <PayPalButtons
                           className="fit-content  mt-3"
@@ -285,7 +286,7 @@ function OrderScreen() {
                         ></PayPalButtons>
                       )
                     ) : null}
-                    {loadingPay && <div>Loading...</div>}
+                    {loadingPay && <div>Cargando...</div>}
                   </li>
                 )}
 
@@ -293,8 +294,8 @@ function OrderScreen() {
                 <li>
                   <div className="mb-2 px-3 flex justify-between">
                     <div>
-                      Shipping is not defined yet, we will contact you to define
-                      the better way of shipping
+                      El envío no está determinado, se te notificará cuando se
+                      te envíe el producto y su valor.
                     </div>
                   </div>
                 </li>

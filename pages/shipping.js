@@ -9,56 +9,39 @@ import Cookies from 'js-cookie';
 
 export default function ShippingScreen() {
   const usStates = [
-    'Alabama',
-    'Alaska',
-    'Arizona',
-    'Arkansas',
-    'California',
-    'Colorado',
-    'Connecticut',
-    'Delaware',
-    'Florida',
-    'Georgia',
-    'Hawaii',
-    'Idaho',
-    'Illinois',
-    'Indiana',
-    'Iowa',
-    'Kansas',
-    'Kentucky',
-    'Louisiana',
-    'Maine',
-    'Maryland',
-    'Massachusetts',
-    'Michigan',
-    'Minnesota',
-    'Mississippi',
-    'Missouri',
-    'Montana',
-    'Nebraska',
-    'Nevada',
-    'New Hampshire',
-    'New Jersey',
-    'New Mexico',
-    'New York',
-    'North Carolina',
-    'North Dakota',
-    'Ohio',
-    'Oklahoma',
-    'Oregon',
-    'Pennsylvania',
-    'Rhode Island',
-    'South Carolina',
-    'South Dakota',
-    'Tennessee',
-    'Texas',
-    'Utah',
-    'Vermont',
-    'Virginia',
-    'Washington',
-    'West Virginia',
-    'Wisconsin',
-    'Wyoming',
+    'Amazonas',
+    'Antioquia',
+    'Arauca',
+    'Atlántico',
+    'Bogotá D.C.',
+    'Bolívar',
+    'Boyacá',
+    'Caldas',
+    'Caquetá',
+    'Casanare',
+    'Cauca',
+    'Cesar',
+    'Chocó',
+    'Córdoba',
+    'Cundinamarca',
+    'Guainía',
+    'Guaviare',
+    'Huila',
+    'La Guajira',
+    'Magdalena',
+    'Meta',
+    'Nariño',
+    'Norte de Santander',
+    'Putumayo',
+    'Quindío',
+    'Risaralda',
+    'San Andrés y Providencia',
+    'Santander',
+    'Sucre',
+    'Tolima',
+    'Valle del Cauca',
+    'Vaupés',
+    'Vichada',
   ];
 
   const [filteredStates, setFilteredStates] = useState(usStates);
@@ -151,54 +134,54 @@ export default function ShippingScreen() {
   };
 
   return (
-    <Layout title="Shipping Address">
+    <Layout title="Dirección de envío">
       <CheckoutWizard activeStep={1}></CheckoutWizard>
       <form
         className="mx-auto max-w-screen-md w-full "
         onSubmit={handleSubmit(submitHandler)}
       >
         <div>
-          <h1 className="text-2xl font-bold">Shipping Address</h1>
+          <h1 className="text-2xl font-bold">Dirección de envío</h1>
           <br />
         </div>
         <div className="mb-4 contact__form-div">
-          <label htmlFor="fullName">Full Name</label>
+          <label htmlFor="fullName">Nombre completo</label>
           <input
             className="w-full contact__form-input"
             type="text"
             id="fullName"
-            placeholder="Enter Full Name"
+            placeholder="Ingrese el nombre completo"
             {...register('fullName', { required: true, minLength: 3 })}
             autoFocus
             autoCapitalize="true"
             required
           />
           {errors.fullName && (
-            <p className="text-red-500">Full Name is required.</p>
+            <p className="text-red-500">El nombre es requerido.</p>
           )}
         </div>
         <div className="mb-4 contact__form-div">
-          <label htmlFor="address">Address</label>
+          <label htmlFor="address">Dirección</label>
           <input
             className="w-full contact__form-input"
             type="text"
             id="adress"
-            placeholder="Enter address"
+            placeholder="Ingrese la dirección"
             {...register('address', { required: true, minLength: 3 })}
             autoCapitalize="true"
             required
           />
           {errors.address && (
-            <p className="text-red-500">Address is required.</p>
+            <p className="text-red-500">La dirección es requerida.</p>
           )}
         </div>
         <div className="mb-4 contact__form-div">
-          <label htmlFor="state">State</label>
+          <label htmlFor="state">Departamento</label>
           <input
             className="w-full contact__form-input"
             type="text"
             id="state"
-            placeholder="Enter state"
+            placeholder="Ingrese el departamento"
             {...register('state', { required: true, minLength: 3 })}
             onChange={handleStateChange}
             onFocus={() => setShowSuggestions(true)}
@@ -206,7 +189,9 @@ export default function ShippingScreen() {
             autoCapitalize="true"
             required
           />
-          {errors.state && <p className="text-red-500">State is required.</p>}
+          {errors.state && (
+            <p className="text-red-500">El departamento es requerido.</p>
+          )}
           {filteredStates.length > 0 &&
             inputValue.length >= 3 &&
             showSuggestions && (
@@ -226,12 +211,12 @@ export default function ShippingScreen() {
             )}
         </div>
         <div className="mb-4 contact__form-div">
-          <label htmlFor="city">City</label>
+          <label htmlFor="city">Ciudad</label>
           <input
             className="w-full contact__form-input"
             type="text"
             id="city"
-            placeholder="Enter city"
+            placeholder="Ingrese la ciudad"
             {...register('city', { required: true, minLength: 3 })}
             autoCapitalize="true"
             required
@@ -239,23 +224,23 @@ export default function ShippingScreen() {
           {errors.city && <p className="text-red-500">City is required.</p>}
         </div>
         <div className="mb-4 contact__form-div">
-          <label htmlFor="postalCode">Postal Code</label>
+          <label htmlFor="postalCode">Código Postal</label>
           <input
             className="w-full contact__form-input"
             type="text"
             id="postalCode"
-            placeholder="Enter postal code"
+            placeholder="Ingrese el código postal"
             {...register('postalCode', { required: true, minLength: 3 })}
             autoCapitalize="true"
             required
           />
           {errors.postalCode && (
-            <p className="text-red-500">Postal Code is required.</p>
+            <p className="text-red-500">El código postal es requerido.</p>
           )}
         </div>
         <div className="mb-4 contact__form-div">
           <button className="primary-button w-full" type="submit">
-            Continue
+            Continuar
           </button>
         </div>
       </form>

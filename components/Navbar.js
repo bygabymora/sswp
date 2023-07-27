@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import {
   BiHomeHeart,
-  BiUser,
   BiPhotoAlbum,
   BiGridVertical,
   BiXCircle,
   BiSearch,
 } from 'react-icons/bi';
-import { MdOutlineWavingHand } from 'react-icons/md';
+import { MdOutlineWavingHand, MdQuestionMark } from 'react-icons/md';
+import { RiSpeakFill, RiSlideshow3Line } from 'react-icons/ri';
 import { useRouter } from 'next/router';
 
 const Navbar = () => {
@@ -59,15 +59,23 @@ const Navbar = () => {
         <div className="nav__list grid">
           <Link href="/" className="nav__link" onClick={handleHomeClick}>
             <BiHomeHeart className="uil uil-estate nav__icon" />
-            Home
+            Inicio
           </Link>
-          <Link href="/about" className="nav__link">
-            <BiUser className="uil uil-user nav__icon" />
-            About
+          <Link href="/#features" className="nav__link">
+            <RiSlideshow3Line className="uil uil-user nav__icon" />
+            ¿Cómo?
           </Link>
           <Link href="/products" className="nav__link">
             <BiPhotoAlbum className="uil uil-scenery nav__icon" />
-            Products
+            Productos
+          </Link>
+          <Link href="/#testimonios" className="nav__link">
+            <RiSpeakFill className="uil uil-scenery nav__icon" />
+            Testimonios
+          </Link>
+          <Link href="/#preguntas" className="nav__link">
+            <MdQuestionMark className="uil uil-scenery nav__icon" />
+            Preguntas
           </Link>
           <Link
             href="/#contact"
@@ -75,14 +83,14 @@ const Navbar = () => {
             className="nav__link"
           >
             <MdOutlineWavingHand className="uil uil-message nav__icon" />
-            Contact
+            Contacto
           </Link>
           <br className="break" />
           <div className="flex col-span-2 text-center ml-4 mr-4">
             <input
               type="text"
-              className="bg-transparent border-b-2 border-blue-800 outline-none focus:bg-white focus:border-blue-800 md:ml-4 w-full"
-              placeholder="Search..."
+              className="bg-transparent border-b-2 border-black outline-none focus:bg-white focus:border-blue-800 md:ml-4 w-full"
+              placeholder="Búsqueda..."
             />
             <button
               className="nav__search-button"

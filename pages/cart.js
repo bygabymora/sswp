@@ -31,12 +31,12 @@ function CartScreen() {
   };
   return (
     <Layout title="Cart">
-      <h1 className="mb-4 text-xl">Shopping Cart</h1>
+      <h1 className="mb-4 text-xl">Tu Carrito</h1>
       {cartItems.length === 0 ? (
         <div>
-          Cart is empty.{' '}
+          Tu carrito está vacío,{' '}
           <Link className="font-bold underline" href="/products">
-            Go shopping!
+            ¡Ve a comprar!
           </Link>
         </div>
       ) : (
@@ -45,9 +45,9 @@ function CartScreen() {
             <table className="table-auto min-w-full">
               <thead className="border-b">
                 <tr>
-                  <th className="px-5 text-left">Product</th>
-                  <th className="p-5 py-2 text-right">Quantity</th>
-                  <th className="p-5 py-2 text-right">Price</th>
+                  <th className="px-5 text-left">Producto</th>
+                  <th className="p-5 py-2 text-right">Cantidad</th>
+                  <th className="p-5 py-2 text-right">Precio</th>
                   <th className="p-5"></th>
                 </tr>
               </thead>
@@ -65,12 +65,11 @@ function CartScreen() {
                           width={50}
                           height={50}
                         />
-                        &nbsp;
-                        {item.manufacturer}
                         <br />
-                        &nbsp;{item.reference}
+                        <div className="items-center self-center">
+                          &nbsp;{item.name}
+                        </div>
                         <br />
-                        &nbsp;{item.name}
                       </Link>
                     </td>
                     <td className="p-5 text-right">
@@ -112,7 +111,7 @@ function CartScreen() {
                   onClick={() => router.push('Login?redirect=/shipping')}
                   className="primary-button w-full"
                 >
-                  Checkout
+                  Ordenar
                 </button>
               </li>
             </ul>

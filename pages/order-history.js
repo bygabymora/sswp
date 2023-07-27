@@ -36,8 +36,8 @@ function OrderHistoryScreen() {
     fetchOrders();
   }, []);
   return (
-    <Layout title="Order History">
-      <h1 className="mb-4 text-xl">Order History</h1>
+    <Layout title="Historial de órdenes">
+      <h1 className="mb-4 text-xl">Historial de órdenes</h1>
       {loading ? (
         <div>Loading...</div>
       ) : error ? (
@@ -48,11 +48,11 @@ function OrderHistoryScreen() {
             <thead className="border-b">
               <tr>
                 <th className="px-5 text-left">ID</th>
-                <th className="p-5 text-left">DATE</th>
+                <th className="p-5 text-left">FECHA</th>
                 <th className="p-5 text-left">TOTAL</th>
-                <th className="p-5 text-left">PAID</th>
-                <th className="p-5 text-left">DELIVERED</th>
-                <th className="p-5 text-left">ACTION</th>
+                <th className="p-5 text-left">PAGADO</th>
+                <th className="p-5 text-left">ENVIADO</th>
+                <th className="p-5 text-left">DETALLE</th>
               </tr>
             </thead>
             <tbody>
@@ -64,12 +64,12 @@ function OrderHistoryScreen() {
                   <td className=" p-5 ">
                     {order.isPaid
                       ? `${order.paidAt.substring(0, 10)}`
-                      : 'not paid'}
+                      : 'No pagado'}
                   </td>
                   <td className=" p-5 ">
                     {order.isDelivered
                       ? `${order.deliveredAt.substring(0, 10)}`
-                      : 'not delivered'}
+                      : 'No enviado'}
                   </td>
                   <td className=" p-5 ">
                     <Link
@@ -77,7 +77,7 @@ function OrderHistoryScreen() {
                       href={`/order/${order._id}`}
                       passHref
                     >
-                      Details
+                      Detalle
                     </Link>
                   </td>
                 </tr>

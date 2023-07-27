@@ -21,8 +21,8 @@ export default function PlaceOrderScreen() {
     cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
   ); // 123.4567 => 123.46
 
-  const taxPrice = round2(itemsPrice * 0.15);
-  const isPayByWire = paymentMethod === 'Pay by Wire';
+  const taxPrice = round2(itemsPrice * 0.19);
+  const isPayByWire = paymentMethod === 'Nequi-Daviplata';
   const discountPercentage = isPayByWire ? WIRE_PAYMENT_DISCOUNT_PERCENTAGE : 0;
   const discountAmount = round2(itemsPrice * (discountPercentage / 100));
   const totalPrice = round2(itemsPrice - discountAmount + taxPrice);
@@ -72,18 +72,21 @@ export default function PlaceOrderScreen() {
   };
 
   return (
-    <Layout title="Place Order">
+    <Layout title="Ordenar">
       <CheckoutWizard activeStep={3} />
-      <h1 className="mb-4 text-xl">Place Order</h1>
+      <h1 className="mb-4 text-xl">Ordenar</h1>
       {cartItems.length === 0 ? (
         <div>
-          Cart is empty. <Link href="/products">Go shopping</Link>
+          Tu carrito está vacío{' '}
+          <Link href="/products" className="font-bold underline">
+            ¡Ve de compras!
+          </Link>
         </div>
       ) : (
         <div className="grid md:grid-cols-4 md:gap-5">
           <div className="overflow-x-auto md:col-span-3">
             <div className="card  p-5">
-              <h2 className="mb-2 text-lg">Shipping Address</h2>
+              <h2 className="mb-2 text-lg">Dirección de envío</h2>
               <div>
                 {shippingAddress.fullName}, {shippingAddress.address},{' '}
                 {shippingAddress.city}, {shippingAddress.postalCode},{' '}
@@ -91,27 +94,27 @@ export default function PlaceOrderScreen() {
               </div>
               <div>
                 <Link className="underline font-bold" href="/shipping">
-                  Edit
+                  Editar
                 </Link>
               </div>
             </div>
             <div className="card  p-5">
-              <h2 className="mb-2 text-lg">Payment Method</h2>
+              <h2 className="mb-2 text-lg">Método de pago</h2>
               <div>{paymentMethod}</div>
               <div>
                 <Link className="underline font-bold" href="/payment">
-                  Edit
+                  Editar
                 </Link>
               </div>
             </div>
             <div className="card overflow-x-auto p-5">
-              <h2 className="mb-2 text-lg">Order Items</h2>
+              <h2 className="mb-2 text-lg">Productos</h2>
               <table className="min-w-full">
                 <thead className="border-b">
                   <tr>
-                    <th className="px-5 text-left">Item</th>
-                    <th className="    p-5 text-right">Quantity</th>
-                    <th className="  p-5 text-right">Price</th>
+                    <th className="px-5 text-left">Producto</th>
+                    <th className="    p-5 text-right">Cantidad</th>
+                    <th className="  p-5 text-right">Precio</th>
                     <th className="p-5 text-right">Subtotal</th>
                   </tr>
                 </thead>
@@ -154,24 +157,24 @@ export default function PlaceOrderScreen() {
           </div>
           <div>
             <div className="card  p-5">
-              <h2 className="mb-2 text-lg">Order Summary</h2>
+              <h2 className="mb-2 text-lg">Resumen</h2>
               <ul>
                 <li>
                   <div className="mb-2 flex justify-between">
-                    <div>Items</div>
+                    <div>Productos</div>
                     <div>${itemsPrice}</div>
                   </div>
                 </li>
                 <li>
                   <div className="mb-2 flex justify-between">
-                    <div>Tax</div>
+                    <div>I.V.A.</div>
                     <div>${taxPrice}</div>
                   </div>
                 </li>
                 {isPayByWire && (
                   <li>
                     <div className="mb-2 flex justify-between">
-                      <div>Discount ({discountPercentage}%)</div>
+                      <div>Descuento ({discountPercentage}%)</div>
                       <div>- ${discountAmount}</div>
                     </div>
                   </li>
@@ -188,15 +191,15 @@ export default function PlaceOrderScreen() {
                     onClick={placeOrderHandler}
                     className="primary-button w-full"
                   >
-                    {loading ? 'Loading...' : 'Place Order'}
+                    {loading ? 'Cargando...' : 'Ordenar'}
                   </button>
                 </li>
                 <li>
                   <br />
                   <div className="mb-2 flex justify-between">
                     <div>
-                      Shipping is not defined yet, we will contact you to define
-                      the better way of shipping
+                      El envío no está determinado, se te notificará cuando se
+                      te envíe el producto y su valor.
                     </div>
                   </div>
                 </li>

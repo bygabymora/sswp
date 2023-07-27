@@ -9,22 +9,22 @@ export default function products() {
         <div>
           <ul>
             <li>
-              <Link href="/admin/dashboard">Dashboard</Link>
+              <Link href="/admin/dashboard">Pánel</Link>
             </li>
             <li>
-              <Link href="/admin/orders">Orders</Link>
+              <Link href="/admin/orders">Órdenes</Link>
             </li>
             <li>
               <Link href="/admin/products" className="font-bold">
-                Products
+                Productos
               </Link>
             </li>
             <li>
-              <Link href="/admin/users">Users</Link>
+              <Link href="/admin/users">Usuarios</Link>
             </li>
           </ul>
         </div>
-        <h1 className="mb-4 text-xl">Admin Products</h1>
+        <h1 className="mb-4 text-xl">Administrar Productos</h1>
       </div>
     </Layout>
   );

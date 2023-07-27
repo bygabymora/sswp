@@ -1,1 +1,1 @@
-STAT webpage
+Easy Home Designerwebpage

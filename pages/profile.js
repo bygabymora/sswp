@@ -41,7 +41,7 @@ export default function ProfileScreen() {
         email,
         password,
       });
-      toast.success('Profile updated successfully');
+      toast.success('Perfil actualizado exitosamente');
       if (result.error) {
         toast.error(result.error);
       }
@@ -52,7 +52,7 @@ export default function ProfileScreen() {
 
   return (
     <Layout title="Profile">
-      <h1 className="mb-4 text-xl ml-10">User Profile Information</h1>
+      <h1 className="mb-4 text-xl ml-10">Información de usuario</h1>
       <div className="mb-4 ml-10">
         <p>
           <strong>Full Name:</strong>
@@ -63,7 +63,7 @@ export default function ProfileScreen() {
           <div>{session.user.email}</div>
         </p>
         <Link href={'/order-history'} className="font-bold underline">
-          Order History
+          Historial de órdenes
         </Link>
       </div>
       <div
@@ -73,13 +73,13 @@ export default function ProfileScreen() {
       >
         {/* Modify Profile Form */}
         <form onSubmit={handleSubmit(submitHandler)}>
-          <h1 className="mb-4 text-xl">Update Profile</h1>
+          <h1 className="mb-4 text-xl">Actualiza tu perfil</h1>
           <div className="my-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="name"
             >
-              Full Name
+              Nombre Completo
             </label>
             <input
               type="text"
@@ -124,7 +124,7 @@ export default function ProfileScreen() {
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="password"
             >
-              New Password
+              Nueva contraseña
             </label>
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
@@ -148,7 +148,7 @@ export default function ProfileScreen() {
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="confirmPassword"
             >
-              Confirm New Password
+              Confirma nueva contraseña
             </label>
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
@@ -159,7 +159,7 @@ export default function ProfileScreen() {
                 validate: (value) => value === getValues('password'),
                 minLength: {
                   value: 6,
-                  message: 'confirm password is more than 5 chars',
+                  message: 'Contraseña es mayor a 5 caracteres',
                 },
               })}
             />
@@ -174,7 +174,7 @@ export default function ProfileScreen() {
               )}
           </div>
           <div className="mb-4">
-            <button className="primary-button">Update Profile</button>
+            <button className="primary-button">Actualiza tu perfil</button>
           </div>
         </form>
       </div>
@@ -194,7 +194,7 @@ export default function ProfileScreen() {
           } mr-2`}
           onClick={toggleModifyForm}
         >
-          Modify Profile
+          Actualiza tu perfil
         </button>
       </div>
     </Layout>

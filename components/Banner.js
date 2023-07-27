@@ -1,29 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Banner1 from '../public/images/assets/banner1.png';
-import Banner2 from '../public/images/assets/banner2.png';
-import Banner3 from '../public/images/assets/banner3.png';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { AiOutlineSend } from 'react-icons/ai';
 
 const Banner = () => {
   const router = useRouter();
-  const [audience, setAudience] = useState('');
-
-  const handleAudienceSelection = (selectedAudience) => {
-    setAudience(selectedAudience);
-  };
-
-  useEffect(() => {
-    const imageContainer = document.querySelector('.image-container');
-    imageContainer.classList.add('fade-in-right');
-
-    const animationDuration = 1000;
-    setTimeout(() => {
-      imageContainer.classList.remove('fade-in-right');
-    }, animationDuration);
-  }, [audience]);
 
   const handleCallButtonClick = () => {
     window.location.href = 'tel:8132520727';
@@ -60,104 +42,32 @@ const Banner = () => {
       <div className="grid lg:grid-cols-2 md:grid-cols-1  banner-container mx-auto px-4 py-8 items-center">
         <div className="">
           <h1 className="text-4xl font-bold mb-4">
-            Welcome to STAT Surgical Supply
+            Transforma tu cama en un oasis de comodidad
           </h1>
-          <p className="text-lg text-text-color">
-            {audience === 'hospital' ? (
-              <>
-                We provide high-quality surgical supplies to meet the needs of
-                healthcare professionals. Partner with us to save thousands on
-                the same devices you purchase direct.
-                <br />
-                <Link
-                  href="/products"
-                  className="flex justify-center items-center font-bold"
-                >
-                  <span className="underline ">Go Shopping!</span>
-                  <span>&nbsp;&nbsp;</span>
-                  <AiOutlineSend className="link-space-1" />
-                </Link>
-              </>
-            ) : audience === 'manufacturer' ? (
-              <>
-                Partner with us to expand your market reach in two ways. We
-                provide cost savings on the same devices you are purchasing
-                direct. Additionally, we will buy your excess inventory.
-                <br />
-                <Link
-                  href="/ManufacturerForm"
-                  className="flex justify-center items-center font-bold"
-                >
-                  <span className="underline ">Send us your list</span>
-                  <span>&nbsp;&nbsp;</span>
-                  <AiOutlineSend className="link-space-1" />
-                </Link>
-              </>
-            ) : (
-              <>Explore our wide range of high-end surgical disposables.</>
-            )}
-          </p>
-          {audience !== '' && (
-            <div className="grid grid-cols-2 mt-8 w-full mb-8 text-center">
-              <button
-                href="tel:8132520727"
-                onClick={handleCallButtonClick}
-                className="equal-button-size btn-call sm:inline-block block mr-4 mb-4 sm:mb-0 text-white bg-title-color-dark hover:bg-title-color px-6 py-3 rounded lg:hidden"
-              >
-                Call Now
-              </button>
-              <Link
-                href="#contact"
-                className=" equal-button-size btn-contact hover:text-white sm:inline-block block px-6 py-3 rounded lg:text-center"
-                onClick={() => handleLinkClick('contact')}
-              >
-                Contact Us
-              </Link>
-            </div>
-          )}
-          {audience === '' && (
-            <div>
-              <h1 className="text-2xl">Who are you?</h1>
-              <br />
-              <div className="grid grid-cols-2 cart-button items-center mb-8 text-center">
-                <button
-                  onClick={() => handleAudienceSelection('hospital')}
-                  className="btn-audience equal-button-size sm:inline-block block mr-4 mb-4 sm:mb-0 text-white bg-title-color-dark hover:bg-title-color px-6 py-3 rounded md:text-sm text-center"
-                >
-                  Hospital, ASC, or Medical Facility
-                </button>
-                <button
-                  onClick={() => handleAudienceSelection('manufacturer')}
-                  className="btn-audience equal-button-size sm:inline-block block mr-4 mb-4 sm:mb-0 text-white bg-title-color-dark hover:bg-title-color px-6 py-3 rounded md:text-sm text-center"
-                >
-                  Distributor
-                  <br /> or Manufacturer
-                </button>
-              </div>
-            </div>
-          )}
+          <p className="text-lg text-text-color">¡Aqui te contamos como!</p>
+
+          <div className="grid grid-cols-2 mt-8 w-full mb-8 text-center">
+            <button
+              href="tel:8132520727"
+              onClick={handleCallButtonClick}
+              className="equal-button-size btn-call sm:inline-block block mr-4 mb-4 sm:mb-0 text-white bg-title-color-dark hover:bg-title-color px-6 py-3 rounded lg:hidden"
+            >
+              Llámanos
+            </button>
+            <Link
+              href="#contact"
+              className=" equal-button-size btn-contact hover:text-white sm:inline-block block px-6 py-3 rounded lg:text-center"
+              onClick={() => handleLinkClick('contact')}
+            >
+              Contáctanos
+            </Link>
+          </div>
         </div>
-        <div className="image-container">
-          {audience === 'hospital' ? (
-            <Image
-              className="image-container-image"
-              src={Banner2}
-              alt="Banner"
-            />
-          ) : audience === 'manufacturer' ? (
-            <Image
-              className="image-container-image"
-              src={Banner3}
-              alt="Banner"
-            />
-          ) : (
-            <Image
-              className="image-container-image"
-              src={Banner1}
-              alt="Banner"
-            />
-          )}
-        </div>
+        <Image
+          className="image-container-image fade-in-right"
+          src={Banner1}
+          alt="Banner"
+        />
       </div>
     </div>
   );

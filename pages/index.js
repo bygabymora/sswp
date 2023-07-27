@@ -8,6 +8,7 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Product from '../models/Product.js';
 import db from '../utils/db.js';
+import Testimonios from '../components/Testimonios.js';
 
 export default function Home({ products }) {
   const [carouselCenterSlidePercentage, setCarouselCenterSlidePercentage] =
@@ -44,7 +45,7 @@ export default function Home({ products }) {
       <StaticBanner />
       <Banner />
       <h2 className="section__title" id="products">
-        Featured Products
+        Nuestros Productos
       </h2>
       <Carousel
         showArrows={true}
@@ -63,6 +64,7 @@ export default function Home({ products }) {
           <ProductItem product={product} key={product.slug}></ProductItem>
         ))}
       </Carousel>
+      <Testimonios />
 
       <Contact className="mt-2" />
     </Layout>

@@ -43,23 +43,23 @@ export default function AdminOrderScreen() {
         <div>
           <ul>
             <li>
-              <Link href="/admin/dashboard">Dashboard</Link>
+              <Link href="/admin/dashboard">Pánel</Link>
             </li>
             <li>
               <Link href="/admin/orders" className="font-bold">
-                Orders
+                Órdenes
               </Link>
             </li>
             <li>
-              <Link href="/admin/products">Products</Link>
+              <Link href="/admin/products">Productos</Link>
             </li>
             <li>
-              <Link href="/admin/users">Users</Link>
+              <Link href="/admin/users">Usuarios</Link>
             </li>
           </ul>
         </div>
         <div className="overflow-x-auto md:col-span-3">
-          <h1 className="mb-4 text-xl">Admin Orders</h1>
+          <h1 className="mb-4 text-xl">Administrar Órdenes</h1>
 
           {loading ? (
             <div>Loading...</div>
@@ -71,12 +71,12 @@ export default function AdminOrderScreen() {
                 <thead className="border-b">
                   <tr>
                     <th className="px-5 text-left">ID</th>
-                    <th className="p-5 text-left">USER</th>
-                    <th className="p-5 text-left">DATE</th>
+                    <th className="p-5 text-left">USUARIO</th>
+                    <th className="p-5 text-left">FECHA</th>
                     <th className="p-5 text-left">TOTAL</th>
-                    <th className="p-5 text-left">PAID</th>
-                    <th className="p-5 text-left">DELIVERED</th>
-                    <th className="p-5 text-left">ACTION</th>
+                    <th className="p-5 text-left">PAGADO</th>
+                    <th className="p-5 text-left">ENVIADO</th>
+                    <th className="p-5 text-left">DETALLE</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -93,12 +93,12 @@ export default function AdminOrderScreen() {
                       <td className="p-5">
                         {order.isPaid
                           ? `${order.paidAt.substring(0, 10)}`
-                          : 'not paid'}
+                          : 'No pagado'}
                       </td>
                       <td className="p-5">
                         {order.isDelivered
                           ? `${order.deliveredAt.substring(0, 10)}`
-                          : 'not delivered'}
+                          : 'No enviado'}
                       </td>
                       <td className="p-5">
                         <Link
@@ -106,7 +106,7 @@ export default function AdminOrderScreen() {
                           href={`/order/${order._id}`}
                           passHref
                         >
-                          Details
+                          Detalle
                         </Link>
                       </td>
                     </tr>

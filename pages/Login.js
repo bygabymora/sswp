@@ -61,7 +61,7 @@ export default function Login() {
               required: 'Please enter email',
               pattern: {
                 value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
-                message: 'Invalid email',
+                message: 'Email invalido',
               },
             })}
             placeholder="Email"
@@ -86,7 +86,7 @@ export default function Login() {
               required: 'Please enter a password',
               minLength: {
                 value: 8,
-                message: 'Password must have at least 8 characters',
+                message: 'Contraseña debe tener al menos 8 caracteres',
               },
               validate: (value) =>
                 /^(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d@$!%*?&]+$/.test(value) ||

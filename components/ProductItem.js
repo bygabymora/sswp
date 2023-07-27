@@ -22,7 +22,7 @@ export const ProductItem = ({ product }) => {
     }
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
 
-    toast.success('Item added to cart');
+    toast.success('item añadido al carrito');
 
     if (product.countInStock < quantity) {
       alert("Sorry, we don't have enough of that item in stock.");
@@ -44,10 +44,10 @@ export const ProductItem = ({ product }) => {
       </Link>
       <div className="flex flex-col justify-center items-center p-5">
         <Link href={{ pathname: `products/${product.slug}` }}>
-          <h2 className="font-bold">
-            {product.manufacturer}
+          <h2 className="font-bold text-lg">{product.name}</h2>
+          <h2 className="font-bold text-xs">
             <br />
-            {product.reference}
+            {product.includes}
           </h2>
         </Link>
         <p className="text-sm text-gray-500 mb-2">{product.manufacturer}</p>
@@ -58,7 +58,7 @@ export const ProductItem = ({ product }) => {
           onClick={addToCartHandler}
           disabled={product.countInStock === 0 || isOutOfStock}
         >
-          {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
+          {isOutOfStock ? 'Fuera de inventario' : 'Añadir al carrito'}
         </button>
         {isOutOfStock && (
           <form className="text-center ">

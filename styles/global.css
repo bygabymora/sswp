@@ -12,12 +12,12 @@
 
   /*========== Colors ==========*/
 
-  --title-color: #144e8b;
-  --title-color-dark: #03793d;
+  --title-color: #101920;
+  --title-color-dark: #ff3131;
   --text-color: #788b9b;
   --body-color: white;
   --container-color: #fff;
-  --yellow: #ffd700;
+  --rose: #fa7474;
 
   /*========== Font and typography ==========*/
   --title-font: 'Montserrat', sans-serif;
@@ -192,7 +192,6 @@ img {
   left: 0;
   z-index: var(--z-fixed);
   background-color: var(--body-color);
-  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(0, 0, 0, 0.12);
 }
 
 .nav {
@@ -694,6 +693,22 @@ img {
   margin-right: 10%;
   padding-left: 0%;
 }
+/*=============== TESTIMONIAL ===============*/
+
+.avatar {
+  border-radius: 50%;
+  width: 100px;
+}
+.testimonial-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  background-color: var(--rose);
+  color: var(--container-color);
+  padding: 1rem;
+}
 
 /*=============== BREAKPOINTS ===============*/
 /* For large devices */
@@ -716,6 +731,9 @@ img {
   }
   .card {
     @apply mt-3 block rounded-lg border-gray-200 shadow-md mx-3;
+  }
+  .testimonios-container {
+    justify-content: space-between;
   }
 }
 

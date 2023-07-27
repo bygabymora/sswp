@@ -19,7 +19,7 @@ export default function Layout({ title, children }) {
         <main className="main container  m-auto mt-11 px-4">{children}</main>
 
         <footer className="footer_1 flex h-10 justify-center shadow-inner items-center footer ">
-          <p className="md:white">Copyrights 2023 STAT Surgical Supply</p>
+          <p className="md:white">Copyrights 2023 Easy Home Designer</p>
         </footer>
       </div>
     </>

@@ -7,17 +7,15 @@ const StaticBanner = () => {
     <div className="static-banner-container mt-4">
       <div className="banner-content">
         <h2 className="banner-title">
-          Partner With Us and Sell Your Surgical Disposables
+          Averigua porque nuestros clientes nos prefieren
         </h2>
         <p className="banner-description">
-          Stat Surgical Supply is looking to fill our customer demand. We pay
-          top dollar for in-date high-end surgical disposables.
+          Sujetadores para sábanas de calidad y comodidad insuperables.
         </p>
-        <Link
-          className="flex justify-center items-center"
-          href="/ManufacturerForm"
-        >
-          <span className="banner-link">Send us your list</span>
+        <Link className="flex justify-center items-center" href="/products">
+          <span className="banner-link">
+            ¡Mejora tus noches de descanso ahora!
+          </span>
           <span className="link-space">&nbsp;&nbsp;</span>
           <AiOutlineSend className="link-space" />
         </Link>

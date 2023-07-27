@@ -8,7 +8,7 @@ export default function Products({ products }) {
   return (
     <Layout title="Products">
       <h2 className="section__title" id="products">
-        Products
+        Productos
       </h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
         {products.map((product) => (

@@ -21,7 +21,7 @@ const ContactUs = () => {
       )
       .then(
         (result) => {
-          alert('Message sent, thank you for contacting me');
+          alert('Mensaje enviado, gracias por contactarnos');
           console.log(result.text);
         },
         (error) => {
@@ -36,11 +36,11 @@ const ContactUs = () => {
 
   return (
     <div className="contact__content">
-      <h3 className="contact__title">Send a message</h3>
+      <h3 className="contact__title">ó, enviarnos un mensaje</h3>
 
       <form className="contact__form" ref={form} onSubmit={sendEmail}>
         <div className="contact__form-div">
-          <lable className="contact__form-tag">Name*</lable>
+          <lable className="contact__form-tag">Nombre*</lable>
           <input
             type="text"
             name="user_name"
@@ -64,7 +64,7 @@ const ContactUs = () => {
         </div>
 
         <div className="contact__form-div">
-          <lable className="contact__form-tag">Message*</lable>
+          <lable className="contact__form-tag">Mensaje*</lable>
           <textarea
             name="message"
             className="contact__form-input contact__message"
@@ -74,7 +74,7 @@ const ContactUs = () => {
           />
         </div>
         <button className="button button--flex btn-contact">
-          <span className=" text-white">Send Message {tab} </span>
+          <span className=" text-white">Enviar {tab} </span>
           <BiMessageAdd className=" text-white" />
         </button>
       </form>

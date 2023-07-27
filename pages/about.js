@@ -28,20 +28,20 @@ export default function AboutScreen() {
         <animated.div className="content-container" style={contentAnimation}>
           <h2 className="section__title"> About Us</h2>
           <p className="about-content">
-            Stat Surgical was founded to combat the rising costs of healthcare
-            supply chains. Our company targets the &quot;small&quot; portion of
-            &quot;off-contract&quot; purchases and backorders. Stat Surgical
-            strictly focuses on sourcing safe, ethical products from trusted
-            suppliers, US-based hospitals, and surgery centers. We source
-            surgical disposables in original OEM packaging, sealed, long-dated,
-            and strictly inspected by our trained quality control department.
-            When doing business with Stat Surgical you can buy products by the
-            &quot;each,&quot; or by the &quot;box.&quot; With 20+ years of
-            surgical sales experience, the founder has a wealth of knowledge of
-            cost savings and the ability to navigate healthcare systems and
-            IDNs. As surgical disposable costs rise, numerous healthcare systems
-            rely on us for cost savings. Our customers are &quot;priority
-            one.&quot;
+            Easy Home DesignerSurgical was founded to combat the rising costs of
+            healthcare supply chains. Our company targets the &quot;small&quot;
+            portion of &quot;off-contract&quot; purchases and backorders. Easy
+            Home DesignerSurgical strictly focuses on sourcing safe, ethical
+            products from trusted suppliers, US-based hospitals, and surgery
+            centers. We source surgical disposables in original OEM packaging,
+            sealed, long-dated, and strictly inspected by our trained quality
+            control department. When doing business with Easy Home
+            DesignerSurgical you can buy products by the &quot;each,&quot; or by
+            the &quot;box.&quot; With 20+ years of surgical sales experience,
+            the founder has a wealth of knowledge of cost savings and the
+            ability to navigate healthcare systems and IDNs. As surgical
+            disposable costs rise, numerous healthcare systems rely on us for
+            cost savings. Our customers are &quot;priority one.&quot;
           </p>
         </animated.div>
       </div>

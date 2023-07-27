@@ -9,22 +9,22 @@ export default function users() {
         <div>
           <ul>
             <li>
-              <Link href="/admin/dashboard">Dashboard</Link>
+              <Link href="/admin/dashboard">Pánel</Link>
             </li>
             <li>
-              <Link href="/admin/orders">Orders</Link>
+              <Link href="/admin/orders">Órdenes</Link>
             </li>
             <li>
-              <Link href="/admin/products">Products</Link>
+              <Link href="/admin/products">Productos</Link>
             </li>
             <li>
               <Link href="/admin/users" className="font-bold">
-                Users
+                Usuarios
               </Link>
             </li>
           </ul>
         </div>
-        <h1 className="mb-4 text-xl">Admin Users</h1>
+        <h1 className="mb-4 text-xl">Administrar Usuarios</h1>
       </div>
     </Layout>
   );

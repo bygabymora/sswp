@@ -2,7 +2,7 @@ import React from 'react';
 import Layout from './Layout';
 
 export const metadata = {
-  title: 'STAT SURGICAL SUPPLY',
+  title: 'Easy Home Designer',
   description: 'Discounted surgical supplies.',
 };
 

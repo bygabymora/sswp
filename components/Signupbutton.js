@@ -72,23 +72,23 @@ const SignupButton = () => {
               <>
                 <Menu.Items className="bg-white grid grid-cols-1 dropdown-menu">
                   <div className="font-bold ml-2">
-                    Hello! {session.user.name}
+                    Hola! {session.user.name}
                   </div>
                   <Menu.Item>
                     <DropdownLink href="/profile" className="dropdown-link">
-                      Profile
+                      <div className="ml-2">Perfil</div>
                     </DropdownLink>
                   </Menu.Item>
                   <Menu.Item className="dropdown-link">
                     <DropdownLink href="/order-history">
-                      Order History
+                      <div className="ml-2">Historial de órdenes</div>
                     </DropdownLink>
                   </Menu.Item>
                   {session.user.isAdmin && (
                     <Menu.Item className="dropdown-link ">
                       <div>
                         <DropdownLink href="/admin/dashboard">
-                          Admin Dashboard
+                          <div className="ml-2">Panel de administrador</div>
                         </DropdownLink>
                       </div>
                     </Menu.Item>
@@ -99,7 +99,7 @@ const SignupButton = () => {
                       className="dropdown-link font-bold"
                       onClick={logoutClickHandler}
                     >
-                      Log Out
+                      <div className="mb-2 ml-2">Salir</div>
                     </DropdownLink>
                   </Menu.Item>
                 </Menu.Items>

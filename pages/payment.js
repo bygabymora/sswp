@@ -18,7 +18,7 @@ export default function PaymentScreen() {
   const submitHandler = (e) => {
     e.preventDefault();
     if (!selectedPaymentMethod) {
-      return toast.error('Payment method is required');
+      return toast.error('Método de pago es requerido');
     }
     dispatch({ type: 'SAVE_PAYMENT_METHOD', payload: selectedPaymentMethod });
     Cookies.set(
@@ -39,16 +39,13 @@ export default function PaymentScreen() {
   }, [paymentMethod, router, shippingAddress.address]);
 
   return (
-    <Layout title="Payment Method">
+    <Layout title="Dirección de envío">
       <CheckoutWizard activeStep={2} />
       <form className="mx-auto max-w-screen-md" onSubmit={submitHandler}>
-        <h1 className="mb-4 text-xl">Payment Method</h1>
-        <p>
-          You get a discount of 1.5% if the payment is done via bank wire
-          transfer.
-        </p>
+        <h1 className="mb-4 text-xl">Método de pago</h1>
+        <p>Obtienes un descuento del 3% si pagas con Nequi o Daviplata. </p>
         <br />
-        {['Stripe', 'Paypal', 'Pay by Wire'].map((payment) => (
+        {['Mercado Pago', 'Paypal', 'Nequi-Daviplata'].map((payment) => (
           <div key={payment} className="mb-4">
             <input
               name="paymentMethod"

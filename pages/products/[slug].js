@@ -37,7 +37,7 @@ export default function ProductScreen(props) {
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
 
     if (product.countInStock < quantity) {
-      toast.error("Sorry, we don't have enough of that item in stock.");
+      toast.error('Disculpa, no tenemos suficiente de ese item en inventario.');
 
       return quantity;
     }
@@ -59,7 +59,7 @@ export default function ProductScreen(props) {
       <div className="py-2">
         <Link href={'/products'} className="flex gap-4 items-center">
           <BsBackspace />
-          Back to products.
+          Regresar a productos.
         </Link>
       </div>
       <div className="product-grid">
@@ -74,10 +74,7 @@ export default function ProductScreen(props) {
         <div className="">
           <ul>
             <li>
-              <h1 className="text-xl font-bold">{product.manufacturer}</h1>
-            </li>
-            <li>
-              <h1 className="text-xl font-bold">{product.reference}</h1>
+              <h1 className="text-xl font-bold">{product.name}</h1>
             </li>
             <li>
               <h1 className="text-xl">{product.description}</h1>
@@ -105,12 +102,12 @@ export default function ProductScreen(props) {
               onClick={addToCartHandler}
               disabled={product.countInStock === 0 || isOutOfStock}
             >
-              {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
+              {isOutOfStock ? 'Fuera de inventario' : 'Añadir al carrito'}
             </button>
             {showPopup && (
               <div className="popup">
                 <div className="popup-content">
-                  <p>Item added to cart.</p>
+                  <p>item añadido al carrito.</p>
                   <br />
                   <div className="flex gap-1 justify-evenly">
                     <button
