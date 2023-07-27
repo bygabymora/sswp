@@ -750,6 +750,20 @@ img {
 @media screen and (max-width: 350px) {
 }
 
+/*=============== FOOTER ===============*/
+.footer {
+  background-color: var(--title-color);
+  color: var(--container-color);
+  padding: 1rem;
+  text-align: center;
+}
+.footer-logo {
+  height: 200px;
+  width: auto;
+}
+.footer-title {
+  color: var(--container-color);
+}
 /*=============== BREAKPOINTS ===============*/
 /* For large devices */
 @media screen and (max-width: 992px) {
