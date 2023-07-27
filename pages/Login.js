@@ -44,7 +44,7 @@ export default function Login() {
   return (
     <Layout title="Login">
       <form className="mx-2 pr-5" onSubmit={handleSubmit(submitHandler)}>
-        <h1 className="mb-1 text-xl font-bold">Login</h1>
+        <h1 className="mb-1 text-xl font-bold">Ingresa</h1>
         <div className="mb-4">
           <label
             className="block mb-2 text-sm font-bold text-gray-700"
@@ -58,7 +58,7 @@ export default function Login() {
             id="email"
             type="email"
             {...register('email', {
-              required: 'Please enter email',
+              required: 'Por favor ingresa tu Email',
               pattern: {
                 value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
                 message: 'Email invalido',
@@ -75,7 +75,7 @@ export default function Login() {
             className="block mb-2 text-sm font-bold text-gray-700"
             htmlFor="password"
           >
-            Password
+            Contraseña
           </label>
           <input
             className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
@@ -83,7 +83,7 @@ export default function Login() {
             id="password"
             type="password"
             {...register('password', {
-              required: 'Please enter a password',
+              required: 'Por favor ingresa tu contraseña',
               minLength: {
                 value: 8,
                 message: 'Contraseña debe tener al menos 8 caracteres',
@@ -105,12 +105,12 @@ export default function Login() {
           </button>
         </div>
         <div className="mb-4">
-          Don&apos;t have an account? &nbsp;
+          ¿No tienes una cuenta? &nbsp;
           <Link
             href="/Register"
             className="font-bold underline active:text-gray-700"
           >
-            Register
+            Registrate
           </Link>
         </div>
       </form>

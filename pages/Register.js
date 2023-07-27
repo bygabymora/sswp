@@ -52,13 +52,13 @@ export default function LoginScreen() {
         className="mx-auto max-w-screen-md"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <h1 className="mb-1 text-xl font-bold">Create Account</h1>
+        <h1 className="mb-1 text-xl font-bold">Crea una cuenta</h1>
         <div className="mb-4">
           <label
             className="block mb-2 text-sm font-bold text-gray-700"
             htmlFor="name"
           >
-            Full Name
+            Nombre completo
           </label>
           <input
             type="text"
@@ -66,7 +66,7 @@ export default function LoginScreen() {
             id="name"
             autoFocus
             {...register('name', {
-              required: 'Please enter name',
+              required: 'Por favor ingresa el nombre completo',
             })}
           />
           {errors.name && (
@@ -84,7 +84,7 @@ export default function LoginScreen() {
           <input
             type="email"
             {...register('email', {
-              required: 'Please enter email',
+              required: 'Por favor ingresa el Email',
               pattern: {
                 value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
                 message: 'Please enter valid email',
@@ -102,12 +102,12 @@ export default function LoginScreen() {
             className="block mb-2 text-sm font-bold text-gray-700"
             htmlFor="password"
           >
-            Password
+            Contraseña
           </label>
           <input
             type="password"
             {...register('password', {
-              required: 'Please enter password',
+              required: 'Por favor ingresa la contraseña',
               minLength: { value: 6, message: 'password is more than 5 chars' },
             })}
             className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
@@ -123,7 +123,7 @@ export default function LoginScreen() {
             className="block mb-2 text-sm font-bold text-gray-700"
             htmlFor="confirmPassword"
           >
-            Confirm Password
+            Confirma la contraseña
           </label>
           <input
             className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
@@ -134,7 +134,7 @@ export default function LoginScreen() {
               validate: (value) => value === getValues('password'),
               minLength: {
                 value: 6,
-                message: 'confirm password is more than 5 chars',
+                message: 'Confirma la contraseña',
               },
             })}
           />
@@ -145,20 +145,22 @@ export default function LoginScreen() {
           )}
           {errors.confirmPassword &&
             errors.confirmPassword.type === 'validate' && (
-              <div className="text-red-500 ">Password do not match</div>
+              <div className="text-red-500 ">
+                Las contraseñas no son iguales
+              </div>
             )}
         </div>
 
         <div className="mb-4 ">
-          <button className="primary-button">Register</button>
+          <button className="primary-button">Registrate</button>
         </div>
         <div className="mb-4 ">
-          Already have an account? &nbsp;
+          ¿Ya tienes una cuenta? &nbsp;
           <Link
             href="/Login"
             className="font-bold underline active:text-gray-700"
           >
-            Login
+            Ingresa
           </Link>
         </div>
       </form>
