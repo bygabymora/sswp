@@ -101,7 +101,7 @@ export default function Login() {
         </div>
         <div className="mb-4">
           <button className="primary-button" type="submit">
-            Login
+            Ingresa
           </button>
         </div>
         <div className="mb-4">
