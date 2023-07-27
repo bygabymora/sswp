@@ -3,7 +3,7 @@ import { TbMessage2Check } from 'react-icons/tb';
 import { GiThreeFriends } from 'react-icons/gi';
 import { FiTag } from 'react-icons/fi';
 import Image from 'next/image';
-import LogoWhite from '../public/images/assets/LogoWhite.png';
+import LogoWhite from '../public/images/assets/logoWhite.png';
 
 export default function Footer() {
   return (
