@@ -55,7 +55,7 @@ export default function ProfileScreen() {
       <h1 className="mb-4 text-xl ml-10">Información de usuario</h1>
       <div className="mb-4 ml-10">
         <p>
-          <strong>Full Name:</strong>
+          <strong>Nombre completo:</strong>
           <div>{session.user.name}</div>
         </p>
         <p>

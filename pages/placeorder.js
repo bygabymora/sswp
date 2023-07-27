@@ -150,7 +150,7 @@ export default function PlaceOrderScreen() {
               </table>
               <div>
                 <Link className="underline font-bold" href="/cart">
-                  Edit
+                  Editar
                 </Link>
               </div>
             </div>
