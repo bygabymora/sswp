@@ -5,7 +5,7 @@ import db from '../../../../utils/db';
 const handler = async (req, res) => {
   const user = await getToken({ req });
   if (!user || !user.isAdmin) {
-    return res.status(401).send('admin signin required');
+    return res.status(401).send('Registro requerido de administrador');
   }
   if (req.method === 'GET') {
     return getHandler(req, res);

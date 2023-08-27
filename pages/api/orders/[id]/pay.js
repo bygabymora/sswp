@@ -5,14 +5,14 @@ import db from '../../../../utils/db';
 const handler = async (req, res) => {
   const user = await getToken({ req });
   if (!user) {
-    return res.status(401).send('Error: signin required');
+    return res.status(401).send('Error: Registro Requerido');
   }
 
   await db.connect();
   const order = await Order.findById(req.query.id);
   if (order) {
     if (order.isPaid) {
-      return res.status(400).send({ message: 'Error: order is already paid' });
+      return res.status(400).send({ message: 'Error: La orden ya está paga' });
     }
     order.isPaid = true;
     order.paidAt = Date.now();
@@ -26,7 +26,7 @@ const handler = async (req, res) => {
     res.send({ message: 'order paid successfully', order: paidOrder });
   } else {
     await db.disconnect();
-    res.status(404).send({ message: 'Error: order not found' });
+    res.status(404).send({ message: 'Error: Orden no encontrada' });
   }
 };
 

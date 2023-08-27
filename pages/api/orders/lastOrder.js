@@ -5,7 +5,7 @@ import db from '../../../utils/db';
 const handler = async (req, res) => {
   const user = await getToken({ req });
   if (!user) {
-    return res.status(401).send({ message: 'signin required' });
+    return res.status(401).send({ message: 'Registro Requerido' });
   }
   await db.connect();
   const lastOrder = await Order.findOne({ user: user._id }).sort({

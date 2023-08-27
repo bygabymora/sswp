@@ -150,15 +150,19 @@ function OrderScreen() {
   };
 
   return (
-    <Layout title={`Order ${orderId}`}>
-      <h1 className="mb-4 text-xl">{`Order ${orderId}`}</h1>
+    <Layout
+      title={`Order ${orderId.substring(orderId.length - 8).toUpperCase()}`}
+    >
+      <h1 className="mb-4 text-xl">{`Order ${orderId
+        .substring(orderId.length - 8)
+        .toUpperCase()}`}</h1>
       {loading ? (
         <div>Loading...</div>
       ) : error ? (
         <div className="alert-error">{error}</div>
       ) : paymentComplete ? (
         <div className="alert-success">
-          Payment completed successfully. Reloading...
+          Pago redireccionado exitosamente. Redirecionando...
         </div>
       ) : (
         <div className="grid md:grid-cols-4 md:gap-2">
