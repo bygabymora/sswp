@@ -114,7 +114,7 @@ const SignupButton = () => {
                   </Menu.Item>
                   <Menu.Item>
                     <DropdownLink href="/Register" className="dropdown-link">
-                      Registrate
+                      Regístrate
                     </DropdownLink>
                   </Menu.Item>
                 </Menu.Items>

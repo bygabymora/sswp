@@ -110,7 +110,7 @@ export default function Login() {
             href="/Register"
             className="font-bold underline active:text-gray-700"
           >
-            Registrate
+            Regístrate
           </Link>
         </div>
       </form>
