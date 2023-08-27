@@ -88,9 +88,9 @@ export default function PlaceOrderScreen() {
             <div className="card  p-5">
               <h2 className="mb-2 text-lg">Dirección de envío</h2>
               <div>
-                {shippingAddress.fullName}, {shippingAddress.address},{' '}
-                {shippingAddress.city}, {shippingAddress.postalCode},{' '}
-                {shippingAddress.country}
+                {shippingAddress.fullName}, {shippingAddress.phone}{' '}
+                {shippingAddress.address}, {shippingAddress.city},{' '}
+                {shippingAddress.postalCode}, ,{shippingAddress.notes}
               </div>
               <div>
                 <Link className="underline font-bold" href="/shipping">
@@ -191,7 +191,7 @@ export default function PlaceOrderScreen() {
                     onClick={placeOrderHandler}
                     className="primary-button w-full"
                   >
-                    {loading ? 'Cargando...' : 'Ordenar'}
+                    {loading ? 'Cargando...' : 'Confirmar Orden'}
                   </button>
                 </li>
                 <li>

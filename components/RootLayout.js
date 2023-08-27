@@ -7,5 +7,5 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  return <Layout title="STAT">{children}</Layout>;
+  return <Layout title="Easy Home Designer">{children}</Layout>;
 }

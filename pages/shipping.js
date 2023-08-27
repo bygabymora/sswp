@@ -6,6 +6,7 @@ import { useContext } from 'react';
 import { Store } from '../utils/Store';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
+import axios from 'axios';
 
 export default function ShippingScreen() {
   const usStates = [
@@ -50,6 +51,8 @@ export default function ShippingScreen() {
   const [showSuggestions, setShowSuggestions] = useState(false); // Add state for tracking the visibility of suggestions
 
   const [selectedSuggestion, setSelectedSuggestion] = useState(-1); // Initialize to -1, meaning no suggestion is selected
+  const [lastOrder, setLastOrder] = useState(null);
+  const [useLastAddress, setUseLastAddress] = useState(false);
 
   const handleStateChange = (event) => {
     const inputValue = event.target.value.toLowerCase();
@@ -105,16 +108,27 @@ export default function ShippingScreen() {
 
   useEffect(() => {
     setValue('fullName', shippingAddress.fullName);
+    setValue('phone', shippingAddress.phone);
     setValue('address', shippingAddress.address);
     setValue('state', shippingAddress.state);
     setValue('city', shippingAddress.city);
     setValue('postalCode', shippingAddress.postalCode);
+    setValue('notes', shippingAddress.notes);
   }, [setValue, shippingAddress]);
 
-  const submitHandler = ({ fullName, address, state, city, postalCode }) => {
+  const submitHandler = ({
+    fullName,
+
+    phone,
+    address,
+    state,
+    city,
+    postalCode,
+    notes,
+  }) => {
     dispatch({
       type: 'SAVE_SHIPPING_ADDRESS',
-      payload: { fullName, address, state, city, postalCode },
+      payload: { fullName, phone, address, state, city, postalCode, notes },
     });
     Cookies.set(
       'cart',
@@ -122,16 +136,43 @@ export default function ShippingScreen() {
         ...cart,
         shippingAddress: {
           fullName,
+          phone,
           address,
           state,
           city,
           postalCode,
+          notes,
         },
       })
     );
 
     router.push('/payment');
   };
+
+  useEffect(() => {
+    const fetchLastOrder = async () => {
+      try {
+        const { data } = await axios.get('/api/orders/lastOrder');
+        setLastOrder(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchLastOrder();
+  }, []);
+  useEffect(() => {
+    if (useLastAddress && lastOrder) {
+      const { shippingAddress } = lastOrder;
+      setValue('fullName', shippingAddress.fullName);
+      setValue('phone', shippingAddress.phone);
+      setValue('address', shippingAddress.address);
+      setValue('state', shippingAddress.state);
+      setValue('city', shippingAddress.city);
+      setValue('postalCode', shippingAddress.postalCode);
+      setValue('notes', shippingAddress.notes);
+    }
+  }, [lastOrder, setValue, useLastAddress]);
 
   return (
     <Layout title="Dirección de envío">
@@ -144,8 +185,38 @@ export default function ShippingScreen() {
           <h1 className="text-2xl font-bold">Dirección de envío</h1>
           <br />
         </div>
+        {lastOrder && (
+          <div className="mb-2 mt-2">
+            <label htmlFor="useLastAddress" className="font-bold">
+              Desea usar la dirección de su último pedido?
+            </label>{' '}
+            &nbsp;
+            <input
+              type="checkbox"
+              id="useLastAddress"
+              checked={useLastAddress}
+              onChange={(e) => setUseLastAddress(e.target.checked)}
+            />
+            <div className="mb-2">
+              <p className="text-sm">
+                {lastOrder.shippingAddress.fullName}
+                <br />{' '}
+                {lastOrder.shippingAddress.phone && (
+                  <>
+                    {lastOrder.shippingAddress.phone} <br />{' '}
+                  </>
+                )}
+                {lastOrder.shippingAddress.address}
+                <br /> {lastOrder.shippingAddress.state}
+                <br /> {lastOrder.shippingAddress.city}
+                <br /> {lastOrder.shippingAddress.postalCode}
+                <br />{' '}
+              </p>
+            </div>
+          </div>
+        )}
         <div className="mb-4 contact__form-div">
-          <label htmlFor="fullName">Nombre completo</label>
+          <label htmlFor="fullName">Nombre completo*</label>
           <input
             className="w-full contact__form-input"
             type="text"
@@ -161,7 +232,23 @@ export default function ShippingScreen() {
           )}
         </div>
         <div className="mb-4 contact__form-div">
-          <label htmlFor="address">Dirección</label>
+          <label htmlFor="phone">Teléfono*</label>
+          <input
+            className="w-full contact__form-input"
+            type="text"
+            id="phone"
+            placeholder="Ingrese el teléfono"
+            {...register('phone', { required: true, minLength: 3 })}
+            autoCapitalize="true"
+            required
+          />
+          {errors.phone && (
+            <p className="text-red-500">El teléfono es requerido.</p>
+          )}
+        </div>
+
+        <div className="mb-4 contact__form-div">
+          <label htmlFor="address">Dirección*</label>
           <input
             className="w-full contact__form-input"
             type="text"
@@ -176,7 +263,7 @@ export default function ShippingScreen() {
           )}
         </div>
         <div className="mb-4 contact__form-div">
-          <label htmlFor="state">Departamento</label>
+          <label htmlFor="state">Departamento*</label>
           <input
             className="w-full contact__form-input"
             type="text"
@@ -211,7 +298,7 @@ export default function ShippingScreen() {
             )}
         </div>
         <div className="mb-4 contact__form-div">
-          <label htmlFor="city">Ciudad</label>
+          <label htmlFor="city">Ciudad*</label>
           <input
             className="w-full contact__form-input"
             type="text"
@@ -224,7 +311,7 @@ export default function ShippingScreen() {
           {errors.city && <p className="text-red-500">City is required.</p>}
         </div>
         <div className="mb-4 contact__form-div">
-          <label htmlFor="postalCode">Código Postal</label>
+          <label htmlFor="postalCode">Código Postal*</label>
           <input
             className="w-full contact__form-input"
             type="text"
@@ -238,6 +325,22 @@ export default function ShippingScreen() {
             <p className="text-red-500">El código postal es requerido.</p>
           )}
         </div>
+        <div className="mb-4 contact__form-div">
+          <label htmlFor="notes">Notas</label>
+          <input
+            className="w-full contact__form-input"
+            type="text"
+            id="notes"
+            placeholder="Ingrese las notas"
+            {...register('notes', { required: false, minLength: 3 })}
+            autoCapitalize="true"
+            required
+          />
+          {errors.notes && (
+            <p className="text-red-500">Las notas son requeridas.</p>
+          )}
+        </div>
+
         <div className="mb-4 contact__form-div">
           <button className="primary-button w-full" type="submit">
             Continuar

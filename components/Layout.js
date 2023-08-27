@@ -9,8 +9,8 @@ export default function Layout({ title, children }) {
   return (
     <>
       <Head>
-        <title>{title ? title : 'STAT'}</title>
-        <meta name="description" content="STAT" />
+        <title>{title ? title : 'Easy Home Designer'}</title>
+        <meta name="description" content="Easy Home Designer" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ToastContainer position="bottom-center" limit={1} />
