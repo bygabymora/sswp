@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Layout from '../../../components/Layout';
@@ -39,6 +39,7 @@ function reducer(state, action) {
   }
 }
 export default function AdminUserEditScreen() {
+  const [isAdmin, setEsAdmin] = useState(false);
   const { query } = useRouter();
   const userId = query.id;
   const [{ loading, error, loadingUpdate }, dispatch] = useReducer(reducer, {
@@ -62,6 +63,7 @@ export default function AdminUserEditScreen() {
         setValue('name', data.name);
         setValue('email', data.email);
         setValue('isAdmin', data.isAdmin);
+        setEsAdmin(data.isAdmin);
       } catch (err) {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
@@ -75,10 +77,11 @@ export default function AdminUserEditScreen() {
   const submitHandler = async ({ name, email, password }) => {
     try {
       dispatch({ type: 'UPDATE_REQUEST' });
-      await axios.put(`/api/admin/products/${userId}`, {
+      await axios.put(`/api/admin/users/${userId}`, {
         name,
         email,
         password,
+        isAdmin,
       });
       dispatch({ type: 'UPDATE_SUCCESS' });
       toast.success('Usuario actualizado exitosamente');
@@ -120,7 +123,9 @@ export default function AdminUserEditScreen() {
               className="mx-auto max-w-screen-md"
               onSubmit={handleSubmit(submitHandler)}
             >
-              <h1 className="mb-4 text-xl">{`Editar Producto ${userId}`}</h1>
+              <h1 className="mb-4 text-xl">{`Editar Usuario ${userId
+                .substring(userId.length - 8)
+                .toUpperCase()}`}</h1>
               <div className="mb-4">
                 <label htmlFor="name">Nombre</label>
                 <input
@@ -138,99 +143,32 @@ export default function AdminUserEditScreen() {
               </div>
 
               <div className="mb-4">
-                <label htmlFor="slug">Referencia</label>
+                <label htmlFor="email">Email</label>
                 <input
-                  type="text"
+                  type="email"
                   className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                  id="slug"
-                  {...register('slug', {
-                    required: 'Por favor ingrese una referencia',
+                  id="email"
+                  {...register('email', {
+                    required: 'Por favor ingrese el email',
                   })}
                 />
-                {errors.slug && (
-                  <div className="text-red-500">{errors.slug.message}</div>
+                {errors.email && (
+                  <div className="text-red-500">{errors.email.message}</div>
                 )}
               </div>
-
               <div className="mb-4">
-                <label hidden htmlFor="reference">
-                  Referencia
-                </label>
+                <label htmlFor="isAdmin">Es Administrador?</label>
+                &nbsp;
                 <input
-                  hidden
-                  value={userId}
-                  type="text"
-                  className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                  id="reference"
-                  {...register('reference', {})}
+                  type="checkbox"
+                  id="esAdmin"
+                  {...register('isAdmin')}
+                  checked={isAdmin}
+                  onChange={(e) => {
+                    setValue('isAdmin', e.target.checked);
+                    setEsAdmin(e.target.checked);
+                  }}
                 />
-                {errors.reference && (
-                  <div className="text-red-500">{errors.reference.message}</div>
-                )}
-              </div>
-              <div>
-                <h2>Each</h2>
-                <div className="mb-4">
-                  <label htmlFor="description">Descripción</label>
-                  <input
-                    type="text"
-                    className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                    id="description"
-                    {...register('description', {
-                      required: 'Por favor ingrese una descripción',
-                    })}
-                  />
-                  {errors.description && (
-                    <div className="text-red-500">
-                      {errors.description.message}
-                    </div>
-                  )}
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="price">Price Each</label>
-                  <input
-                    type="text"
-                    className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                    id="price"
-                    {...register('price', {
-                      required: 'Please enter price',
-                    })}
-                  />
-                  {errors.price && (
-                    <div className="text-red-500">{errors.price.message}</div>
-                  )}
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="countInStock">Inventario</label>
-                  <input
-                    type="text"
-                    className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                    id="countInStock"
-                    {...register('countInStock', {
-                      required: 'Por favor ingrese un inventario',
-                    })}
-                  />
-                  {errors.countInStock && (
-                    <div className="text-red-500">
-                      {errors.countInStock.message}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="mb-4">
-                <label htmlFor="category">Notas</label>
-                <input
-                  type="text"
-                  className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                  id="notes"
-                  {...register('notes', {
-                    required: 'Por favor ingrese notas',
-                  })}
-                />
-                {errors.notes && (
-                  <div className="text-red-500">{errors.notes.message}</div>
-                )}
               </div>
 
               <div className="flex flex-row">
