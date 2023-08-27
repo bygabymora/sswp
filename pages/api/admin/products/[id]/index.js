@@ -15,7 +15,7 @@ const handler = async (req, res) => {
   } else if (req.method === 'DELETE') {
     return deleteHandler(req, res, user);
   } else {
-    return res.status(400).send({ message: 'Method not allowed' });
+    return res.status(400).send({ message: 'Metodo no permitido' });
   }
 };
 const getHandler = async (req, res) => {
@@ -40,10 +40,10 @@ const putHandler = async (req, res) => {
     product.includes = req.body.includes;
     await product.save();
     await db.disconnect();
-    res.send({ message: 'Product updated successfully' });
+    res.send({ message: 'Producto actualizado exiosamente' });
   } else {
     await db.disconnect();
-    res.status(404).send({ message: 'Product not found' });
+    res.status(404).send({ message: 'Producto no encontrado' });
   }
 };
 const deleteHandler = async (req, res) => {
@@ -54,10 +54,10 @@ const deleteHandler = async (req, res) => {
   if (product) {
     await Product.findByIdAndDelete(req.query.id);
     await db.disconnect();
-    res.send({ message: 'Product deleted successfully' });
+    res.send({ message: 'Producto borrado exitosamente' });
   } else {
     await db.disconnect();
-    res.status(404).send({ message: 'Product not found' });
+    res.status(404).send({ message: 'Producto no encontrado' });
   }
 };
 
