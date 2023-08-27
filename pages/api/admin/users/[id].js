@@ -5,7 +5,9 @@ import { getToken } from 'next-auth/jwt';
 const handler = async (req, res) => {
   const user = await getToken({ req });
   if (!user || !user.isAdmin) {
-    return res.status(401).send('admin signin required');
+    return res
+      .status(401)
+      .send('Requerido Inicio de sesión como Administrador');
   }
 
   if (req.method === 'DELETE') {
