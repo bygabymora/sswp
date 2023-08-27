@@ -38,9 +38,9 @@ function reducer(state, action) {
       return state;
   }
 }
-export default function AdminProductEditScreen() {
+export default function AdminUserEditScreen() {
   const { query } = useRouter();
-  const productId = query.id;
+  const userId = query.id;
   const [{ loading, error, loadingUpdate, loadingUpload }, dispatch] =
     useReducer(reducer, {
       loading: true,
@@ -58,81 +58,32 @@ export default function AdminProductEditScreen() {
     const fetchData = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
-        const { data } = await axios.get(`/api/admin/products/${productId}`);
+        const { data } = await axios.get(`/api/admin/users/${userId}`);
         dispatch({ type: 'FETCH_SUCCESS' });
         setValue('name', data.name);
-        setValue('slug', data.slug);
-        setValue('image', data.image);
-        setValue('reference', data.reference);
-        setValue('size', data.size);
-        setValue('description', data.description);
-        setValue('price', data.price);
-        setValue('countInStock', data.countInStock);
-        setValue('notes', data.notes);
-        setValue('includes', data.includes);
+        setValue('email', data.email);
+        setValue('isAdmin', data.isAdmin);
       } catch (err) {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
     };
 
     fetchData();
-  }, [productId, setValue]);
+  }, [userId, setValue]);
 
   const router = useRouter();
 
-  const uploadHandler = async (e, imageField = 'image') => {
-    const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
-    try {
-      dispatch({ type: 'UPLOAD_REQUEST' });
-      const {
-        data: { signature, timestamp },
-      } = await axios('/api/admin/cloudinary-sign');
-
-      const file = e.target.files[0];
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('signature', signature);
-      formData.append('timestamp', timestamp);
-      formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
-      const { data } = await axios.post(url, formData);
-      dispatch({ type: 'UPLOAD_SUCCESS' });
-      setValue(imageField, data.secure_url);
-      toast.success('File uploaded successfully');
-    } catch (err) {
-      dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
-      toast.error(getError(err));
-    }
-  };
-
-  const submitHandler = async ({
-    name,
-    slug,
-    image,
-    size,
-    reference,
-    description,
-    price,
-    countInStock,
-    notes,
-    includes,
-  }) => {
+  const submitHandler = async ({ name, email, password }) => {
     try {
       dispatch({ type: 'UPDATE_REQUEST' });
-      await axios.put(`/api/admin/products/${productId}`, {
+      await axios.put(`/api/admin/products/${userId}`, {
         name,
-        slug,
-        image,
-        reference,
-        size,
-        description,
-        price,
-        countInStock,
-        notes,
-        includes,
+        email,
+        password,
       });
       dispatch({ type: 'UPDATE_SUCCESS' });
-      toast.success('Product updated successfully');
-      router.push('/admin/products');
+      toast.success('Usuario actualizado exitosamente');
+      router.push('/admin/users');
     } catch (err) {
       dispatch({ type: 'UPDATE_FAIL', payload: getError(err) });
       toast.error(getError(err));
@@ -140,7 +91,7 @@ export default function AdminProductEditScreen() {
   };
 
   return (
-    <Layout title={`Edit Product ${productId}`}>
+    <Layout title={`Editar Usuario ${userId}`}>
       <div className="grid md:grid-cols-4 md:gap-5">
         <div>
           <ul>
@@ -170,7 +121,7 @@ export default function AdminProductEditScreen() {
               className="mx-auto max-w-screen-md"
               onSubmit={handleSubmit(submitHandler)}
             >
-              <h1 className="mb-4 text-xl">{`Edit Product ${productId}`}</h1>
+              <h1 className="mb-4 text-xl">{`Editar Producto ${userId}`}</h1>
               <div className="mb-4">
                 <label htmlFor="name">Nombre</label>
                 <input
@@ -201,38 +152,14 @@ export default function AdminProductEditScreen() {
                   <div className="text-red-500">{errors.slug.message}</div>
                 )}
               </div>
-              <div className="mb-4">
-                <label htmlFor="image">Imagen</label>
-                <input
-                  type="text"
-                  className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                  id="image"
-                  {...register('image', {
-                    required: 'Por favor ingrese una imagen',
-                  })}
-                />
-                {errors.image && (
-                  <div className="text-red-500">{errors.image.message}</div>
-                )}
-              </div>
-              <div className="mb-4">
-                <label htmlFor="imageFile">Cargar Imagen</label>
-                <input
-                  type="file"
-                  className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                  id="imageFile"
-                  onChange={uploadHandler}
-                />
 
-                {loadingUpload && <div>Uploading....</div>}
-              </div>
               <div className="mb-4">
                 <label hidden htmlFor="reference">
                   Referencia
                 </label>
                 <input
                   hidden
-                  value={productId}
+                  value={userId}
                   type="text"
                   className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                   id="reference"
@@ -333,4 +260,4 @@ export default function AdminProductEditScreen() {
   );
 }
 
-AdminProductEditScreen.auth = { adminOnly: true };
+AdminUserEditScreen.auth = { adminOnly: true };

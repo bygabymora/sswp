@@ -151,7 +151,7 @@ function OrderScreen() {
 
   return (
     <Layout
-      title={`Order ${orderId.substring(orderId.length - 8).toUpperCase()}`}
+      title={`Orden ${orderId.substring(orderId.length - 8).toUpperCase()}`}
     >
       <h1 className="mb-4 text-xl">{`Order ${orderId
         .substring(orderId.length - 8)

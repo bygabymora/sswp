@@ -119,8 +119,8 @@ export default function AdminProdcutsScreen() {
         </div>
         <div className="overflow-x-auto md:col-span-3">
           <div className="flex justify-between">
-            <h1 className="mb-4 text-xl">Products</h1>
-            {loadingDelete && <div>Deleting item...</div>}
+            <h1 className="mb-4 text-xl">Productos</h1>
+            {loadingDelete && <div>Borrando item...</div>}
             <button
               disabled={loadingCreate}
               onClick={createHandler}
