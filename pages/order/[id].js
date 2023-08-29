@@ -5,8 +5,8 @@ import { Router, useRouter } from 'next/router'; // Removed unnecessary import f
 import { useEffect, useReducer, useState } from 'react';
 import Layout from '../../components/Layout';
 import { getError } from '../../utils/error';
-import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import { toast } from 'react-toastify';
+import { useSession } from 'next-auth/react';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -28,8 +28,8 @@ function reducer(state, action) {
 }
 
 function OrderScreen() {
+  const { data: session } = useSession();
   const [paymentComplete, setPaymentComplete] = useState(false);
-  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
   const { query } = useRouter();
   const orderId = query.id;
 
@@ -56,21 +56,8 @@ function OrderScreen() {
       if (successPay) {
         dispatch({ type: 'PAY_RESET' });
       }
-    } else {
-      const loadPaypalScript = async () => {
-        const { data: clientId } = await axios.get('/api/keys/paypal');
-        paypalDispatch({
-          type: 'resetOptions',
-          value: {
-            'client-id': clientId,
-            currency: 'USD',
-          },
-        });
-        paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
-      };
-      loadPaypalScript();
     }
-  }, [order, orderId, paypalDispatch, successPay]);
+  }, [order, orderId, successPay]);
 
   const {
     shippingAddress,
@@ -103,50 +90,29 @@ function OrderScreen() {
     }
   };
 
-  const createOrder = (data, actions) => {
-    return actions.order
-      .create({
-        purchase_units: [
-          {
-            amount: {
-              value: totalPrice,
-            },
-          },
-        ],
-      })
-      .then((orderID) => {
-        return orderID;
-      });
+  const handlePayment = async () => {
+    try {
+      dispatch({ type: 'PAY_REQUEST' });
+      const { data } = await axios.put(
+        `/api/orders/${order._id}/pay`
+        // Include any necessary payload here
+      );
+      dispatch({ type: 'PAY_SUCCESS', payload: data });
+      toast.success('Order is paid successfully');
+
+      // Mark payment as complete and show success message
+      setPaymentComplete(true);
+
+      // Reload the page after payment success
+      window.location.reload();
+    } catch (error) {
+      dispatch({ type: 'PAY_FAIL', payload: getError(error) });
+      toast.error(getError(error));
+    }
   };
 
-  const onApprove = (data, actions) => {
-    return actions.order.capture().then(async function (details) {
-      try {
-        dispatch({ type: 'PAY_REQUEST' });
-        const { data } = await axios.put(
-          `/api/orders/${order._id}/pay`,
-          details
-        );
-        dispatch({ type: 'PAY_SUCCESS', payload: data });
-        toast.success('La orden ha sido pagada exitosamente');
-
-        // Mark payment as complete and show success message
-        setPaymentComplete(true);
-
-        // Reload the page after a short delay (e.g., 2 seconds)
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      } catch (error) {
-        dispatch({ type: 'PAY_FAIL', payload: getError(error) });
-        toast.error(getError(error));
-      }
-    });
-  };
-
-  const onError = (err) => {
-    dispatch({ type: 'PAY_FAIL', payload: getError(err) });
-    toast.error(getError(err));
+  const handleButtonClick = () => {
+    handlePayment();
   };
 
   return (
@@ -269,26 +235,34 @@ function OrderScreen() {
                         className="primary-button w-full mt-2"
                         onClick={handleCheckout}
                       >
-                        Pago con Mercadopago
+                        Mercadopago
                       </button>
                     ) : paymentMethod === 'Nequi-Daviplata' ? (
+                      <div>
+                        {session.user.isAdmin && (
+                          <button
+                            className="primary-button w-full"
+                            onClick={handleButtonClick}
+                          >
+                            Marcar como pagado
+                          </button>
+                        )}
+                        {!session.user.isAdmin && (
+                          <Link
+                            className="primary-button w-full mt-2"
+                            href="/ManufacturerForm"
+                          >
+                            Nequi-Daviplata
+                          </Link>
+                        )}
+                      </div>
+                    ) : paymentMethod === 'PSE' ? (
                       <Link
                         className="primary-button w-full mt-2"
                         href="/ManufacturerForm"
                       >
-                        Nequi-Daviplata
+                        PSE
                       </Link>
-                    ) : paymentMethod === 'Paypal' ? (
-                      isPending ? (
-                        <div>Cargando...</div>
-                      ) : (
-                        <PayPalButtons
-                          className="fit-content  mt-3"
-                          createOrder={createOrder}
-                          onApprove={onApprove}
-                          onError={onError}
-                        ></PayPalButtons>
-                      )
                     ) : null}
                     {loadingPay && <div>Cargando...</div>}
                   </li>
