@@ -2,7 +2,7 @@ import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router'; // Removed unnecessary import for Router
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useReducer, useRef, useState } from 'react';
 import Layout from '../../components/Layout';
 import { getError } from '../../utils/error';
 import { toast } from 'react-toastify';
@@ -22,6 +22,26 @@ function reducer(state, action) {
       return { ...state, loadingPay: false, successPay: true };
     case 'PAY_FAIL':
       return { ...state, loadingPay: false, errorPay: action.payload };
+    case 'PAY_RESET':
+      return { ...state, loadingPay: false, successPay: false, errorPay: '' };
+    case 'DELIVER_REQUEST':
+      return { ...state, loadingDeliver: true };
+    case 'DELIVER_SUCCESS':
+      return { ...state, loadingDeliver: false, successDeliver: true };
+    case 'DELIVER_FAIL':
+      return { ...state, loadingDeliver: false };
+    case 'DELIVER_RESET':
+      return {
+        ...state,
+        loadingDeliver: false,
+        successDeliver: false,
+      };
+    case 'AT_COSTUMERS_REQUEST':
+      return { ...state, loadingAtCostumers: true };
+    case 'AT_COSTUMERS_SUCCESS':
+      return { ...state, loadingAtCostumers: false, successAtCostumers: true };
+    case 'AT_COSTUMERS_FAIL':
+      return { ...state, loadingAtCostumers: false, successAtCostumers: false };
     default:
       return state; // Fixed the missing return statement here
   }
@@ -33,13 +53,25 @@ function OrderScreen() {
 
   const { query } = useRouter();
   const orderId = query.id;
+  const trackUrlRef = useRef(null);
+  const trackNumberRef = useRef(null);
 
-  const [{ loading, error, order, successPay, loadingPay }, dispatch] =
-    useReducer(reducer, {
-      loading: true,
-      order: {},
-      error: '',
-    });
+  const [
+    {
+      loading,
+      error,
+      order,
+      successPay,
+      loadingPay,
+      loadingDeliver,
+      successDeliver,
+    },
+    dispatch,
+  ] = useReducer(reducer, {
+    loading: true,
+    order: {},
+    error: '',
+  });
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -52,13 +84,21 @@ function OrderScreen() {
       }
     };
 
-    if (!order._id || successPay || (order._id && order._id !== orderId)) {
+    if (
+      !order._id ||
+      successPay ||
+      successDeliver ||
+      (order._id && order._id !== orderId)
+    ) {
       fetchOrder();
       if (successPay) {
         dispatch({ type: 'PAY_RESET' });
       }
+      if (successDeliver) {
+        dispatch({ type: 'DELIVER_RESET' });
+      }
     }
-  }, [order, orderId, successPay]);
+  }, [order, orderId, successPay, successDeliver]);
 
   const {
     shippingAddress,
@@ -111,6 +151,37 @@ function OrderScreen() {
       console.error('Error al obtener la URL de MercadoPago', error);
     }
   };
+  async function deliverOrderHandler(e) {
+    e.preventDefault(); // prevent default form submission
+
+    const trackUrl = trackUrlRef.current.value;
+    const trackNumber = trackNumberRef.current.value;
+
+    // Validation: Check for whitespace-only strings
+    if (!trackUrl.trim() || !trackNumber.trim()) {
+      toast.error('Please provide valid inputs.');
+      return; // exit function
+    }
+
+    try {
+      dispatch({ type: 'DELIVER_REQUEST' });
+
+      // Send tracking URL and number with the axios request
+      const { data } = await axios.put(
+        `/api/admin/orders/${order._id}/deliver`,
+        {
+          trackUrl: trackUrl,
+          trackNumber: trackNumber,
+        }
+      );
+
+      dispatch({ type: 'DELIVER_SUCCESS', payload: data });
+      toast.success('Order is processed');
+    } catch (err) {
+      dispatch({ type: 'DELIVER_FAIL', payload: getError(err) });
+      toast.error(getError(err));
+    }
+  }
 
   return (
     <Layout
@@ -257,7 +328,40 @@ function OrderScreen() {
                     {loadingPay && <div>Cargando...</div>}
                   </li>
                 )}
-
+                {session.user.isAdmin && order.isPaid && !order.isDelivered && (
+                  <li>
+                    {loadingDeliver && <div>Loading...</div>}
+                    <form
+                      action={`/api/admin/orders/${order._id}/deliver`}
+                      method="POST"
+                    >
+                      <section>
+                        <input
+                          ref={trackUrlRef}
+                          name="trackUrl"
+                          placeholder="Tracking URL"
+                          className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline m-1"
+                          required
+                        />
+                        <input
+                          ref={trackNumberRef}
+                          name="trackNumber"
+                          placeholder="Tracking Number"
+                          className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline m-1"
+                          required
+                        />
+                        <button
+                          type="submit"
+                          role="link"
+                          className="primary-button w-full"
+                          onClick={deliverOrderHandler}
+                        >
+                          Deliver Order
+                        </button>
+                      </section>
+                    </form>
+                  </li>
+                )}
                 <br />
                 <li>
                   <div className="mb-2 px-3 flex justify-between">
