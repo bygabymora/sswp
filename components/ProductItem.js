@@ -10,10 +10,11 @@ export const ProductItem = ({ product }) => {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
   const [isOutOfStock, setIsOutOfStock] = useState(false);
+  const [qty, setQty] = useState(1);
 
   const addToCartHandler = async () => {
     const exisItem = cart.cartItems.find((x) => x.slug === product.slug);
-    let quantity = exisItem ? exisItem.quantity + 1 : 1;
+    const quantity = exisItem ? exisItem.quantity + qty : qty;
     const { data } = await axios.get(`/api/products/${product._id}`);
 
     if (data.countInStock < quantity) {
@@ -25,7 +26,7 @@ export const ProductItem = ({ product }) => {
     toast.success('item añadido al carrito');
 
     if (product.countInStock < quantity) {
-      alert("Sorry, we don't have enough of that item in stock.");
+      alert('No tenemos suficiente inventario para esta compra');
 
       return quantity;
     }
@@ -50,7 +51,34 @@ export const ProductItem = ({ product }) => {
             {product.includes}
           </h2>
         </Link>
-        <p className="text-sm text-gray-500 mb-2">{product.manufacturer}</p>
+        <div className="mb-2 flex items-center justify-center lg:block">
+          <div className="font-bold mt-4">Quantity &nbsp;</div>
+          <div className="flex items-center flex-row">
+            <button
+              className="border px-2 py-1 card"
+              onClick={() => setQty(Math.max(1, qty - 1))}
+              disabled={qty <= 1}
+            >
+              -
+            </button>
+            <span className="px-1 mt-4">{isOutOfStock ? 0 : qty}</span>
+            <button
+              className="border px-2 py-1 card"
+              onClick={() => {
+                if (qty < product.countInStock) {
+                  setQty(qty + 1);
+                } else {
+                  alert(
+                    `Sorry,  we do not have any additional units of ${product.manufacturer} ${product.slug} at this moment`
+                  );
+                }
+              }}
+              disabled={isOutOfStock}
+            >
+              +
+            </button>
+          </div>
+        </div>
         <p className="text-sm text-gray-500">${product.price}</p>
         <button
           className="primary-button align-middle mt-2"
@@ -62,7 +90,9 @@ export const ProductItem = ({ product }) => {
         </button>
         {isOutOfStock && (
           <form className="text-center ">
-            <label className="mt-3 font-bold ">Join our waiting List</label>
+            <label className="mt-3 font-bold ">
+              Únete a nuestra lista de espera
+            </label>
             <input
               type="text"
               placeholder="Name"

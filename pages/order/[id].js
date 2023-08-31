@@ -209,9 +209,11 @@ function OrderScreen() {
                 {shippingAddress.state}
               </div>
               {isDelivered ? (
-                <div className="alert-success">Enviado el {deliveredAt}</div>
+                <div className="alert-success">
+                  Enviado el {deliveredAt.substring(0, 10)}
+                </div>
               ) : (
-                <div className="alert-error">No enviado</div>
+                <div className="alert-error">En preparación</div>
               )}
             </div>
 
@@ -219,7 +221,9 @@ function OrderScreen() {
               <h2 className="mb-2 text-lg">Método de pago</h2>
               <div>{paymentMethod}</div>
               {isPaid ? (
-                <div className="alert-success">Pagado el {paidAt}</div>
+                <div className="alert-success">
+                  Pagado el {paidAt.substring(0, 10)}
+                </div>
               ) : (
                 <div className="alert-error">No pagado</div>
               )}
@@ -339,14 +343,14 @@ function OrderScreen() {
                         <input
                           ref={trackUrlRef}
                           name="trackUrl"
-                          placeholder="Tracking URL"
+                          placeholder="URL de seguimiento"
                           className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline m-1"
                           required
                         />
                         <input
                           ref={trackNumberRef}
                           name="trackNumber"
-                          placeholder="Tracking Number"
+                          placeholder="Número y empresa de envío"
                           className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline m-1"
                           required
                         />
@@ -356,7 +360,7 @@ function OrderScreen() {
                           className="primary-button w-full"
                           onClick={deliverOrderHandler}
                         >
-                          Deliver Order
+                          Enviar Orden
                         </button>
                       </section>
                     </form>

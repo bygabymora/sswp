@@ -39,13 +39,18 @@ export default function LoginScreen() {
         email,
         password,
       });
+
       if (result.error) {
         toast.error(result.error);
+      } else {
+        // Display a success toast message
+        toast.success('Registro exitoso');
       }
     } catch (err) {
       toast.error(getError(err));
     }
   };
+
   return (
     <Layout title="Create Account">
       <form
@@ -138,7 +143,7 @@ export default function LoginScreen() {
             type="password"
             id="confirmPassword"
             {...register('confirmPassword', {
-              required: 'Please enter confirm password',
+              required: 'Por favor confirma la contraseña',
               validate: (value) => value === getValues('password'),
               minLength: {
                 value: 6,
@@ -158,9 +163,23 @@ export default function LoginScreen() {
               </div>
             )}
         </div>
+        <div className="mb-4">
+          <label
+            className="block mb-2 text-sm font-bold text-gray-700"
+            htmlFor="terms"
+          >
+            Acepto los términos, condiciones y política de tratamiento de datos.
+          </label>
+          <input
+            type="checkbox"
+            className="border-gray-300 rounded-sm"
+            id="terms"
+            required
+          />
+        </div>
 
         <div className="mb-4 ">
-          <button className="primary-button">Registrate</button>
+          <button className="primary-button">Regístrate</button>
         </div>
         <div className="mb-4 ">
           ¿Ya tienes una cuenta? &nbsp;
