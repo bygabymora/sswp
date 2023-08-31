@@ -3,6 +3,7 @@ import emailjs from '@emailjs/browser';
 import { BiMessageAdd } from 'react-icons/bi';
 import Layout from '../components/Layout';
 import Link from 'next/link';
+import { FaCopy } from 'react-icons/fa';
 
 export default function ManufacturerForm() {
   const form = useRef();
@@ -57,30 +58,48 @@ export default function ManufacturerForm() {
     }
   };
   const tab = <>&nbsp;&nbsp;</>;
+  const handleCopyClick = () => {
+    navigator.clipboard
+      .writeText('3138125075')
+      .then(() => {
+        alert('Número copiado al portapapeles!');
+      })
+      .catch((err) => {
+        console.error('Could not copy text: ', err);
+      });
+  };
 
   return (
     <Layout title="Nequi-Daviplata">
       <h1 className="section__title">Nequi-Daviplata</h1>
-      <div className="card mb-3">
+      <div className="card m-3 p-2">
         <p className="setion__text self-center text-center mb-3">
           Puedes realizar el pago por Nequi o Daviplata al siguiente número:
         </p>
-        <p className="setion__text font-bold underline self-center text-center">
-          313 8125075
-        </p>
-        <br />
+        <div className="self-center text-center mb-3 flex flex-row justify-center">
+          <p
+            onClick={handleCopyClick}
+            style={{ cursor: 'pointer' }}
+            className="flex flex-row setion__text font-bold underline self-center text-center"
+          >
+            313 8125075
+          </p>
+          {tab}
+          <FaCopy onClick={handleCopyClick} style={{ cursor: 'pointer' }} />
+        </div>
       </div>
       <div className="manufacturer__content">
         <h3 className="setion__text self-center text-center mb-3">
-          Por favor llena el siguiente formulario cuando realices el pago, o
-          envía el comprobante al WhatApp{' '}
+          Una vez realices el pago por favor envía en comprobante al siguiente
+          Whatsapp{' '}
           <Link
             className="font-bold underline"
             href="https://wa.me/573138125075"
           >
             3138125075
           </Link>{' '}
-          y nos contactaremos contigo lo más pronto posible.{' '}
+          o llena el siguiente formulario y nos contactaremos contigo lo más
+          pronto posible.{' '}
           <span className="font-bold underline">
             (En cualquier momento puedes acceder a esta página de nuevo, desde
             la orden presionando el botón Nequi-Daviplata)
@@ -163,7 +182,7 @@ export default function ManufacturerForm() {
           </div>
 
           <button
-            className="button button-flex rounded py-2 px-4 shadow outline-none hover:bg-gray-400 active:bg-gray-500 text-white w-full"
+            className="button mb-4 button-flex rounded py-2 px-4 shadow outline-none hover:bg-gray-400 active:bg-gray-500 text-white w-full"
             type="submit"
             value="Send"
           >

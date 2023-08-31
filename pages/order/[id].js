@@ -205,8 +205,8 @@ function OrderScreen() {
               <h2 className="mb-2 text-lg">Dirección de envío</h2>
               <div>
                 {shippingAddress.fullName}, {shippingAddress.address},{' '}
-                {shippingAddress.city}, {shippingAddress.postalCode},{' '}
-                {shippingAddress.state}
+                {shippingAddress.state}, {shippingAddress.city},{' '}
+                {shippingAddress.postalCode}, {shippingAddress.state}
               </div>
               {isDelivered ? (
                 <div className="alert-success">

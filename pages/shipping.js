@@ -266,7 +266,7 @@ export default function ShippingScreen() {
           )}
         </div>
         <div className="mb-4 contact__form-div">
-          <label htmlFor="state">Departamento*</label>
+          <label htmlFor="state">Departamento o Bogotá D.C.*</label>
           <input
             className="w-full contact__form-input"
             type="text"
@@ -311,7 +311,9 @@ export default function ShippingScreen() {
             autoCapitalize="true"
             required
           />
-          {errors.city && <p className="text-red-500">City is required.</p>}
+          {errors.city && (
+            <p className="text-red-500">La ciudad es requerida.</p>
+          )}
         </div>
         <div className="mb-4 contact__form-div">
           <label htmlFor="postalCode">Código Postal*</label>
@@ -337,7 +339,6 @@ export default function ShippingScreen() {
             placeholder="Ingrese las notas"
             {...register('notes', { required: false, minLength: 3 })}
             autoCapitalize="true"
-            required
           />
           {errors.notes && (
             <p className="text-red-500">Las notas son requeridas.</p>
