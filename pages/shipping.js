@@ -69,6 +69,9 @@ export default function ShippingScreen() {
   };
 
   const handleSelectState = (state) => {
+    if (state === 'Bogotá D.C.') {
+      setValue('city', 'Bogotá D.C.');
+    }
     setValue('state', state);
     setShowSuggestions(false);
     setSelectedSuggestion(-1); // Reset the selected suggestion when an option is clicked
