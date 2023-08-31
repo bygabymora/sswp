@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Router, useRouter } from 'next/router'; // Removed unnecessary import for Router
+import { useRouter } from 'next/router'; // Removed unnecessary import for Router
 import { useEffect, useReducer, useState } from 'react';
 import Layout from '../../components/Layout';
 import { getError } from '../../utils/error';
@@ -30,6 +30,7 @@ function reducer(state, action) {
 function OrderScreen() {
   const { data: session } = useSession();
   const [paymentComplete, setPaymentComplete] = useState(false);
+
   const { query } = useRouter();
   const orderId = query.id;
 
@@ -73,23 +74,6 @@ function OrderScreen() {
   } = order;
   const discountAmount = itemsPrice * 0.03;
 
-  const handleCheckout = async () => {
-    try {
-      dispatch({ type: 'FETCH_REQUEST' });
-      const { data } = await axios.post('/api/checkout', {
-        paymentMethod: paymentMethod,
-      });
-
-      if (data.sessionId) {
-        window.location = `https://checkout.stripe.com/pay/${data.sessionId}`;
-      } else if (data.redirectTo) {
-        Router.push(data.redirectTo); // Corrected Router to useRouter
-      }
-    } catch (err) {
-      dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
-    }
-  };
-
   const handlePayment = async () => {
     try {
       dispatch({ type: 'PAY_REQUEST' });
@@ -113,6 +97,19 @@ function OrderScreen() {
 
   const handleButtonClick = () => {
     handlePayment();
+  };
+
+  const handleMercadoPagoClick = async () => {
+    try {
+      const response = await axios.post('/api/mercadopago', {
+        totalPrice,
+        orderId,
+      });
+      const { init_point } = response.data;
+      window.location.href = init_point; // Redirige al usuario a MercadoPago
+    } catch (error) {
+      console.error('Error al obtener la URL de MercadoPago', error);
+    }
   };
 
   return (
@@ -230,10 +227,10 @@ function OrderScreen() {
                 </li>
                 {!isPaid && (
                   <li className="buttons-container text-center mx-auto">
-                    {paymentMethod === 'Stripe' ? (
+                    {paymentMethod === 'Mercadopago' ? (
                       <button
                         className="primary-button w-full mt-2"
-                        onClick={handleCheckout}
+                        onClick={handleMercadoPagoClick}
                       >
                         Mercadopago
                       </button>
@@ -256,13 +253,6 @@ function OrderScreen() {
                           </Link>
                         )}
                       </div>
-                    ) : paymentMethod === 'PSE' ? (
-                      <Link
-                        className="primary-button w-full mt-2"
-                        href="/ManufacturerForm"
-                      >
-                        PSE
-                      </Link>
                     ) : null}
                     {loadingPay && <div>Cargando...</div>}
                   </li>

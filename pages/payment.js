@@ -45,7 +45,7 @@ export default function PaymentScreen() {
         <h1 className="mb-4 text-xl">Método de pago</h1>
         <p>Obtienes un descuento del 3% si pagas con Nequi o Daviplata. </p>
         <br />
-        {['Mercado Pago', 'PSE', 'Nequi-Daviplata'].map((payment) => (
+        {['Mercadopago', 'Nequi-Daviplata'].map((payment) => (
           <div key={payment} className="mb-4">
             <input
               name="paymentMethod"
