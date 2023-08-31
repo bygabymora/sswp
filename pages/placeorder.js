@@ -89,8 +89,9 @@ export default function PlaceOrderScreen() {
               <h2 className="mb-2 text-lg">Dirección de envío</h2>
               <div>
                 {shippingAddress.fullName}, {shippingAddress.phone}{' '}
-                {shippingAddress.address}, {shippingAddress.city},{' '}
-                {shippingAddress.postalCode}, ,{shippingAddress.notes}
+                {shippingAddress.address}, {shippingAddress.state},{' '}
+                {shippingAddress.city}, {shippingAddress.postalCode}, ,
+                {shippingAddress.notes}
               </div>
               <div>
                 <Link className="underline font-bold" href="/shipping">

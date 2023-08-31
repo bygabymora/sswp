@@ -10,11 +10,11 @@ import axios from 'axios';
 
 export default function ShippingScreen() {
   const usStates = [
-    'Bogotá D.C.',
     'Amazonas',
     'Antioquia',
     'Arauca',
     'Atlántico',
+    'Bogotá D.C.',
     'Bolívar',
     'Boyacá',
     'Caldas',
@@ -53,32 +53,25 @@ export default function ShippingScreen() {
   const [selectedSuggestion, setSelectedSuggestion] = useState(-1); // Initialize to -1, meaning no suggestion is selected
   const [lastOrder, setLastOrder] = useState(null);
   const [useLastAddress, setUseLastAddress] = useState(false);
-  const [stateValue, setStateValue] = useState('');
-  const [cityValue, setCityValue] = useState('');
 
   const handleStateChange = (event) => {
-    const newStateValue = event.target.value;
-    setStateValue(newStateValue);
-
-    if (newStateValue === 'Bogotá D.C.') {
-      setCityValue('Bogotá D.C.');
-    } else {
-      setCityValue('');
+    const inputValue = event.target.value.toLowerCase();
+    setInputValue(inputValue);
+    let filteredOptions = [];
+    if (inputValue.length >= 3) {
+      filteredOptions = usStates.filter((state) =>
+        state.toLowerCase().startsWith(inputValue)
+      );
     }
-    setInputValue(newStateValue);
-    // Filter and update suggestions
-    const filtered = usStates.filter((state) =>
-      state.toLowerCase().includes(newStateValue.toLowerCase())
-    );
-    setFilteredStates(filtered);
-    setSelectedSuggestion(-1); // Reset selected suggestion
+    setFilteredStates(filteredOptions);
+    setShowSuggestions(true);
+    setSelectedSuggestion(-1); // Reset the selected suggestion when input value changes
   };
 
-  const handleSelectState = (selectedState) => {
-    setStateValue(selectedState);
-    setCityValue(selectedState); // Automatically set city
+  const handleSelectState = (state) => {
+    setValue('state', state);
     setShowSuggestions(false);
-    setFilteredStates([]); // Clear suggestions
+    setSelectedSuggestion(-1); // Reset the selected suggestion when an option is clicked
   };
 
   const handleKeyDown = (event) => {
@@ -270,13 +263,12 @@ export default function ShippingScreen() {
           )}
         </div>
         <div className="mb-4 contact__form-div">
-          <label htmlFor="state">Departamento o Distrito Capital*</label>
+          <label htmlFor="state">Departamento*</label>
           <input
             className="w-full contact__form-input"
             type="text"
             id="state"
             placeholder="Ingrese el departamento"
-            value={stateValue}
             {...register('state', { required: true, minLength: 3 })}
             onChange={handleStateChange}
             onFocus={() => setShowSuggestions(true)}
@@ -312,14 +304,11 @@ export default function ShippingScreen() {
             type="text"
             id="city"
             placeholder="Ingrese la ciudad"
-            value={cityValue}
             {...register('city', { required: true, minLength: 3 })}
             autoCapitalize="true"
             required
           />
-          {errors.city && (
-            <p className="text-red-500">La ciudad es requerida.</p>
-          )}
+          {errors.city && <p className="text-red-500">City is required.</p>}
         </div>
         <div className="mb-4 contact__form-div">
           <label htmlFor="postalCode">Código Postal*</label>
