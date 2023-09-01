@@ -7,6 +7,7 @@ const initialState = {
   cart: Cookies.get('cart')
     ? JSON.parse(Cookies.get('cart'))
     : { cartItems: [], shippingAddress: {} },
+  cookieAccepted: Cookies.get('cookieAccepted') || false,
 };
 
 function reducer(state, action) {
@@ -64,6 +65,9 @@ function reducer(state, action) {
           paymentMethod: action.payload,
         },
       };
+    case 'ACCEPT_COOKIES':
+      Cookies.set('cookieAccepted', true);
+      return { ...state, cookieAccepted: true };
 
     default:
       return state;

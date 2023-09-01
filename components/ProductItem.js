@@ -51,8 +51,8 @@ export const ProductItem = ({ product }) => {
             {product.includes}
           </h2>
         </Link>
-        <div className="mb-2 flex items-center justify-center lg:block">
-          <div className="font-bold mt-4">Cantidad &nbsp;</div>
+        <div className="mb-2 flex items-center flex-col text-center justify-center lg:block">
+          <div className="font-bold mt-4">Cantidad</div>
           <div className="flex items-center flex-row">
             <button
               className="border px-2 py-1 card"
