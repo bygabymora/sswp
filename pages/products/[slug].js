@@ -16,6 +16,7 @@ export default function ProductScreen(props) {
   const { state, dispatch } = useContext(Store);
   const [showPopup, setShowPopup] = useState(false);
   const [isOutOfStock, setIsOutOfStock] = useState(false);
+  const [qty, setQty] = useState(1);
 
   if (!product) {
     return (
@@ -27,7 +28,7 @@ export default function ProductScreen(props) {
 
   const addToCartHandler = async () => {
     const exisItem = state.cart.cartItems.find((x) => x.slug === product.slug);
-    let quantity = exisItem ? exisItem.quantity + 1 : 1;
+    const quantity = exisItem ? exisItem.quantity + qty : qty;
     const { data } = await axios.get(`/api/products/${product._id}`);
 
     if (data.countInStock < quantity) {
@@ -46,7 +47,7 @@ export default function ProductScreen(props) {
 
   const continueShoppingHandler = () => {
     setShowPopup(false);
-    router.push('/');
+    router.push('/products');
   };
 
   const goToCartHandler = () => {
@@ -83,6 +84,34 @@ export default function ProductScreen(props) {
         </div>
         <div>
           <div className="card p-5">
+            <div className="mb-2 flex items-center justify-center lg:block">
+              <div className="font-bold mt-4">Cantidad &nbsp;</div>
+              <div className="flex items-center flex-row">
+                <button
+                  className="border px-2 py-1 card"
+                  onClick={() => setQty(Math.max(1, qty - 1))}
+                  disabled={qty <= 1}
+                >
+                  -
+                </button>
+                <span className="px-1 mt-4">{isOutOfStock ? 0 : qty}</span>
+                <button
+                  className="border px-2 py-1 card"
+                  onClick={() => {
+                    if (qty < product.countInStock) {
+                      setQty(qty + 1);
+                    } else {
+                      alert(
+                        `Sorry,  we do not have any additional units of ${product.manufacturer} ${product.slug} at this moment`
+                      );
+                    }
+                  }}
+                  disabled={isOutOfStock}
+                >
+                  +
+                </button>
+              </div>
+            </div>
             <div className="mb-2 flex justify-between">
               <div className="font-bold">Price</div>
               <div className="text-2xl">${product.price}</div>
@@ -114,13 +143,13 @@ export default function ProductScreen(props) {
                       className="primary-button w-1/2 text-xs text-left"
                       onClick={continueShoppingHandler}
                     >
-                      Continue Shopping
+                      Continuar comprando
                     </button>
                     <button
                       className=" flex primary-button w-1/2 text-xs text-left items-center"
                       onClick={goToCartHandler}
                     >
-                      <p>Go to Cart</p> &nbsp;
+                      <p>Ir al carrito</p> &nbsp;
                       <BsCart2 className="text-2xl" />
                     </button>
                   </div>
@@ -129,10 +158,12 @@ export default function ProductScreen(props) {
             )}
             {isOutOfStock && (
               <form className="text-center mt-3 ">
-                <label className="mt-3 font-bold ">Join our waiting List</label>
+                <label className="mt-3 font-bold ">
+                  Únete a nuestra lista de espera
+                </label>
                 <input
                   type="text"
-                  placeholder="Name"
+                  placeholder="Nombre"
                   className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                 />
                 <input
@@ -141,7 +172,7 @@ export default function ProductScreen(props) {
                   className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                 />
                 <button className="primary-button mt-3" type="submit">
-                  Submit
+                  Enviar
                 </button>
               </form>
             )}

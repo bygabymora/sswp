@@ -11,7 +11,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import Layout from '../../components/Layout';
 import { getError } from '../../utils/error';
 
@@ -46,11 +46,69 @@ function reducer(state, action) {
   }
 }
 function AdminDashboardScreen() {
+  const [activeChart, setActiveChart] = useState('sales');
   const [{ loading, error, summary }, dispatch] = useReducer(reducer, {
     loading: true,
-    summary: { salesData: [] },
+    summary: null,
     error: '',
   });
+
+  let data = {};
+
+  if (summary) {
+    switch (activeChart) {
+      case 'sales':
+        data = {
+          labels: summary.salesData.map((x) => x._id),
+          datasets: [
+            {
+              label: 'Sales',
+              backgroundColor: 'rgba(162, 222, 208, 1)',
+              data: summary.salesData.map((x) => x.totalSales),
+            },
+          ],
+        };
+        break;
+      case 'orders':
+        data = {
+          labels: summary.salesData ? summary.salesData.map((x) => x._id) : [],
+          datasets: [
+            {
+              label: 'Orders Value',
+              backgroundColor: 'rgba(162, 222, 208, 1)',
+              data: summary.salesData
+                ? summary.salesData.map((x) => x.orderCount)
+                : [],
+            },
+          ],
+        };
+        break;
+      case 'products':
+        data = {
+          labels: summary.salesPerProduct.map((x) => x._id),
+          datasets: [
+            {
+              label: 'Products Sold',
+              backgroundColor: 'rgba(162, 222, 208, 1)',
+              data: summary.salesPerProduct.map((x) => x.totalQuantity),
+            },
+          ],
+        };
+        break;
+      case 'users':
+        data = {
+          labels: summary.totalPricePerUser.map((x) => x._id), // This will be user's name now
+          datasets: [
+            {
+              label: 'Money Spent',
+              backgroundColor: 'rgba(162, 222, 208, 1)',
+              data: summary.totalPricePerUser.map((x) => x.totalSpent),
+            },
+          ],
+        };
+        break;
+    }
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,16 +124,6 @@ function AdminDashboardScreen() {
     fetchData();
   }, []);
 
-  const data = {
-    labels: summary.salesData.map((x) => x._id), // 2022/01 2022/03
-    datasets: [
-      {
-        label: 'Sales',
-        backgroundColor: 'rgba(162, 222, 208, 1)',
-        data: summary.salesData.map((x) => x.totalSales),
-      },
-    ],
-  };
   return (
     <Layout title="Admin Dashboard">
       <div className="grid  md:grid-cols-4 md:gap-5">
@@ -107,41 +155,62 @@ function AdminDashboardScreen() {
             <div>
               <div className="grid grid-cols-1 md:grid-cols-4">
                 <div className="card m-5 p-5">
-                  <p>${summary.ordersPrice} </p>
+                  <p>
+                    $
+                    {summary.ordersPrice.toLocaleString('en-US', {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                    })}
+                  </p>
                   <p className="font-bold">Ventas</p>
-                  <Link className="underline" href="/admin/orders">
+                  <a
+                    className="underline"
+                    onClick={() => setActiveChart('sales')}
+                  >
                     Ver ventas
-                  </Link>
+                  </a>
                 </div>
+
                 <div className="card m-5 p-5">
                   <p>{summary.ordersCount} </p>
                   <p className="font-bold">Órdenes</p>
-                  <Link className="underline" href="/admin/orders">
+                  <a
+                    className="underline"
+                    onClick={() => setActiveChart('orders')}
+                  >
                     Ver Órdenes
-                  </Link>
+                  </a>
                 </div>
                 <div className="card m-5 p-5">
                   <p>{summary.productsCount} </p>
                   <p className="font-bold">Productos</p>
-                  <Link className="underline" href="/admin/products">
+                  <a
+                    className="underline"
+                    onClick={() => setActiveChart('products')}
+                  >
                     Ver Productos
-                  </Link>
+                  </a>
                 </div>
                 <div className="card m-5 p-5">
                   <p>{summary.usersCount} </p>
                   <p className="font-bold">Usuarios</p>
-                  <Link className="underline" href="/admin/users">
+                  <a
+                    className="underline"
+                    onClick={() => setActiveChart('users')}
+                  >
                     Ver Usuarios
-                  </Link>
+                  </a>
                 </div>
               </div>
               <h2 className="text-xl">Reporte de ventas</h2>
-              <Bar
-                options={{
-                  legend: { display: true, position: 'right' },
-                }}
-                data={data}
-              />
+              {summary && (
+                <Bar
+                  options={{
+                    legend: { display: true, position: 'right' },
+                  }}
+                  data={data}
+                />
+              )}
             </div>
           )}
         </div>

@@ -7,8 +7,8 @@ import {
   BiXCircle,
   BiSearch,
 } from 'react-icons/bi';
-import { MdOutlineWavingHand, MdQuestionMark } from 'react-icons/md';
-import { RiSpeakFill, RiSlideshow3Line } from 'react-icons/ri';
+import { MdOutlineWavingHand } from 'react-icons/md';
+import { RiSpeakFill } from 'react-icons/ri';
 import { useRouter } from 'next/router';
 
 const Navbar = () => {
@@ -61,10 +61,7 @@ const Navbar = () => {
             <BiHomeHeart className="uil uil-estate nav__icon" />
             Inicio
           </Link>
-          <Link href="/#features" className="nav__link">
-            <RiSlideshow3Line className="uil uil-user nav__icon" />
-            ¿Cómo?
-          </Link>
+
           <Link href="/products" className="nav__link">
             <BiPhotoAlbum className="uil uil-scenery nav__icon" />
             Productos
@@ -73,10 +70,7 @@ const Navbar = () => {
             <RiSpeakFill className="uil uil-scenery nav__icon" />
             Testimonios
           </Link>
-          <Link href="/#preguntas" className="nav__link">
-            <MdQuestionMark className="uil uil-scenery nav__icon" />
-            Preguntas
-          </Link>
+
           <Link
             href="/#contact"
             onClick={() => handleLinkClick('contact')}
