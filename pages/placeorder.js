@@ -14,18 +14,19 @@ export default function PlaceOrderScreen() {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
   const { cartItems, shippingAddress, paymentMethod } = cart;
-  const WIRE_PAYMENT_DISCOUNT_PERCENTAGE = 1.5;
+  const WIRE_PAYMENT_DISCOUNT_PERCENTAGE = 3;
   const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
 
   const itemsPrice = round2(
     cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
-  ); // 123.4567 => 123.46
+  );
 
+  const brutPrice = round2(itemsPrice * 0.81);
   const taxPrice = round2(itemsPrice * 0.19);
   const isPayByWire = paymentMethod === 'Nequi-Daviplata';
   const discountPercentage = isPayByWire ? WIRE_PAYMENT_DISCOUNT_PERCENTAGE : 0;
-  const discountAmount = round2(itemsPrice * (discountPercentage / 100));
-  const totalPrice = round2(itemsPrice - discountAmount + taxPrice);
+  const discountAmount = round2(brutPrice * (discountPercentage / 100));
+  const totalPrice = round2(brutPrice - discountAmount + taxPrice);
 
   const router = useRouter();
   useEffect(() => {
@@ -163,7 +164,7 @@ export default function PlaceOrderScreen() {
                 <li>
                   <div className="mb-2 flex justify-between">
                     <div>Productos</div>
-                    <div>${itemsPrice}</div>
+                    <div>${brutPrice}</div>
                   </div>
                 </li>
                 <li>
