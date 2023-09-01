@@ -192,7 +192,7 @@ export default function PlaceOrderScreen() {
                     onClick={placeOrderHandler}
                     className="primary-button w-full"
                   >
-                    {loading ? 'Cargando...' : 'Confirmar Orden'}
+                    {loading ? 'Cargando...' : 'Confirmar Compra'}
                   </button>
                 </li>
                 <li>

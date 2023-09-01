@@ -67,9 +67,9 @@ export default function PaymentScreen() {
             type="button"
             className="primary-button"
           >
-            Back
+            Atrás
           </button>
-          <button className="primary-button">Next</button>
+          <button className="primary-button">Siguiente</button>
         </div>
       </form>
     </Layout>
