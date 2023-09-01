@@ -47,6 +47,12 @@ function reducer(state, action) {
 }
 function AdminDashboardScreen() {
   const [activeChart, setActiveChart] = useState('sales');
+  const chartTitles = {
+    sales: 'Reporte de Ventas',
+    orders: 'Reporte de Órdenes',
+    products: 'Reporte de Productos',
+    users: 'Reporte de Usuarios',
+  };
   const [{ loading, error, summary }, dispatch] = useReducer(reducer, {
     loading: true,
     summary: null,
@@ -62,7 +68,7 @@ function AdminDashboardScreen() {
           labels: summary.salesData.map((x) => x._id),
           datasets: [
             {
-              label: 'Sales',
+              label: 'Ventas',
               backgroundColor: 'rgba(162, 222, 208, 1)',
               data: summary.salesData.map((x) => x.totalSales),
             },
@@ -74,7 +80,7 @@ function AdminDashboardScreen() {
           labels: summary.salesData ? summary.salesData.map((x) => x._id) : [],
           datasets: [
             {
-              label: 'Orders Value',
+              label: 'Cantidad de Órdenes',
               backgroundColor: 'rgba(162, 222, 208, 1)',
               data: summary.salesData
                 ? summary.salesData.map((x) => x.orderCount)
@@ -88,7 +94,7 @@ function AdminDashboardScreen() {
           labels: summary.salesPerProduct.map((x) => x._id),
           datasets: [
             {
-              label: 'Products Sold',
+              label: 'Cantidad de Productos Vendidos',
               backgroundColor: 'rgba(162, 222, 208, 1)',
               data: summary.salesPerProduct.map((x) => x.totalQuantity),
             },
@@ -100,7 +106,7 @@ function AdminDashboardScreen() {
           labels: summary.totalPricePerUser.map((x) => x._id), // This will be user's name now
           datasets: [
             {
-              label: 'Money Spent',
+              label: 'Dinero Gastado',
               backgroundColor: 'rgba(162, 222, 208, 1)',
               data: summary.totalPricePerUser.map((x) => x.totalSpent),
             },
@@ -164,7 +170,7 @@ function AdminDashboardScreen() {
                   </p>
                   <p className="font-bold">Ventas</p>
                   <a
-                    className="underline"
+                    className="underline hover:cursor-pointer"
                     onClick={() => setActiveChart('sales')}
                   >
                     Ver ventas
@@ -175,7 +181,7 @@ function AdminDashboardScreen() {
                   <p>{summary.ordersCount} </p>
                   <p className="font-bold">Órdenes</p>
                   <a
-                    className="underline"
+                    className="underline hover:cursor-pointer "
                     onClick={() => setActiveChart('orders')}
                   >
                     Ver Órdenes
@@ -185,7 +191,7 @@ function AdminDashboardScreen() {
                   <p>{summary.productsCount} </p>
                   <p className="font-bold">Productos</p>
                   <a
-                    className="underline"
+                    className="underline hover:cursor-pointer"
                     onClick={() => setActiveChart('products')}
                   >
                     Ver Productos
@@ -195,14 +201,14 @@ function AdminDashboardScreen() {
                   <p>{summary.usersCount} </p>
                   <p className="font-bold">Usuarios</p>
                   <a
-                    className="underline"
+                    className="underline hover:cursor-pointer"
                     onClick={() => setActiveChart('users')}
                   >
                     Ver Usuarios
                   </a>
                 </div>
               </div>
-              <h2 className="text-xl">Reporte de ventas</h2>
+              <h2 className="text-xl">{chartTitles[activeChart]}</h2>
               {summary && (
                 <Bar
                   options={{
