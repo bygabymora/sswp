@@ -112,7 +112,9 @@ function OrderScreen() {
     isDelivered,
     deliveredAt,
   } = order;
-  const discountAmount = itemsPrice * 0.03;
+
+  const brutPrice = itemsPrice * 0.81;
+  const discountAmount = brutPrice * 0.03;
 
   const handlePayment = async () => {
     try {
@@ -275,13 +277,13 @@ function OrderScreen() {
               <ul>
                 <li>
                   <div className="mb-2 px-3 flex justify-between">
-                    <div>Items</div>
-                    <div>${itemsPrice}</div>
+                    <div>Productos</div>
+                    <div>${brutPrice}</div>
                   </div>
                 </li>
                 <li>
                   <div className="mb-2 px-3 flex justify-between">
-                    <div>Impuestos</div>
+                    <div>I.V.A.</div>
                     <div>${taxPrice}</div>
                   </div>
                 </li>
