@@ -150,6 +150,7 @@ function OrderScreen() {
       const { init_point } = response.data;
       window.location.href = init_point; // Redirige al usuario a MercadoPago
     } catch (error) {
+      console.error('Detalle del error:', error.response.data);
       console.error('Error al obtener la URL de MercadoPago', error);
     }
   };
