@@ -9,6 +9,12 @@ const handler = async (req, res) => {
   }
 
   await db.connect();
+  console.log('Order ID:', req.query.id);
+  const orderId = req.query.id;
+  if (!orderId) {
+    return res.status(400).json({ message: 'Validating...' });
+  }
+
   const order = await Order.findById(req.query.id);
   if (order) {
     if (order.isPaid) {

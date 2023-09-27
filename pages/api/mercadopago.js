@@ -17,6 +17,12 @@ const mercadopagoHandler = async (req, res) => {
           currency_id: 'COP',
         },
       ],
+      back_urls: {
+        success: `${process.env.NEXT_PUBLIC_APP_URL}/order/${orderId}`,
+        failure: `${process.env.NEXT_PUBLIC_APP_URL}/order/${orderId}`,
+        pending: `${process.env.NEXT_PUBLIC_APP_URL}/order/${orderId}`,
+      },
+      auto_return: 'approved',
     };
 
     try {

@@ -7,6 +7,8 @@ import Layout from '../../components/Layout';
 import { getError } from '../../utils/error';
 import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
+import { AiTwotoneLock } from 'react-icons/ai';
+import Mercadopago from '../../public/images/assets/mercadopago.png';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -129,13 +131,50 @@ function OrderScreen() {
       // Mark payment as complete and show success message
       setPaymentComplete(true);
 
-      // Reload the page after payment success
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (error) {
       dispatch({ type: 'PAY_FAIL', payload: getError(error) });
       toast.error(getError(error));
     }
   };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const collection_status = urlParams.get('collection_status');
+    if (collection_status === 'approved') {
+      const handleAprove = async () => {
+        try {
+          dispatch({ type: 'PAY_REQUEST' });
+          const { data } = await axios.put(
+            `/api/orders/${orderId}/pay`,
+            console.log(orderId)
+            // Include any necessary payload here
+          );
+          dispatch({ type: 'PAY_SUCCESS', payload: data });
+          toast.success('Order is paid successfully');
+
+          // Mark payment as complete and show success message
+          setPaymentComplete(true);
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        } catch (error) {
+          dispatch({ type: 'PAY_FAIL', payload: getError(error) });
+          toast.error(getError(error));
+        }
+      };
+      urlParams.delete('collection_status');
+      window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname + '?' + urlParams.toString()
+      );
+      handleAprove();
+    }
+  }, [order._id]);
 
   const handleButtonClick = () => {
     handlePayment();
@@ -310,7 +349,16 @@ function OrderScreen() {
                         className="primary-button w-full mt-2"
                         onClick={handleMercadoPagoClick}
                       >
-                        Mercadopago
+                        <div className="flex flex-row align-middle justify-center items-center font-bold ">
+                          PAGAR &nbsp; <AiTwotoneLock className="" />
+                        </div>
+                        <Image
+                          src={Mercadopago}
+                          alt="Mercadopago"
+                          height={80}
+                          width={200}
+                          className="mt-2"
+                        />
                       </button>
                     ) : paymentMethod === 'Nequi-Daviplata' ? (
                       <div>
