@@ -187,11 +187,19 @@ export default function ShippingScreen() {
         <div>
           <h1 className="text-2xl font-bold">Dirección de envío</h1>
           <br />
+          <p>
+            El envío tiene un valor de $8.000 en Bogotá D.C. y de $12.500 en el
+            resto del país.
+          </p>
+
+          <p className="text-lg font-bold">
+            ¡Si tu orden es mayor a $90.000 el envío es gratis!
+          </p>
         </div>
         {lastOrder && (
           <div className="mb-2 mt-2">
             <label htmlFor="useLastAddress" className="font-bold">
-              Desea usar la dirección de su último pedido?
+              Deseas usar la dirección de su último pedido?
             </label>{' '}
             &nbsp;
             <input

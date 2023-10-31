@@ -3,95 +3,57 @@ import emailjs from '@emailjs/browser';
 import { BiMessageAdd } from 'react-icons/bi';
 import Layout from '../components/Layout';
 import Link from 'next/link';
-import { FaCopy } from 'react-icons/fa';
 
 export default function ManufacturerForm() {
   const form = useRef();
-  const fileInputRef = useRef(); // Add a separate ref for the file input
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [company, setCompany] = useState('');
+  const [adress, setAdress] = useState('');
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
-  const [file, setFile] = useState([]);
 
   const sendEmail = (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append('user_name', name);
+    formData.append('user_email', email);
+    formData.append('user_adress', adress);
+    formData.append('phone', phone);
+    formData.append('message', message);
 
-    const fileInput = fileInputRef.current.files[0];
+    emailjs
+      .sendForm(
+        'service_45krz9b',
+        'template_w13byb7',
+        form.current,
+        'VGgpXukeMgVAWbiOf'
+      )
+      .then(
+        (result) => {
+          alert('Mensaje enviado, gracias por contactarnos');
+          console.log('Email sent', result.text);
+        },
+        (error) => {
+          console.log('Error sendingemail', error.text);
+        }
+      );
 
-    if (fileInput) {
-      const formData = new FormData();
-      formData.append('user_name', name);
-      formData.append('user_email', email);
-      formData.append('company', company);
-      formData.append('phone', phone);
-      formData.append('message', message);
-      formData.append('my_file', fileInput);
-
-      emailjs
-        .sendForm(
-          'service_ej3pm1k',
-          'template_6uwfj0h',
-          form.current,
-          'cKdr3QndIv27-P67m'
-        )
-        .then(
-          (result) => {
-            alert('Mensaje enviado, gracias por contactarnos');
-            console.log('Email sent', result.text);
-          },
-          (error) => {
-            console.log('Error sendingemail', error.text);
-          }
-        );
-
-      setName('');
-      setEmail('');
-      setCompany('');
-      setPhone('');
-      setMessage('');
-      setFile('');
-    } else {
-      alert('Selecciona un archivo');
-    }
+    setName('');
+    setEmail('');
+    setAdress('');
+    setPhone('');
+    setMessage('');
   };
   const tab = <>&nbsp;&nbsp;</>;
-  const handleCopyClick = () => {
-    navigator.clipboard
-      .writeText('3138125075')
-      .then(() => {
-        alert('Número copiado al portapapeles!');
-      })
-      .catch((err) => {
-        console.error('Could not copy text: ', err);
-      });
-  };
 
   return (
-    <Layout title="Nequi-Daviplata">
-      <h1 className="section__title">Nequi-Daviplata</h1>
-      <div className="card m-3 p-2">
-        <p className="setion__text self-center text-center mb-3">
-          Puedes realizar el pago por Nequi o Daviplata al siguiente número:
-        </p>
-        <div className="self-center text-center mb-3 flex flex-row justify-center">
-          <p
-            onClick={handleCopyClick}
-            style={{ cursor: 'pointer' }}
-            className="flex flex-row setion__text font-bold underline self-center text-center"
-          >
-            313 8125075
-          </p>
-          {tab}
-          <FaCopy onClick={handleCopyClick} style={{ cursor: 'pointer' }} />
-        </div>
-      </div>
+    <Layout title="Contraentrega">
+      <h1 className="section__title">Contraentrega</h1>
       <div className="manufacturer__content">
         <h3 className="setion__text self-center text-center mb-3">
-          Una vez realices el pago por favor envía en comprobante al siguiente
-          Whatsapp{' '}
+          Si deseas hacer algún cambio a tu orden, puedes enviarnos un mensaje
+          por Whatsapp{' '}
           <Link
             className="font-bold underline"
             href="https://wa.me/573138125075"
@@ -102,7 +64,7 @@ export default function ManufacturerForm() {
           pronto posible.{' '}
           <span className="font-bold underline">
             (En cualquier momento puedes acceder a esta página de nuevo, desde
-            la orden presionando el botón Nequi-Daviplata)
+            la orden presionando el botón &quot;Editar Contraentrega&quot;)
           </span>
           , si tienes dudas, no dudes en contactarnos.
         </h3>
@@ -146,13 +108,13 @@ export default function ManufacturerForm() {
             />
           </div>
           <div className="manufacturer__form-div">
-            <label className="manufacturer__form-tag">Fecha del pago</label>
+            <label className="manufacturer__form-tag">Dirección</label>
             <input
-              type="date"
-              name="user_company"
+              type="address"
+              name="user_adress"
               className="manufacturer__form-input "
-              onChange={(e) => setCompany(e.target.value)}
-              value={company}
+              onChange={(e) => setAdress(e.target.value)}
+              value={adress}
             />
           </div>
 
@@ -164,20 +126,6 @@ export default function ManufacturerForm() {
               onChange={(e) => setMessage(e.target.value)}
               value={message}
               required
-            />
-          </div>
-
-          <div className="manufacturer__form-div">
-            <label className="manufacturer__form-tag">
-              Comprobante del pago
-            </label>
-            <input
-              type="file"
-              name="my_file"
-              onChange={(e) => setFile(e.target.value)}
-              className="manufacturer__form-input"
-              ref={fileInputRef}
-              value={file}
             />
           </div>
 

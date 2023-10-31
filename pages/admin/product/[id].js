@@ -308,6 +308,20 @@ export default function AdminProductEditScreen() {
                   <div className="text-red-500">{errors.notes.message}</div>
                 )}
               </div>
+              <div className="mb-4">
+                <label htmlFor="category">Incluye</label>
+                <input
+                  type="text"
+                  className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                  id="includes"
+                  {...register('includes', {
+                    required: 'Por favor ingrese que incluye',
+                  })}
+                />
+                {errors.notes && (
+                  <div className="text-red-500">{errors.notes.message}</div>
+                )}
+              </div>
 
               <div className="flex flex-row">
                 <div className="mb-4">

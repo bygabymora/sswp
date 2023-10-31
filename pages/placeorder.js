@@ -3,30 +3,43 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import CheckoutWizard from '../components/CheckoutWizard';
 import Layout from '../components/Layout';
 import { getError } from '../utils/error';
 import { Store } from '../utils/Store';
+import emailjs from '@emailjs/browser';
 
 export default function PlaceOrderScreen() {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
   const { cartItems, shippingAddress, paymentMethod } = cart;
-  const WIRE_PAYMENT_DISCOUNT_PERCENTAGE = 3;
+
   const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
 
   const itemsPrice = round2(
     cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
   );
+  const calculateShippingCost = (brutPrice, taxPrice, city) => {
+    if (brutPrice + taxPrice > 90000) {
+      return 0;
+    } else if (city === 'Bogotá D.C.') {
+      return 8000;
+    } else {
+      return 12500;
+    }
+  };
 
   const brutPrice = round2(itemsPrice * 0.81);
   const taxPrice = round2(itemsPrice * 0.19);
-  const isPayByWire = paymentMethod === 'Nequi-Daviplata';
-  const discountPercentage = isPayByWire ? WIRE_PAYMENT_DISCOUNT_PERCENTAGE : 0;
-  const discountAmount = round2(brutPrice * (discountPercentage / 100));
-  const totalPrice = round2(brutPrice - discountAmount + taxPrice);
+
+  const shippingCost = calculateShippingCost(
+    brutPrice,
+    taxPrice,
+    shippingAddress.city
+  );
+  const totalPrice = round2(brutPrice + taxPrice + shippingCost);
 
   const router = useRouter();
   useEffect(() => {
@@ -37,7 +50,12 @@ export default function PlaceOrderScreen() {
 
   const [loading, setLoading] = useState(false);
 
+  const formatNumberWithDots = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  };
+
   const placeOrderHandler = async () => {
+    sendEmail();
     try {
       setLoading(true);
       const { data } = await axios.post('/api/orders', {
@@ -47,7 +65,6 @@ export default function PlaceOrderScreen() {
         itemsPrice,
         taxPrice,
         totalPrice,
-        discountAmount,
       });
       setLoading(false);
       dispatch({ type: 'CART_CLEAR_ITEMS' });
@@ -71,6 +88,72 @@ export default function PlaceOrderScreen() {
       taxPrice,
     });
   };
+
+  //----EmailJS----//
+
+  const form = useRef();
+
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get('/api/orders/placeOrder');
+      const userData = response.data;
+
+      setEmail(userData.email);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
+
+  const [email, setEmail] = useState('');
+  const [emailName, setEmailName] = useState('');
+  const [emailPhone, setEmailPhone] = useState('');
+  const [emailPaymentMethod, setEmailPaymentMethod] = useState('');
+  const [emailTotalOrder, setEmailTotalOrder] = useState('');
+  const [emailShippingPreference, setEmailShippingPreference] = useState('');
+
+  useEffect(() => {
+    fetchUserData();
+    setEmailName(shippingAddress.fullName);
+    setEmailPhone(shippingAddress.phone);
+    setEmailPaymentMethod(paymentMethod);
+    setEmailTotalOrder(totalPrice);
+    setEmailShippingPreference(shippingAddress.notes);
+  }, [
+    paymentMethod,
+    shippingAddress.fullName,
+    shippingAddress.phone,
+    totalPrice,
+    shippingAddress.notes,
+  ]);
+
+  function sendEmail() {
+    const formData = new FormData();
+
+    formData.append('user_name', emailName);
+    formData.append('user_phone', emailPhone);
+    formData.append('user_email', email);
+    formData.append('total_order', emailTotalOrder);
+    formData.append('payment_method', emailPaymentMethod);
+    formData.append('shipping_preference', emailShippingPreference);
+
+    emailjs
+      .sendForm(
+        'service_45krz9b',
+        'template_w13byb7',
+        form.current,
+        'VGgpXukeMgVAWbiOf'
+      )
+      .then(
+        (result) => {
+          console.log('Email sent', result.text);
+        },
+        (error) => {
+          console.log('Error sendingemail', error.text);
+        }
+      );
+  }
+
+  //-----------//
 
   return (
     <Layout title="Ordenar">
@@ -142,9 +225,11 @@ export default function PlaceOrderScreen() {
                         </Link>
                       </td>
                       <td className=" p-5 text-right">{item.quantity}</td>
-                      <td className="p-5 text-right">${item.price}</td>
                       <td className="p-5 text-right">
-                        ${item.quantity * item.price}
+                        ${formatNumberWithDots(item.price)}
+                      </td>
+                      <td className="p-5 text-right">
+                        ${formatNumberWithDots(item.quantity * item.price)}
                       </td>
                     </tr>
                   ))}
@@ -164,27 +249,27 @@ export default function PlaceOrderScreen() {
                 <li>
                   <div className="mb-2 flex justify-between">
                     <div>Productos</div>
-                    <div>${brutPrice}</div>
+                    <div>${formatNumberWithDots(brutPrice)}</div>
                   </div>
                 </li>
                 <li>
                   <div className="mb-2 flex justify-between">
                     <div>I.V.A.</div>
-                    <div>${taxPrice}</div>
+                    <div>${formatNumberWithDots(taxPrice)}</div>
                   </div>
                 </li>
-                {isPayByWire && (
-                  <li>
-                    <div className="mb-2 flex justify-between">
-                      <div>Descuento ({discountPercentage}%)</div>
-                      <div>- ${discountAmount}</div>
-                    </div>
-                  </li>
-                )}
+
+                <li>
+                  <div className="mb-2 flex justify-between">
+                    <div>Costo de Envío</div>
+                    <div>${formatNumberWithDots(shippingCost)}</div>
+                  </div>
+                </li>
+
                 <li>
                   <div className="mb-2 flex justify-between">
                     <div>Total</div>
-                    <div>${totalPrice}</div>
+                    <div>${formatNumberWithDots(totalPrice)}</div>
                   </div>
                 </li>
                 <li>
@@ -196,18 +281,26 @@ export default function PlaceOrderScreen() {
                     {loading ? 'Cargando...' : 'Confirmar Compra'}
                   </button>
                 </li>
-                <li>
-                  <br />
-                  <div className="mb-2 flex justify-between">
-                    <div>
-                      El envío no está determinado, se te notificará cuando se
-                      te envíe el producto y su valor.
-                    </div>
-                  </div>
-                </li>
               </ul>
             </div>
           </div>
+          <form ref={form} hidden>
+            <input type="text" name="user_name" value={emailName} />
+            <input type="text" name="user_phone" value={emailPhone} />
+            <input type="text" name="total_order" value={emailTotalOrder} />
+            <input
+              type="text"
+              name="payment_method"
+              value={emailPaymentMethod}
+            />
+
+            <input
+              type="text"
+              name="shipping_preference"
+              value={emailShippingPreference}
+            />
+            <input type="text" name="user_email" value={email} />
+          </form>
         </div>
       )}
     </Layout>

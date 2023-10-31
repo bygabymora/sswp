@@ -43,9 +43,12 @@ export default function PaymentScreen() {
       <CheckoutWizard activeStep={2} />
       <form className="mx-auto max-w-screen-md" onSubmit={submitHandler}>
         <h1 className="mb-4 text-xl">Método de pago</h1>
-        <p>Obtienes un descuento del 3% si pagas con Nequi o Daviplata. </p>
+        <p>
+          Puedes realizar tu pago por medio de MercadoPago o Contraentrega en
+          efectivo.
+        </p>
         <br />
-        {['Mercadopago', 'Nequi-Daviplata'].map((payment) => (
+        {['Mercadopago', 'Contraentrega'].map((payment) => (
           <div key={payment} className="mb-4">
             <input
               name="paymentMethod"

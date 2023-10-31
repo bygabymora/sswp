@@ -116,7 +116,6 @@ function OrderScreen() {
   } = order;
 
   const brutPrice = itemsPrice * 0.81;
-  const discountAmount = brutPrice * 0.03;
 
   const handlePayment = async () => {
     try {
@@ -327,14 +326,7 @@ function OrderScreen() {
                     <div>${taxPrice}</div>
                   </div>
                 </li>
-                {paymentMethod === 'Nequi-Daviplata' ? (
-                  <li>
-                    <div className="mb-2 px-3 flex justify-between">
-                      <div>Descuento</div>
-                      <div>- ${discountAmount}</div>
-                    </div>
-                  </li>
-                ) : null}
+
                 <li>
                   <div className="mb-2  px-3 flex justify-between">
                     <div>Total</div>
@@ -360,7 +352,7 @@ function OrderScreen() {
                           className="mt-2"
                         />
                       </button>
-                    ) : paymentMethod === 'Nequi-Daviplata' ? (
+                    ) : paymentMethod === 'Contraentrega' ? (
                       <div>
                         {session.user.isAdmin && (
                           <button
@@ -375,7 +367,7 @@ function OrderScreen() {
                             className="primary-button w-full mt-2"
                             href="/ManufacturerForm"
                           >
-                            Nequi-Daviplata
+                            Editar Contraentrega
                           </Link>
                         )}
                       </div>
@@ -418,14 +410,16 @@ function OrderScreen() {
                   </li>
                 )}
                 <br />
-                <li>
-                  <div className="mb-2 px-3 flex justify-between">
-                    <div>
-                      El envío no está determinado, se te notificará cuando se
-                      te envíe el producto y su valor.
+                {paymentMethod === 'Contraentrega' ? (
+                  <li>
+                    <div className="mb-2 px-3 flex justify-between">
+                      <div>
+                        Te enviaremos un correo con la confirmación de tu orden
+                        y los datos de envío.
+                      </div>
                     </div>
-                  </div>
-                </li>
+                  </li>
+                ) : null}
               </ul>
             </div>
           </div>
