@@ -22,7 +22,7 @@ export default function PlaceOrderScreen() {
     cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
   );
   const calculateShippingCost = (brutPrice, taxPrice, city) => {
-    if (brutPrice + taxPrice > 90000) {
+    if (brutPrice + taxPrice > 83000) {
       return 0;
     } else if (city === 'Bogotá D.C.') {
       return 8000;
