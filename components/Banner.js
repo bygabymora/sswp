@@ -1,7 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
-import Banner1 from '../public/images/assets/banner1.png';
-import Link from 'next/link';
+import Banner1 from '../public/images/assets/banner1.svg';
+import Banner2 from '../public/images/assets/banner2.svg';
+import { BsWhatsapp } from 'react-icons/bs';
+
 import { useRouter } from 'next/router';
 
 const Banner = () => {
@@ -38,36 +40,47 @@ const Banner = () => {
   };
 
   return (
-    <div className="text-title-color-dark text-center ">
-      <div className="grid lg:grid-cols-2 md:grid-cols-1  banner-container mx-auto px-4 py-8 items-center">
-        <div className="">
-          <h1 className="text-4xl font-bold mb-4">
-            Transforma tu cama en un oasis de comodidad
-          </h1>
-          <p className="text-lg text-text-color">¡Aqui te contamos como!</p>
-
-          <div className="grid grid-cols-2 mt-8 w-full mb-8 text-center">
-            <button
-              href="tel:8132520727"
-              onClick={handleCallButtonClick}
-              className="equal-button-size btn-call sm:inline-block block mr-4 mb-4 sm:mb-0 text-white bg-title-color-dark hover:bg-title-color px-6 py-3 rounded lg:hidden"
-            >
-              Llámanos
-            </button>
-            <Link
-              href="#contact"
-              className=" equal-button-size btn-contact hover:text-white sm:inline-block block px-6 py-3 rounded lg:text-center"
-              onClick={() => handleLinkClick('contact')}
-            >
-              Contáctanos
-            </Link>
-          </div>
-        </div>
+    <div className="static-banner-container lg:relative lg:text-title-color-dark lg:text-center overflow-hidden  lg:h-[315px] h-[300px] w-[375px]">
+      <div className="absolute inset-0 w-full ">
         <Image
-          className="image-container-image fade-in-right"
+          className="object-cover w-full h-full hidden  -z-40 lg:block"
           src={Banner1}
           alt="Banner"
         />
+      </div>
+
+      <div className="relative z-10 grid lg:grid-cols-1 md:grid-cols-1 banner-container mx-auto px-4 py-8 items-center  w-[100%] ">
+        <div className="absolute inset-0 w-full -z-40">
+          <Image
+            className="object-cover w-full h-full lg:hidden "
+            src={Banner2}
+            alt="Banner"
+          />
+        </div>
+        <div className="grid grid-cols-1 lg:mt-8 w-[40%] lg:mb-8 text-right mt-[30%] z-10">
+          <button
+            href="tel:8132520727"
+            onClick={handleCallButtonClick}
+            className="equal-button-size btn-call sm:inline-block block mr-4 mb-4  sm:mb-0 text-white bg-title-color-dark hover:bg-title-color  rounded lg:hidden text-center"
+          >
+            Llámanos
+          </button>
+
+          <button
+            href="#contact"
+            className=" equal-button-size btn-contact   block mr-4 py-1  sm:mb-0 text-white bg-title-color-dark hover:bg-title-color  rounded  text-center sm:text-3xl  lg:text-4xl md:py-2 mb-1"
+            onClick={() => handleLinkClick('contact')}
+          >
+            Contáctanos
+          </button>
+          <button
+            className="equal-button-size btn-contact flex items-center justify-center mr-4 py-2 sm:mb-0 text-white bg-title-color-dark hover:bg-title-color rounded sm:text-3xl lg:text-4xl md:py-2"
+            href="https://wa.me/573138125075"
+            target="_blank"
+          >
+            <BsWhatsapp />
+          </button>
+        </div>
       </div>
     </div>
   );
