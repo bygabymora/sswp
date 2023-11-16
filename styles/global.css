@@ -245,6 +245,10 @@ img {
   flex-direction: row-reverse;
   color: var(--title-color);
 }
+.nav-reverse2 {
+  flex-direction: row-reverse;
+  color: var(--title-color);
+}
 
 /* Active link  */
 
@@ -821,6 +825,9 @@ img {
   }
   .nav-reverse {
     flex-direction: row;
+  }
+  .nav-reverse2 {
+    flex-direction: col;
   }
 
   .nav__menu {

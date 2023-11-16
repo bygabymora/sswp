@@ -2,7 +2,6 @@ import React from 'react';
 import Image from 'next/image';
 import Banner1 from '../public/images/assets/banner1.svg';
 import Banner2 from '../public/images/assets/banner2.svg';
-import { BsWhatsapp } from 'react-icons/bs';
 
 import { useRouter } from 'next/router';
 
@@ -72,13 +71,6 @@ const Banner = () => {
             onClick={() => handleLinkClick('contact')}
           >
             Contáctanos
-          </button>
-          <button
-            className="equal-button-size btn-contact flex items-center justify-center mr-4 py-2 sm:mb-0 text-white bg-title-color-dark hover:bg-title-color rounded sm:text-3xl lg:text-4xl md:py-2"
-            href="https://wa.me/573138125075"
-            target="_blank"
-          >
-            <BsWhatsapp />
           </button>
         </div>
       </div>

@@ -9,6 +9,7 @@ import Logo2 from '../public/images/assets/logo.png';
 import Navbar from './Navbar';
 import { Store } from '../utils/Store';
 import { useRouter } from 'next/router';
+import { BsWhatsapp } from 'react-icons/bs';
 
 const Header = () => {
   const router = useRouter();
@@ -28,50 +29,65 @@ const Header = () => {
     }
   };
   return (
-    <header className="header">
-      <nav className="nav container">
-        <div className="flex h-12 items-center">
+    <>
+      <header className="header  flex flex-col">
+        <div className=" text-right p-2 equal-button-size btn-contact flex items-center justify-center mr-4 py-2 sm:mb-0 text-white bg-title-color-dark hover:bg-title-color rounded sm:text-3xl lg:text-4xl md:py-2 lg:order-last">
+          <a
+            href="https://wa.me/573138125075"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <BsWhatsapp className="text-2xl" />
+          </a>
+        </div>
+        <nav className="nav container">
           <div className="flex h-12 items-center">
-            <Link href="/" className="nav__logo logo" onClick={handleHomeClick}>
-              <div className="r__logo r__logo-1">
-                <Image src={Logo2} alt="logo" width={500} />
-              </div>
-            </Link>
-            <Link
-              href="/"
-              className="nav__logo_2 logo"
-              onClick={handleHomeClick}
-            >
-              <div className="r__logo r__logo-2">
-                <Image src={Logo} alt="logo" width={400} />
-              </div>
-            </Link>
-          </div>
-
-          <div className="nav-reverse flex h-12 place-items-center gap-4">
             <div className="flex h-12 items-center">
               <Link
-                href={{ pathname: '/cart' }}
-                className="flex text-xl font-bold p-2"
+                href="/"
+                className="nav__logo logo"
+                onClick={handleHomeClick}
               >
-                <BsCart2 />
+                <div className="r__logo r__logo-1">
+                  <Image src={Logo2} alt="logo" width={500} />
+                </div>
               </Link>
-              {cartItemsCount > 0 && (
-                <sub
-                  className="cart-badge"
-                  onClick={() => router.push('/cart')}
-                >
-                  {cartItemsCount}
-                </sub>
-              )}
+              <Link
+                href="/"
+                className="nav__logo_2 logo"
+                onClick={handleHomeClick}
+              >
+                <div className="r__logo r__logo-2">
+                  <Image src={Logo} alt="logo" width={400} />
+                </div>
+              </Link>
             </div>
 
-            <Signupbutton />
-            <Navbar />
+            <div className="nav-reverse flex h-12 place-items-center gap-4">
+              <div className="flex h-12 items-center">
+                <Link
+                  href={{ pathname: '/cart' }}
+                  className="flex text-xl font-bold p-2"
+                >
+                  <BsCart2 />
+                </Link>
+                {cartItemsCount > 0 && (
+                  <sub
+                    className="cart-badge"
+                    onClick={() => router.push('/cart')}
+                  >
+                    {cartItemsCount}
+                  </sub>
+                )}
+              </div>
+
+              <Signupbutton />
+              <Navbar />
+            </div>
           </div>
-        </div>
-      </nav>
-    </header>
+        </nav>
+      </header>
+    </>
   );
 };
 
