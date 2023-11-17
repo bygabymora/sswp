@@ -4,7 +4,7 @@ import { AiOutlineSend } from 'react-icons/ai';
 
 const StaticBanner = () => {
   return (
-    <div className="static-banner-container mt-4">
+    <div className="static-banner-container md:mt-10 mt-3">
       <div className="banner-content">
         <h2 className="banner-title">
           Averigua porque nuestros clientes nos prefieren

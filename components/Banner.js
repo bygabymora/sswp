@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Banner1 from '../public/images/assets/banner1.svg';
 import Banner2 from '../public/images/assets/banner2.svg';
-
+import Banner3 from '../public/images/assets/banner3.svg';
 import { useRouter } from 'next/router';
 
 const Banner = () => {
@@ -42,8 +42,13 @@ const Banner = () => {
     <div className="static-banner-container lg:relative lg:text-title-color-dark lg:text-center overflow-hidden  lg:h-[315px] h-[300px] w-[375px]">
       <div className="absolute inset-0 w-full ">
         <Image
-          className="object-cover w-full h-full hidden  -z-40 lg:block"
+          className="object-cover w-full h-full hidden -z-40 lg:block xl:hidden"
           src={Banner1}
+          alt="Banner"
+        />
+        <Image
+          className="object-cover w-full h-full hidden -z-40 lg:hidden xl:block"
+          src={Banner3}
           alt="Banner"
         />
       </div>

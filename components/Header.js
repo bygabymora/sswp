@@ -21,7 +21,6 @@ const Header = () => {
   }, [cart.cartItems]);
 
   const handleHomeClick = () => {
-    // Check if the current route is the home page
     if (router.pathname === '/') {
       router.reload();
     } else {
@@ -31,12 +30,14 @@ const Header = () => {
   return (
     <>
       <header className="header  flex flex-col">
-        <div className=" text-right p-2 equal-button-size btn-contact flex items-center justify-center mr-4 py-2 sm:mb-0 text-white bg-title-color-dark hover:bg-title-color rounded sm:text-3xl lg:text-4xl md:py-2 lg:order-last">
+        <div className="md:mx-auto md:max-w-[1600px] md:mb-2 flex text-right p-2 equal-button-size btn-contact items-center justify-center mr-4 py-2 sm:mb-0 text-white bg-title-color-dark hover:bg-title-color rounded sm:text-3xl lg:text-4xl md:justify-center md:order-last lg:w-[30%] xl:w-[20%] ">
           <a
+            className="flex flex-row "
             href="https://wa.me/573138125075"
             target="_blank"
             rel="noopener noreferrer"
           >
+            <span className="text-lg">¿Necesitas ayuda? &nbsp;</span>
             <BsWhatsapp className="text-2xl" />
           </a>
         </div>
