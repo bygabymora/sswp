@@ -63,7 +63,7 @@ const Banner = () => {
         </div>
         <div className="grid grid-cols-1 lg:mt-8 w-[40%] lg:mb-8 text-right mt-[30%] z-10">
           <button
-            href="tel:8132520727"
+            href="tel:3138125075"
             onClick={handleCallButtonClick}
             className="equal-button-size btn-call sm:inline-block block mr-4 mb-4  sm:mb-0 text-white bg-title-color-dark hover:bg-title-color  rounded lg:hidden text-center"
           >
