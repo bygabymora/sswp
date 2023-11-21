@@ -161,7 +161,7 @@ function OrderScreen() {
           toast.error(getError(error));
         }
       };
-
+      urlParams.delete('status');
       window.history.replaceState(
         {},
         document.title,
