@@ -279,6 +279,7 @@ function OrderScreen() {
                 {shippingAddress.fullName}, {shippingAddress.address},{' '}
                 {shippingAddress.state}, {shippingAddress.city},{' '}
                 {shippingAddress.postalCode}, {shippingAddress.state}
+                {userEmail}
               </div>
               {isDelivered ? (
                 <div className="alert-success">
@@ -443,12 +444,14 @@ function OrderScreen() {
                     </li>
                   )}
                 <br />
-                {paymentMethod === 'Contraentrega' ? (
+                {!session.user.isAdmin && paymentMethod === 'Contraentrega' ? (
                   <li>
                     <div className="mb-2 px-3 flex justify-between">
                       <div>
                         Te enviaremos un correo con la confirmación de tu orden
-                        y los datos de envío.
+                        y los datos de envío al siguiente correo:
+                        <br />
+                        <p className="font-bold">{userEmail}</p>
                       </div>
                     </div>
                   </li>
