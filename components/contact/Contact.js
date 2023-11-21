@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const Contact = () => {
   return (
-    <section className="contact" id="contact">
+    <section className="contact" id="contacto">
       <div className="contact__container">
         <h1 className="section__title">¡Contáctanos!</h1>
         <span className="section__subtitle">

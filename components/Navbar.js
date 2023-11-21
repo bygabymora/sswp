@@ -72,7 +72,7 @@ const Navbar = () => {
           </Link>
 
           <Link
-            href="/#contact"
+            href="/#contacto"
             onClick={() => handleLinkClick('contact')}
             className="nav__link"
           >
