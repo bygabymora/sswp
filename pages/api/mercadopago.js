@@ -18,9 +18,9 @@ const mercadopagoHandler = async (req, res) => {
         },
       ],
       back_urls: {
-        success: `${process.env.NEXT_PUBLIC_APP_URL}/order/${orderId}`,
-        failure: `${process.env.NEXT_PUBLIC_APP_URL}/order/${orderId}`,
-        pending: `${process.env.NEXT_PUBLIC_APP_URL}/order/${orderId}`,
+        success: `${process.env.NEXT_PUBLIC_APP_URL}/order/${orderId}?status=success`,
+        failure: `${process.env.NEXT_PUBLIC_APP_URL}/order/${orderId}?status=failure`,
+        pending: `${process.env.NEXT_PUBLIC_APP_URL}/order/${orderId}?status=pending`,
       },
       auto_return: 'approved',
     };

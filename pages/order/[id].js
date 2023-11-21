@@ -137,8 +137,9 @@ function OrderScreen() {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const collection_status = urlParams.get('collection_status');
-    if (collection_status === 'approved') {
+    const paymentStatus = urlParams.get('status');
+
+    if (paymentStatus === 'success') {
       const handleAprove = async () => {
         try {
           dispatch({ type: 'PAY_REQUEST' });
