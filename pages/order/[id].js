@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 import { AiTwotoneLock } from 'react-icons/ai';
 import Mercadopago from '../../public/images/assets/mercadopago.png';
+import emailjs from '@emailjs/browser';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -117,6 +118,41 @@ function OrderScreen() {
 
   const brutPrice = itemsPrice * 0.81;
 
+  //----EmailJS----//
+
+  const form = useRef();
+
+  const userEmail = order.user?.email || '';
+
+  function sendEmail() {
+    const formData = new FormData();
+
+    formData.append('user_name', shippingAddress.fullName);
+    formData.append('user_phone', shippingAddress.phone);
+    formData.append('user_email', userEmail);
+    formData.append('total_order', totalPrice);
+    formData.append('payment_method', paymentMethod);
+    formData.append('shipping_preference', shippingAddress.notes);
+
+    emailjs
+      .sendForm(
+        'service_45krz9b',
+        'template_p6qbr62',
+        form.current,
+        'LuJZSocJe5a_St7dQ'
+      )
+      .then(
+        (result) => {
+          console.log('Email enviado', result.text);
+        },
+        (error) => {
+          console.log('Error al enviar mensaje', error.text);
+        }
+      );
+  }
+
+  //-----------//
+
   const handlePayment = async () => {
     try {
       dispatch({ type: 'PAY_REQUEST' });
@@ -125,7 +161,7 @@ function OrderScreen() {
       toast.success('La orden se ha pagado de manera exitosa.');
 
       setPaymentComplete(true);
-
+      sendEmail();
       setTimeout(() => {
         window.location.reload();
       }, 2000);
@@ -152,7 +188,7 @@ function OrderScreen() {
           toast.success('La orden se ha pagado de manera exitosa.');
 
           setPaymentComplete(true);
-
+          sendEmail();
           setTimeout(() => {
             window.location.reload();
           }, 2000);
@@ -173,6 +209,7 @@ function OrderScreen() {
 
   const handleButtonClick = () => {
     handlePayment();
+    console.log(userEmail);
   };
 
   const handleMercadoPagoClick = async () => {
@@ -195,7 +232,7 @@ function OrderScreen() {
     const trackNumber = trackNumberRef.current.value;
 
     if (!trackUrl.trim() || !trackNumber.trim()) {
-      toast.error('Please provide valid inputs.');
+      toast.error('Por favor ingrese la URL y el número de seguimiento');
       return;
     }
 
@@ -211,7 +248,7 @@ function OrderScreen() {
       );
 
       dispatch({ type: 'DELIVER_SUCCESS', payload: data });
-      toast.success('Order is processed');
+      toast.success('Orden enviada correctamente');
     } catch (err) {
       dispatch({ type: 'DELIVER_FAIL', payload: getError(err) });
       toast.error(getError(err));
@@ -350,7 +387,7 @@ function OrderScreen() {
                       <div>
                         {session.user.isAdmin && (
                           <button
-                            className="primary-button w-full"
+                            className="primary-button w-full mb-2"
                             onClick={handleButtonClick}
                           >
                             Marcar como pagado
@@ -369,40 +406,42 @@ function OrderScreen() {
                     {loadingPay && <div>Cargando...</div>}
                   </li>
                 )}
-                {session.user.isAdmin && order.isPaid && !order.isDelivered && (
-                  <li>
-                    {loadingDeliver && <div>Loading...</div>}
-                    <form
-                      action={`/api/admin/orders/${order._id}/deliver`}
-                      method="POST"
-                    >
-                      <section>
-                        <input
-                          ref={trackUrlRef}
-                          name="trackUrl"
-                          placeholder="URL de seguimiento"
-                          className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline m-1"
-                          required
-                        />
-                        <input
-                          ref={trackNumberRef}
-                          name="trackNumber"
-                          placeholder="Número y empresa de envío"
-                          className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline m-1"
-                          required
-                        />
-                        <button
-                          type="submit"
-                          role="link"
-                          className="primary-button w-full"
-                          onClick={deliverOrderHandler}
-                        >
-                          Enviar Orden
-                        </button>
-                      </section>
-                    </form>
-                  </li>
-                )}
+                {session.user.isAdmin &&
+                  !order.isDelivered &&
+                  (order.isPaid || paymentMethod === 'Contraentrega') && (
+                    <li>
+                      {loadingDeliver && <div>Loading...</div>}
+                      <form
+                        action={`/api/admin/orders/${order._id}/deliver`}
+                        method="POST"
+                      >
+                        <section>
+                          <input
+                            ref={trackUrlRef}
+                            name="trackUrl"
+                            placeholder="URL de seguimiento"
+                            className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline m-1"
+                            required
+                          />
+                          <input
+                            ref={trackNumberRef}
+                            name="trackNumber"
+                            placeholder="Número y empresa de envío"
+                            className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline m-1"
+                            required
+                          />
+                          <button
+                            type="submit"
+                            role="link"
+                            className="primary-button w-full"
+                            onClick={deliverOrderHandler}
+                          >
+                            Enviar Orden
+                          </button>
+                        </section>
+                      </form>
+                    </li>
+                  )}
                 <br />
                 {paymentMethod === 'Contraentrega' ? (
                   <li>
@@ -417,6 +456,51 @@ function OrderScreen() {
               </ul>
             </div>
           </div>
+          <form ref={form} hidden>
+            <input
+              type="hidden"
+              name="order_id"
+              value={orderId.substring(orderId.length - 8).toUpperCase()}
+              readOnly
+            />
+            <input
+              type="hidden"
+              name="user_name"
+              value={shippingAddress.fullName}
+              readOnly
+            />
+            <input
+              type="hidden"
+              name="user_phone"
+              value={shippingAddress.phone}
+              readOnly
+            />
+            <input type="hidden" name="user_email" value={userEmail} readOnly />
+            <input
+              type="hidden"
+              name="total_order"
+              value={totalPrice}
+              readOnly
+            />
+            <input
+              type="hidden"
+              name="payment_method"
+              value={paymentMethod}
+              readOnly
+            />
+            <input
+              type="hidden"
+              name="shipping_address"
+              value={shippingAddress.address}
+              readOnly
+            />
+            <input
+              type="hidden"
+              name="shipping_preference"
+              value={shippingAddress.notes}
+              readOnly
+            />
+          </form>
         </div>
       )}
     </Layout>

@@ -1,12 +1,12 @@
 import { getToken } from 'next-auth/jwt';
-import Order from '../../../../models/Order';
-import db from '../../../../utils/db';
+import Order from '../../../../../models/Order';
+import db from '../../../../../utils/db';
 
 const handler = async (req, res) => {
   const user = await getToken({ req });
 
   if (!user || (user && !user.isAdmin)) {
-    return res.status(401).send('Error: signin required');
+    return res.status(401).send('Error: Inicio de sesión requerido');
   }
 
   if (req.method === 'PUT') {
@@ -31,12 +31,12 @@ const putHandler = async (req, res) => {
 
     await db.disconnect();
     res.send({
-      message: 'Order updated and processed successfully',
+      message: 'Orden procesada exitosamente',
       order: updatedOrder,
     });
   } else {
     await db.disconnect();
-    res.status(404).send({ message: 'Order not found' });
+    res.status(404).send({ message: 'Orden no encontrada' });
   }
 };
 
