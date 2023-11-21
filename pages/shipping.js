@@ -188,12 +188,12 @@ export default function ShippingScreen() {
           <h1 className="text-2xl font-bold">Dirección de envío</h1>
           <br />
           <p>
-            El envío tiene un valor de $8.000 en Bogotá D.C. y de $12.500 en el
+            El envío tiene un valor de $12.000 en Bogotá D.C. y de $15.000 en el
             resto del país.
           </p>
 
           <p className="text-lg font-bold">
-            ¡Si tu orden es mayor a $90.000 el envío es gratis!
+            ¡Si tu orden es mayor a $80.000 el envío es gratis!
           </p>
         </div>
         {lastOrder && (

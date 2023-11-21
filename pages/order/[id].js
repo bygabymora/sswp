@@ -120,14 +120,10 @@ function OrderScreen() {
   const handlePayment = async () => {
     try {
       dispatch({ type: 'PAY_REQUEST' });
-      const { data } = await axios.put(
-        `/api/orders/${order._id}/pay`
-        // Include any necessary payload here
-      );
+      const { data } = await axios.put(`/api/orders/${order._id}/pay`);
       dispatch({ type: 'PAY_SUCCESS', payload: data });
-      toast.success('Order is paid successfully');
+      toast.success('La orden se ha pagado de manera exitosa.');
 
-      // Mark payment as complete and show success message
       setPaymentComplete(true);
 
       setTimeout(() => {
@@ -152,9 +148,8 @@ function OrderScreen() {
             // Include any necessary payload here
           );
           dispatch({ type: 'PAY_SUCCESS', payload: data });
-          toast.success('Order is paid successfully');
+          toast.success('La orden se ha pagado de manera exitosa.');
 
-          // Mark payment as complete and show success message
           setPaymentComplete(true);
 
           setTimeout(() => {
@@ -165,7 +160,7 @@ function OrderScreen() {
           toast.error(getError(error));
         }
       };
-      urlParams.delete('collection_status');
+
       window.history.replaceState(
         {},
         document.title,
@@ -186,28 +181,26 @@ function OrderScreen() {
         orderId,
       });
       const { init_point } = response.data;
-      window.location.href = init_point; // Redirige al usuario a MercadoPago
+      window.location.href = init_point;
     } catch (error) {
       console.error('Detalle del error:', error.response.data);
       console.error('Error al obtener la URL de MercadoPago', error);
     }
   };
   async function deliverOrderHandler(e) {
-    e.preventDefault(); // prevent default form submission
+    e.preventDefault();
 
     const trackUrl = trackUrlRef.current.value;
     const trackNumber = trackNumberRef.current.value;
 
-    // Validation: Check for whitespace-only strings
     if (!trackUrl.trim() || !trackNumber.trim()) {
       toast.error('Please provide valid inputs.');
-      return; // exit function
+      return;
     }
 
     try {
       dispatch({ type: 'DELIVER_REQUEST' });
 
-      // Send tracking URL and number with the axios request
       const { data } = await axios.put(
         `/api/admin/orders/${order._id}/deliver`,
         {

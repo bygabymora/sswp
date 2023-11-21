@@ -25,9 +25,9 @@ export default function PlaceOrderScreen() {
     if (brutPrice + taxPrice > 83000) {
       return 0;
     } else if (city === 'Bogotá D.C.') {
-      return 8000;
+      return 12000;
     } else {
-      return 12500;
+      return 15000;
     }
   };
 
