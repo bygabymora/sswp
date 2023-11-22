@@ -535,15 +535,10 @@ function OrderScreen() {
             <input
               type="hidden"
               name="trackNumber"
-              value={trackNumberRef.current.value}
+              value={trackNumberRef}
               readOnly
             />
-            <input
-              type="hidden"
-              name="trackUrl"
-              value={trackUrlRef.current.value}
-              readOnly
-            />
+            <input type="hidden" name="trackUrl" value={trackUrlRef} readOnly />
           </form>
         </div>
       )}
