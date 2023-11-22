@@ -85,6 +85,9 @@ function OrderScreen() {
         dispatch({ type: 'FETCH_REQUEST' });
         const { data } = await axios.get(`/api/orders/${orderId}`);
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
+        if (data.paymentMethod === 'Contraentrega') {
+          sendEmail4();
+        }
       } catch (err) {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
@@ -199,6 +202,32 @@ function OrderScreen() {
       .sendForm(
         'service_45krz9b',
         'template_tke8ycv',
+        form.current,
+        'LuJZSocJe5a_St7dQ'
+      )
+      .then(
+        (result) => {
+          console.log('Email enviado', result.text);
+        },
+        (error) => {
+          console.log('Error al enviar mensaje', error.text);
+        }
+      );
+  }
+  function sendEmail4() {
+    const formData = new FormData();
+
+    formData.append('user_name', shippingAddress.fullName);
+    formData.append('user_phone', shippingAddress.phone);
+    formData.append('user_email', userEmail);
+    formData.append('total_order', totalPrice);
+    formData.append('payment_method', paymentMethod);
+    formData.append('shipping_preference', shippingAddress.notes);
+
+    emailjs
+      .sendForm(
+        'service_45krz9b',
+        'template_htcwujt',
         form.current,
         'LuJZSocJe5a_St7dQ'
       )

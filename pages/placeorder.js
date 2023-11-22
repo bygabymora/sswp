@@ -55,7 +55,9 @@ export default function PlaceOrderScreen() {
   };
 
   const placeOrderHandler = async () => {
-    sendEmail();
+    if (paymentMethod === 'MercadoPago') {
+      sendEmail();
+    }
     try {
       setLoading(true);
       const { data } = await axios.post('/api/orders', {
@@ -143,7 +145,7 @@ export default function PlaceOrderScreen() {
     emailjs
       .sendForm(
         'service_45krz9b',
-        'template_4f8o7mh',
+        'template_d4mlqb4',
         form.current,
         'LuJZSocJe5a_St7dQ'
       )
@@ -282,7 +284,11 @@ export default function PlaceOrderScreen() {
                     onClick={placeOrderHandler}
                     className="primary-button w-full"
                   >
-                    {loading ? 'Cargando...' : 'Confirmar Compra'}
+                    {loading
+                      ? 'Cargando...'
+                      : paymentMethod === 'Mercadopago'
+                      ? 'Confirmar y pagar'
+                      : 'Confirmar Compra'}
                   </button>
                 </li>
               </ul>
