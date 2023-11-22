@@ -51,6 +51,9 @@ function reducer(state, action) {
 }
 
 function OrderScreen() {
+  const formatNumberWithDots = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  };
   const { data: session } = useSession();
   const [paymentComplete, setPaymentComplete] = useState(false);
 
@@ -276,9 +279,10 @@ function OrderScreen() {
           trackNumber: trackNumber,
         }
       );
-      sendEmail2();
+
       dispatch({ type: 'DELIVER_SUCCESS', payload: data });
       toast.success('Orden enviada correctamente');
+      sendEmail2();
     } catch (err) {
       dispatch({ type: 'DELIVER_FAIL', payload: getError(err) });
       toast.error(getError(err));
@@ -382,9 +386,11 @@ function OrderScreen() {
                         </Link>
                       </td>
                       <td className=" p-5 text-right">{item.quantity}</td>
-                      <td className="p-5 text-right">${item.price}</td>
                       <td className="p-5 text-right">
-                        ${item.quantity * item.price}
+                        ${formatNumberWithDots(item.price)}
+                      </td>
+                      <td className="p-5 text-right">
+                        ${formatNumberWithDots(item.quantity * item.price)}
                       </td>
                     </tr>
                   ))}
@@ -399,20 +405,20 @@ function OrderScreen() {
                 <li>
                   <div className="mb-2 px-3 flex justify-between">
                     <div>Productos</div>
-                    <div>${brutPrice}</div>
+                    <div>${formatNumberWithDots(brutPrice)}</div>
                   </div>
                 </li>
                 <li>
                   <div className="mb-2 px-3 flex justify-between">
                     <div>I.V.A.</div>
-                    <div>${taxPrice}</div>
+                    <div>${formatNumberWithDots(taxPrice)}</div>
                   </div>
                 </li>
 
                 <li>
                   <div className="mb-2  px-3 flex justify-between">
                     <div>Total</div>
-                    <div>${totalPrice}</div>
+                    <div>${formatNumberWithDots(totalPrice)}</div>
                   </div>
                   <br />
                 </li>
@@ -553,11 +559,16 @@ function OrderScreen() {
               value={shippingAddress.notes}
               readOnly
             />
-            <input type="hidden" name="track_url" value={trackUrl} readOnly />
+            <input
+              type="hidden"
+              name="track_url"
+              value={trackUrlRef.current?.value}
+              readOnly
+            />
             <input
               type="hidden"
               name="track_number"
-              value={trackNumber}
+              value={trackNumberRef.current?.value}
               readOnly
             />
           </form>
