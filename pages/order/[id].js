@@ -114,6 +114,8 @@ function OrderScreen() {
     paidAt,
     isDelivered,
     deliveredAt,
+    trackUrl,
+    trackNumber,
   } = order;
 
   const brutPrice = itemsPrice * 0.81;
@@ -310,7 +312,28 @@ function OrderScreen() {
               </div>
               {isDelivered ? (
                 <div className="alert-success">
-                  Enviado el {deliveredAt.substring(0, 10)}
+                  Enviado el{' '}
+                  <span className="font-bold">
+                    {new Date(deliveredAt).toLocaleDateString()}{' '}
+                  </span>
+                  <br />
+                  Sigue tu orden &nbsp;
+                  <Link
+                    href={trackUrl}
+                    target="_blank"
+                    className="underline font-bold"
+                  >
+                    AQUI.
+                  </Link>
+                  <br />
+                  Número y empresa de envíos &nbsp;
+                  <Link
+                    href={trackUrl}
+                    target="_blank"
+                    className="underline font-bold"
+                  >
+                    {trackNumber}.
+                  </Link>
                 </div>
               ) : (
                 <div className="alert-error">En preparación</div>
@@ -447,7 +470,6 @@ function OrderScreen() {
                           <input
                             ref={trackUrlRef}
                             name="trackUrl"
-                            value={trackUrlRef.current.value}
                             placeholder="URL de seguimiento"
                             className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline m-1"
                             required
@@ -455,7 +477,6 @@ function OrderScreen() {
                           <input
                             ref={trackNumberRef}
                             name="trackNumber"
-                            value={trackNumberRef.current.value}
                             placeholder="Número y empresa de envío"
                             className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline m-1"
                             required
@@ -532,13 +553,13 @@ function OrderScreen() {
               value={shippingAddress.notes}
               readOnly
             />
+            <input type="hidden" name="track_url" value={trackUrl} readOnly />
             <input
               type="hidden"
-              name="trackNumber"
-              value={trackNumberRef}
+              name="track_number"
+              value={trackNumber}
               readOnly
             />
-            <input type="hidden" name="trackUrl" value={trackUrlRef} readOnly />
           </form>
         </div>
       )}
