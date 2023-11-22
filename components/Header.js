@@ -33,7 +33,7 @@ const Header = () => {
         <div className="md:mx-auto md:max-w-[1600px] md:mb-2 flex text-right p-2 equal-button-size btn-contact items-center justify-center mr-4 py-2 sm:mb-0 text-white bg-title-color-dark hover:bg-title-color rounded sm:text-3xl lg:text-4xl md:justify-center md:order-last lg:hidden xl:hidden ">
           <a
             className="flex flex-row "
-            href="https://wa.me/573138125075"
+            href="https://wa.me/573044450405"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -67,7 +67,7 @@ const Header = () => {
             <div className=" hidden md:mx-auto md:max-w-[1600px] md:mb-2   p-2 equal-button-size btn-contact items-center justify-center  py-2 sm:mb-0 text-white bg-title-color-dark hover:bg-title-color rounded sm:text-3xl lg:text-2xl md:justify-center md:order-last lg:block xl:block ">
               <a
                 className="flex flex-row "
-                href="https://wa.me/573138125075"
+                href="https://wa.me/573044450405"
                 target="_blank"
                 rel="noopener noreferrer"
               >

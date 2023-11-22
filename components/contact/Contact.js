@@ -20,7 +20,7 @@ const Contact = () => {
               <h3 className="contact__card-title">WhatsApp</h3>
               <Link
                 className="contact__card-data"
-                href=" https://wa.me/573138125075 "
+                href=" https://wa.me/573044450405 "
                 target="_blank"
               >
                 317-812-5075

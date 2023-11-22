@@ -66,9 +66,9 @@ export default function ManufacturerForm() {
           por Whatsapp{' '}
           <Link
             className="font-bold underline"
-            href="https://wa.me/573138125075"
+            href="https://wa.me/573044450405"
           >
-            3138125075
+            304 4450405
           </Link>{' '}
           o llena el siguiente formulario y nos contactaremos contigo lo más
           pronto posible.{' '}
