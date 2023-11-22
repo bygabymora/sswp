@@ -128,13 +128,23 @@ function OrderScreen() {
       order.paymentMethod === 'Contraentrega' &&
       order.shippingAddress
     ) {
-      sendEmail4();
+      const createdAt = new Date(order.createdAt);
+      const now = new Date();
+      const oneMinute = 20 * 1000;
+      if (now - createdAt < oneMinute) {
+        sendEmail4();
+      }
     } else if (
       order &&
       order.paymentMethod === 'Mercadopago' &&
       order.shippingAddress
     ) {
-      sendEmail5();
+      const createdAt = new Date(order.createdAt);
+      const now = new Date();
+      const oneMinute = 20 * 1000;
+      if (now - createdAt < oneMinute) {
+        sendEmail5();
+      }
     }
   }, [order]);
 
