@@ -71,9 +71,9 @@ const Banner = () => {
           </button>
 
           <button
-            href="#contact"
+            href="/#contacto"
             className=" equal-button-size btn-contact   block mr-4 py-1  sm:mb-0 text-white bg-title-color-dark hover:bg-title-color  rounded  text-center sm:text-3xl  lg:text-4xl md:py-2 mb-1"
-            onClick={() => handleLinkClick('contact')}
+            onClick={() => handleLinkClick('contacto')}
           >
             Contáctanos
           </button>
