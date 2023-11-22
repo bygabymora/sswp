@@ -23,7 +23,7 @@ const Contact = () => {
                 href=" https://wa.me/573044450405 "
                 target="_blank"
               >
-                304 4450405
+                304 445 0405
               </Link>
             </div>
 
