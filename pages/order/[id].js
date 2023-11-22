@@ -130,7 +130,7 @@ function OrderScreen() {
     ) {
       const createdAt = new Date(order.createdAt);
       const now = new Date();
-      const oneMinute = 20 * 1000;
+      const oneMinute = 10 * 1000;
       if (now - createdAt < oneMinute) {
         sendEmail4();
       }
@@ -141,7 +141,7 @@ function OrderScreen() {
     ) {
       const createdAt = new Date(order.createdAt);
       const now = new Date();
-      const oneMinute = 20 * 1000;
+      const oneMinute = 10 * 1000;
       if (now - createdAt < oneMinute) {
         sendEmail5();
       }
