@@ -155,6 +155,34 @@ function OrderScreen() {
         }
       );
   }
+  function sendEmail3() {
+    const formData = new FormData();
+
+    formData.append('user_name', shippingAddress.fullName);
+    formData.append('user_phone', shippingAddress.phone);
+    formData.append('user_email', userEmail);
+    formData.append('total_order', totalPrice);
+    formData.append('payment_method', paymentMethod);
+    formData.append('shipping_preference', shippingAddress.notes);
+    formData.append('track_url', trackUrlRef);
+    formData.append('track_number', trackNumberRef);
+
+    emailjs
+      .sendForm(
+        'service_45krz9b',
+        'template_emnnp5b',
+        form.current,
+        'LuJZSocJe5a_St7dQ'
+      )
+      .then(
+        (result) => {
+          console.log('Email enviado', result.text);
+        },
+        (error) => {
+          console.log('Error al enviar mensaje', error.text);
+        }
+      );
+  }
   function sendEmail2() {
     const formData = new FormData();
 
@@ -194,7 +222,7 @@ function OrderScreen() {
       toast.success('La orden se ha pagado de manera exitosa.');
 
       setPaymentComplete(true);
-      sendEmail();
+      sendEmail3();
       setTimeout(() => {
         window.location.reload();
       }, 2000);
@@ -327,10 +355,10 @@ function OrderScreen() {
                     target="_blank"
                     className="underline font-bold"
                   >
-                    AQUI.
+                    AQUÍ.
                   </Link>
                   <br />
-                  Número y empresa de envíos &nbsp;
+                  Número de guía y empresa de envíos &nbsp;
                   <Link
                     href={trackUrl}
                     target="_blank"
@@ -562,13 +590,13 @@ function OrderScreen() {
             <input
               type="hidden"
               name="track_url"
-              value={trackUrlRef.current?.value}
+              value={trackUrlRef.current?.value || trackUrl}
               readOnly
             />
             <input
               type="hidden"
               name="track_number"
-              value={trackNumberRef.current?.value}
+              value={trackNumberRef.current?.value || trackNumber}
               readOnly
             />
           </form>

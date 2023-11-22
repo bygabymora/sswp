@@ -7,6 +7,7 @@ import { Store } from '../utils/Store';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { useSession } from 'next-auth/react';
 
 export default function ShippingScreen() {
   const usStates = [
@@ -46,7 +47,7 @@ export default function ShippingScreen() {
   ];
 
   const [filteredStates, setFilteredStates] = useState(usStates);
-
+  const { data: session } = useSession();
   const [inputValue, setInputValue] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false); // Add state for tracking the visibility of suggestions
 
@@ -164,7 +165,9 @@ export default function ShippingScreen() {
 
     fetchLastOrder();
   }, []);
+
   useEffect(() => {
+    setValue('fullName', session?.user?.name);
     if (useLastAddress && lastOrder) {
       const { shippingAddress } = lastOrder;
       setValue('fullName', shippingAddress.fullName);
@@ -175,7 +178,7 @@ export default function ShippingScreen() {
       setValue('postalCode', shippingAddress.postalCode);
       setValue('notes', shippingAddress.notes);
     }
-  }, [lastOrder, setValue, useLastAddress]);
+  }, [lastOrder, session?.user?.name, setValue, useLastAddress]);
 
   return (
     <Layout title="Dirección de envío">

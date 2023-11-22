@@ -46,6 +46,15 @@ export default function Login() {
       <form className="mx-2 pr-5" onSubmit={handleSubmit(submitHandler)}>
         <h1 className="mb-1 text-xl font-bold">Ingresa</h1>
         <div className="mb-4">
+          ¿No tienes una cuenta? &nbsp;
+          <Link
+            href="/Register"
+            className="font-bold underline active:text-gray-700"
+          >
+            Regístrate
+          </Link>
+        </div>
+        <div className="mb-4">
           <label
             className="block mb-2 text-sm font-bold text-gray-700"
             htmlFor="email"
@@ -103,15 +112,6 @@ export default function Login() {
           <button className="primary-button" type="submit">
             Ingresa
           </button>
-        </div>
-        <div className="mb-4">
-          ¿No tienes una cuenta? &nbsp;
-          <Link
-            href="/Register"
-            className="font-bold underline active:text-gray-700"
-          >
-            Regístrate
-          </Link>
         </div>
       </form>
     </Layout>

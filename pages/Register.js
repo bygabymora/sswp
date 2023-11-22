@@ -58,6 +58,15 @@ export default function LoginScreen() {
         onSubmit={handleSubmit(submitHandler)}
       >
         <h1 className="mb-1 text-xl font-bold">Crea una cuenta</h1>
+        <div className="mb-4 ">
+          ¿Ya tienes una cuenta? &nbsp;
+          <Link
+            href="/Login"
+            className="font-bold underline active:text-gray-700"
+          >
+            Ingresa
+          </Link>
+        </div>
         <div className="mb-4">
           <label
             className="block mb-2 text-sm font-bold text-gray-700"
@@ -180,15 +189,6 @@ export default function LoginScreen() {
 
         <div className="mb-4 ">
           <button className="primary-button">Regístrate</button>
-        </div>
-        <div className="mb-4 ">
-          ¿Ya tienes una cuenta? &nbsp;
-          <Link
-            href="/Login"
-            className="font-bold underline active:text-gray-700"
-          >
-            Ingresa
-          </Link>
         </div>
       </form>
     </Layout>

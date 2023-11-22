@@ -11,6 +11,9 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 export default function ProductScreen(props) {
+  const formatNumberWithDots = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  };
   const { product } = props;
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
@@ -114,7 +117,9 @@ export default function ProductScreen(props) {
             </div>
             <div className="mb-2 flex justify-between">
               <div className="font-bold">Precio</div>
-              <div className="text-2xl">${product.price}</div>
+              <div className="text-2xl">
+                ${formatNumberWithDots(product.price)}
+              </div>
             </div>
             <div className="mb-2 flex justify-between">
               <div className="font-bold">Inventario</div>

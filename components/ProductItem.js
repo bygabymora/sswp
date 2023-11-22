@@ -5,12 +5,17 @@ import { Store } from '../utils/Store';
 import { useContext } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 export const ProductItem = ({ product }) => {
+  const formatNumberWithDots = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  };
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
   const [isOutOfStock, setIsOutOfStock] = useState(false);
   const [qty, setQty] = useState(1);
+  const router = useRouter();
 
   const addToCartHandler = async () => {
     const exisItem = cart.cartItems.find((x) => x.slug === product.slug);
@@ -30,6 +35,11 @@ export const ProductItem = ({ product }) => {
 
       return quantity;
     }
+  };
+
+  const buyNowHandler = async () => {
+    addToCartHandler();
+    router.push('Login?redirect=/shipping');
   };
 
   return (
@@ -79,7 +89,9 @@ export const ProductItem = ({ product }) => {
             </button>
           </div>
         </div>
-        <p className="text-sm text-gray-500">${product.price}</p>
+        <p className="text-sm text-gray-500">
+          ${formatNumberWithDots(product.price)}
+        </p>
         <button
           className="primary-button align-middle mt-2"
           type="button"
@@ -87,6 +99,14 @@ export const ProductItem = ({ product }) => {
           disabled={product.countInStock === 0 || isOutOfStock}
         >
           {isOutOfStock ? 'Fuera de inventario' : 'Añadir al carrito'}
+        </button>
+        <button
+          className="primary-button align-middle mt-2"
+          type="button"
+          onClick={buyNowHandler}
+          disabled={product.countInStock === 0 || isOutOfStock}
+        >
+          {isOutOfStock ? 'Fuera de inventario' : 'Comprar ahora'}
         </button>
         {isOutOfStock && (
           <form className="text-center ">
