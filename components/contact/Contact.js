@@ -23,7 +23,7 @@ const Contact = () => {
                 href=" https://wa.me/573044450405 "
                 target="_blank"
               >
-                317-812-5075
+                304 4450405
               </Link>
             </div>
 
