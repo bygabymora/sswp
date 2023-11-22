@@ -150,6 +150,34 @@ function OrderScreen() {
         }
       );
   }
+  function sendEmail2() {
+    const formData = new FormData();
+
+    formData.append('user_name', shippingAddress.fullName);
+    formData.append('user_phone', shippingAddress.phone);
+    formData.append('user_email', userEmail);
+    formData.append('total_order', totalPrice);
+    formData.append('payment_method', paymentMethod);
+    formData.append('shipping_preference', shippingAddress.notes);
+    formData.append('track_url', trackUrlRef.current.value);
+    formData.append('track_number', trackNumberRef.current.value);
+
+    emailjs
+      .sendForm(
+        'service_45krz9b',
+        'template_tke8ycv',
+        form.current,
+        'LuJZSocJe5a_St7dQ'
+      )
+      .then(
+        (result) => {
+          console.log('Email enviado', result.text);
+        },
+        (error) => {
+          console.log('Error al enviar mensaje', error.text);
+        }
+      );
+  }
 
   //-----------//
 
@@ -246,7 +274,7 @@ function OrderScreen() {
           trackNumber: trackNumber,
         }
       );
-
+      sendEmail2();
       dispatch({ type: 'DELIVER_SUCCESS', payload: data });
       toast.success('Orden enviada correctamente');
     } catch (err) {
@@ -419,6 +447,7 @@ function OrderScreen() {
                           <input
                             ref={trackUrlRef}
                             name="trackUrl"
+                            value={trackUrlRef.current.value}
                             placeholder="URL de seguimiento"
                             className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline m-1"
                             required
@@ -426,6 +455,7 @@ function OrderScreen() {
                           <input
                             ref={trackNumberRef}
                             name="trackNumber"
+                            value={trackNumberRef.current.value}
                             placeholder="Número y empresa de envío"
                             className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline m-1"
                             required
@@ -500,6 +530,18 @@ function OrderScreen() {
               type="hidden"
               name="shipping_preference"
               value={shippingAddress.notes}
+              readOnly
+            />
+            <input
+              type="hidden"
+              name="trackNumber"
+              value={trackNumberRef.current.value}
+              readOnly
+            />
+            <input
+              type="hidden"
+              name="trackUrl"
+              value={trackUrlRef.current.value}
               readOnly
             />
           </form>

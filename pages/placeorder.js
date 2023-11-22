@@ -110,6 +110,7 @@ export default function PlaceOrderScreen() {
   const [emailPaymentMethod, setEmailPaymentMethod] = useState('');
   const [emailTotalOrder, setEmailTotalOrder] = useState('');
   const [emailShippingPreference, setEmailShippingPreference] = useState('');
+  const [emailShippingAddress, setEmailShippingAddress] = useState('');
 
   useEffect(() => {
     fetchUserData();
@@ -118,12 +119,14 @@ export default function PlaceOrderScreen() {
     setEmailPaymentMethod(paymentMethod);
     setEmailTotalOrder(totalPrice);
     setEmailShippingPreference(shippingAddress.notes);
+    setEmailShippingAddress(shippingAddress.address);
   }, [
     paymentMethod,
     shippingAddress.fullName,
     shippingAddress.phone,
     totalPrice,
     shippingAddress.notes,
+    shippingAddress.address,
   ]);
 
   function sendEmail() {
@@ -135,13 +138,14 @@ export default function PlaceOrderScreen() {
     formData.append('total_order', emailTotalOrder);
     formData.append('payment_method', emailPaymentMethod);
     formData.append('shipping_preference', emailShippingPreference);
+    formData.append('shipping_address', emailShippingAddress);
 
     emailjs
       .sendForm(
         'service_45krz9b',
-        'template_w13byb7',
+        'template_4f8o7mh',
         form.current,
-        'VGgpXukeMgVAWbiOf'
+        'LuJZSocJe5a_St7dQ'
       )
       .then(
         (result) => {
@@ -298,6 +302,11 @@ export default function PlaceOrderScreen() {
               type="text"
               name="shipping_preference"
               value={emailShippingPreference}
+            />
+            <input
+              type="text"
+              name="shipping_address"
+              value={emailShippingAddress}
             />
             <input type="text" name="user_email" value={email} />
           </form>
