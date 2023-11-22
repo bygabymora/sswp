@@ -37,7 +37,9 @@ function reducer(state, action) {
 }
 export default function AdminProdcutsScreen() {
   const router = useRouter();
-
+  const formatNumberWithDots = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  };
   const [
     { loading, error, products, loadingCreate, successDelete, loadingDelete },
     dispatch,
@@ -156,7 +158,9 @@ export default function AdminProdcutsScreen() {
                       <td className=" p-2 border-r border-gray-300">
                         {product.slug}
                       </td>
-                      <td className=" p-2 ">${product.price}</td>
+                      <td className=" p-2 ">
+                        ${formatNumberWithDots(product.price)}
+                      </td>
                       <td className=" p-2 border-r border-gray-300">
                         {product.countInStock}
                       </td>

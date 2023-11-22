@@ -1,8 +1,10 @@
 import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { BiMessageAdd } from 'react-icons/bi';
-import Layout from '../components/Layout';
+import Layout from '../../../components/Layout';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 
 export default function ManufacturerForm() {
   const form = useRef();
@@ -12,26 +14,32 @@ export default function ManufacturerForm() {
   const [adress, setAdress] = useState('');
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
+  const router = useRouter();
+  const { id } = router.query;
+  const { data: session } = useSession();
 
   const sendEmail = (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('user_name', name);
     formData.append('user_email', email);
-    formData.append('user_adress', adress);
+    formData.append('user_address', adress);
     formData.append('phone', phone);
     formData.append('message', message);
+    formData.append('id', id);
 
     emailjs
       .sendForm(
         'service_45krz9b',
-        'template_w13byb7',
+        'template_spa46uv',
         form.current,
-        'VGgpXukeMgVAWbiOf'
+        'LuJZSocJe5a_St7dQ'
       )
       .then(
         (result) => {
-          alert('Mensaje enviado, gracias por contactarnos');
+          alert(
+            'Mensaje enviado, por favor revisa tu correo para más información, ¡gracias por contactarnos!'
+          );
           console.log('Email sent', result.text);
         },
         (error) => {
@@ -49,9 +57,11 @@ export default function ManufacturerForm() {
 
   return (
     <Layout title="Contraentrega">
-      <h1 className="section__title">Contraentrega</h1>
+      <h1 className="section__title">
+        Solicitud de modificación de orden contraentrega
+      </h1>
       <div className="manufacturer__content">
-        <h3 className="setion__text self-center text-center mb-3">
+        <h2 className="setion__text self-center text-center mb-3">
           Si deseas hacer algún cambio a tu orden, puedes enviarnos un mensaje
           por Whatsapp{' '}
           <Link
@@ -63,11 +73,29 @@ export default function ManufacturerForm() {
           o llena el siguiente formulario y nos contactaremos contigo lo más
           pronto posible.{' '}
           <span className="font-bold underline">
+            No se garantiza que los cambios realizados en este formulario
+            alcancen a ser procesados, pero haremos lo posible por realizarlos.*
+          </span>{' '}
+          <br /> <br />
+          <span className="font-bold underline">
             (En cualquier momento puedes acceder a esta página de nuevo, desde
-            la orden presionando el botón &quot;Editar Contraentrega&quot;)
+            la orden presionando el botón &quot;Editar Contraentrega&quot; antes
+            de que la orden sea enviada)
           </span>
-          , si tienes dudas, no dudes en contactarnos.
-        </h3>
+          <br />
+          Si tienes dudas, no dudes en contactarnos.
+        </h2>
+        <br />
+        <h1 className="font-bold text-xl">
+          Modificación de la orden{' '}
+          <span className="font-bold">
+            {id.substring(id.length - 8).toUpperCase()}
+          </span>
+        </h1>
+        <h2>
+          Te enviaremos un mensaje de confirmación de la solicitud a{' '}
+          <span className="font-bold">{session?.user?.email}</span>
+        </h2>
 
         <form
           className="manufacturer__form mt-9"
@@ -86,15 +114,15 @@ export default function ManufacturerForm() {
             />
           </div>
 
-          <div className="manufacturer__form-div">
+          <div className="manufacturer__form-div hidden">
             <label className="manufacturer__form-tag">Email*</label>
             <input
               type="email"
               name="user_email"
               className="manufacturer__form-input"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
+              value={session?.user?.email}
               required
+              readOnly
             />
           </div>
           <div className="manufacturer__form-div">
@@ -111,13 +139,18 @@ export default function ManufacturerForm() {
             <label className="manufacturer__form-tag">Dirección</label>
             <input
               type="address"
-              name="user_adress"
+              name="user_address"
               className="manufacturer__form-input "
               onChange={(e) => setAdress(e.target.value)}
               value={adress}
             />
           </div>
-
+          <input
+            type="hidden"
+            name="id"
+            readOnly
+            value={id.substring(id.length - 8).toUpperCase()}
+          />
           <div className="manufacturer__form-div">
             <label className="manufacturer__form-tag">Anotaciones</label>
             <textarea
@@ -133,6 +166,7 @@ export default function ManufacturerForm() {
             className="button mb-4 button-flex rounded py-2 px-4 shadow outline-none hover:bg-gray-400 active:bg-gray-500 text-white w-full"
             type="submit"
             value="Send"
+            onClick={router.back}
           >
             <span className="flex items-center justify-center text-white">
               Enviar {tab}

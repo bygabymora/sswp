@@ -18,6 +18,9 @@ function reducer(state, action) {
 }
 
 export default function AdminOrderScreen() {
+  const formatNumberWithDots = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  };
   const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
     loading: true,
     orders: [],
@@ -82,14 +85,20 @@ export default function AdminOrderScreen() {
                 <tbody>
                   {orders.map((order) => (
                     <tr key={order._id} className="border-b">
-                      <td className="p-5">{order._id.substring(20, 24)}</td>
+                      <td className="p-5">
+                        {order._id
+                          .substring(order._id.length - 8)
+                          .toUpperCase()}
+                      </td>
                       <td className="p-5">
                         {order.user ? order.user.name : 'DELETED USER'}
                       </td>
                       <td className="p-5">
                         {order.createdAt.substring(0, 10)}
                       </td>
-                      <td className="p-5">${order.totalPrice}</td>
+                      <td className="p-5">
+                        ${formatNumberWithDots(order.totalPrice)}
+                      </td>
                       <td className="p-5">
                         {order.isPaid
                           ? `${order.paidAt.substring(0, 10)}`

@@ -478,10 +478,10 @@ function OrderScreen() {
                             Marcar como pagado
                           </button>
                         )}
-                        {!session.user.isAdmin && (
+                        {!session.user.isAdmin && !isDelivered && (
                           <Link
                             className="primary-button w-full mt-2"
-                            href="/ManufacturerForm"
+                            href={`/order/${order._id}/ManufacturerForm`}
                           >
                             Editar Contraentrega
                           </Link>
@@ -532,7 +532,7 @@ function OrderScreen() {
                   <li>
                     <div className="mb-2 px-3 flex justify-between">
                       <div>
-                        Te enviaremos un correo con la confirmación de tu orden
+                        Te enviaremos un mensaje con la confirmación de tu orden
                         y los datos de envío al siguiente correo:
                         <br />
                         <p className="font-bold">{userEmail}</p>
