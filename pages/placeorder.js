@@ -3,13 +3,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import CheckoutWizard from '../components/CheckoutWizard';
 import Layout from '../components/Layout';
 import { getError } from '../utils/error';
 import { Store } from '../utils/Store';
-import emailjs from '@emailjs/browser';
 
 export default function PlaceOrderScreen() {
   const { state, dispatch } = useContext(Store);
@@ -55,9 +54,6 @@ export default function PlaceOrderScreen() {
   };
 
   const placeOrderHandler = async () => {
-    if (paymentMethod === 'MercadoPago') {
-      sendEmail();
-    }
     try {
       setLoading(true);
       const { data } = await axios.post('/api/orders', {
@@ -90,76 +86,6 @@ export default function PlaceOrderScreen() {
       taxPrice,
     });
   };
-
-  //----EmailJS----//
-
-  const form = useRef();
-
-  const fetchUserData = async () => {
-    try {
-      const response = await axios.get('/api/orders/placeOrder');
-      const userData = response.data;
-
-      setEmail(userData.email);
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-    }
-  };
-
-  const [email, setEmail] = useState('');
-  const [emailName, setEmailName] = useState('');
-  const [emailPhone, setEmailPhone] = useState('');
-  const [emailPaymentMethod, setEmailPaymentMethod] = useState('');
-  const [emailTotalOrder, setEmailTotalOrder] = useState('');
-  const [emailShippingPreference, setEmailShippingPreference] = useState('');
-  const [emailShippingAddress, setEmailShippingAddress] = useState('');
-
-  useEffect(() => {
-    fetchUserData();
-    setEmailName(shippingAddress.fullName);
-    setEmailPhone(shippingAddress.phone);
-    setEmailPaymentMethod(paymentMethod);
-    setEmailTotalOrder(totalPrice);
-    setEmailShippingPreference(shippingAddress.notes);
-    setEmailShippingAddress(shippingAddress.address);
-  }, [
-    paymentMethod,
-    shippingAddress.fullName,
-    shippingAddress.phone,
-    totalPrice,
-    shippingAddress.notes,
-    shippingAddress.address,
-  ]);
-
-  function sendEmail() {
-    const formData = new FormData();
-
-    formData.append('user_name', emailName);
-    formData.append('user_phone', emailPhone);
-    formData.append('user_email', email);
-    formData.append('total_order', emailTotalOrder);
-    formData.append('payment_method', emailPaymentMethod);
-    formData.append('shipping_preference', emailShippingPreference);
-    formData.append('shipping_address', emailShippingAddress);
-
-    emailjs
-      .sendForm(
-        'service_45krz9b',
-        'template_d4mlqb4',
-        form.current,
-        'LuJZSocJe5a_St7dQ'
-      )
-      .then(
-        (result) => {
-          console.log('Email sent', result.text);
-        },
-        (error) => {
-          console.log('Error sendingemail', error.text);
-        }
-      );
-  }
-
-  //-----------//
 
   return (
     <Layout title="Ordenar">
@@ -287,35 +213,13 @@ export default function PlaceOrderScreen() {
                     {loading
                       ? 'Cargando...'
                       : paymentMethod === 'Mercadopago'
-                      ? 'Confirmar y pagar'
+                      ? 'Confirmar Compra y Pagar'
                       : 'Confirmar Compra'}
                   </button>
                 </li>
               </ul>
             </div>
           </div>
-          <form ref={form} hidden>
-            <input type="text" name="user_name" value={emailName} />
-            <input type="text" name="user_phone" value={emailPhone} />
-            <input type="text" name="total_order" value={emailTotalOrder} />
-            <input
-              type="text"
-              name="payment_method"
-              value={emailPaymentMethod}
-            />
-
-            <input
-              type="text"
-              name="shipping_preference"
-              value={emailShippingPreference}
-            />
-            <input
-              type="text"
-              name="shipping_address"
-              value={emailShippingAddress}
-            />
-            <input type="text" name="user_email" value={email} />
-          </form>
         </div>
       )}
     </Layout>

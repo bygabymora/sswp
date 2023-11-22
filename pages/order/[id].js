@@ -85,9 +85,6 @@ function OrderScreen() {
         dispatch({ type: 'FETCH_REQUEST' });
         const { data } = await axios.get(`/api/orders/${orderId}`);
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
-        if (data.paymentMethod === 'Contraentrega') {
-          sendEmail4();
-        }
       } catch (err) {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
@@ -125,6 +122,21 @@ function OrderScreen() {
   } = order;
 
   const brutPrice = itemsPrice * 0.81;
+  useEffect(() => {
+    if (
+      order &&
+      order.paymentMethod === 'Contraentrega' &&
+      order.shippingAddress
+    ) {
+      sendEmail4();
+    } else if (
+      order &&
+      order.paymentMethod === 'Mercadopago' &&
+      order.shippingAddress
+    ) {
+      sendEmail5();
+    }
+  }, [order]);
 
   //----EmailJS----//
 
@@ -223,11 +235,39 @@ function OrderScreen() {
     formData.append('total_order', totalPrice);
     formData.append('payment_method', paymentMethod);
     formData.append('shipping_preference', shippingAddress.notes);
+    formData.append('full_order_id', orderId);
 
     emailjs
       .sendForm(
         'service_45krz9b',
         'template_htcwujt',
+        form.current,
+        'LuJZSocJe5a_St7dQ'
+      )
+      .then(
+        (result) => {
+          console.log('Email enviado', result.text);
+        },
+        (error) => {
+          console.log('Error al enviar mensaje', error.text);
+        }
+      );
+  }
+  function sendEmail5() {
+    const formData = new FormData();
+
+    formData.append('user_name', shippingAddress.fullName);
+    formData.append('user_phone', shippingAddress.phone);
+    formData.append('user_email', userEmail);
+    formData.append('total_order', totalPrice);
+    formData.append('payment_method', paymentMethod);
+    formData.append('shipping_preference', shippingAddress.notes);
+    formData.append('full_order_id', orderId);
+
+    emailjs
+      .sendForm(
+        'service_45krz9b',
+        'template_i95meue',
         form.current,
         'LuJZSocJe5a_St7dQ'
       )
@@ -577,6 +617,12 @@ function OrderScreen() {
               type="hidden"
               name="order_id"
               value={orderId.substring(orderId.length - 8).toUpperCase()}
+              readOnly
+            />
+            <input
+              type="hidden"
+              name="full_order_id"
+              value={orderId}
               readOnly
             />
             <input

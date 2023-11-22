@@ -20,7 +20,11 @@ export default function ManufacturerForm() {
 
   const sendEmail = (e) => {
     e.preventDefault();
-    const formData = new FormData();
+    if (!id) {
+      console.error('ID is not available');
+      return;
+    }
+    const formData = new FormData(form.current);
     formData.append('user_name', name);
     formData.append('user_email', email);
     formData.append('user_address', adress);
@@ -89,7 +93,7 @@ export default function ManufacturerForm() {
         <h1 className="font-bold text-xl">
           Modificación de la orden{' '}
           <span className="font-bold">
-            {id.substring(id.length - 8).toUpperCase()}
+            {id ? id.substring(id.length - 8).toUpperCase() : 'Loading...'}
           </span>
         </h1>
         <h2>
@@ -120,7 +124,7 @@ export default function ManufacturerForm() {
               type="email"
               name="user_email"
               className="manufacturer__form-input"
-              value={session?.user?.email}
+              value={session?.user?.email || ''}
               required
               readOnly
             />
@@ -149,7 +153,7 @@ export default function ManufacturerForm() {
             type="hidden"
             name="id"
             readOnly
-            value={id.substring(id.length - 8).toUpperCase()}
+            value={id ? id.substring(id.length - 8).toUpperCase() : ''}
           />
           <div className="manufacturer__form-div">
             <label className="manufacturer__form-tag">Anotaciones</label>
