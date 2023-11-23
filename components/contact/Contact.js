@@ -20,7 +20,7 @@ const Contact = () => {
               <h3 className="contact__card-title">WhatsApp</h3>
               <Link
                 className="contact__card-data"
-                href=" https://wa.me/573044450405 "
+                href=" https://www.gupshup.io/whatsapp/optin/?bId=3f9057df-b2fc-4173-a8cd-8db79f6d168a&bName=easyhome&s=URL&lang=es"
                 target="_blank"
               >
                 304 445 0405

@@ -12,6 +12,23 @@ import { useRouter } from 'next/router';
 import { BsWhatsapp } from 'react-icons/bs';
 
 const Header = () => {
+  const loadWhatsAppScript = () => {
+    const script = document.createElement('script');
+    script.async = true;
+    script.src =
+      'https://www.buildquickbots.com/gsui/js/embedScript/gs_wa_widget.js';
+    script.dataset.appid = '3f9057df-b2fc-4173-a8cd-8db79f6d168a';
+    script.dataset.appname = 'easyhome';
+    script.dataset.source = 'WEB';
+    script.dataset.env = 'QA';
+    script.dataset.lang = 'es';
+    document.head.appendChild(script);
+  };
+
+  useEffect(() => {
+    loadWhatsAppScript();
+  }, []);
+
   const router = useRouter();
   const { state } = useContext(Store);
   const { cart } = state;
@@ -65,15 +82,15 @@ const Header = () => {
               </Link>
             </div>
             <div className=" hidden md:mx-auto md:max-w-[1600px] md:mb-2   p-2 equal-button-size btn-contact items-center justify-center  py-2 sm:mb-0 text-white bg-title-color-dark hover:bg-title-color rounded sm:text-3xl lg:text-2xl md:justify-center md:order-last lg:block xl:block ">
-              <a
+              <Link
                 className="flex flex-row "
-                href="https://wa.me/573044450405"
+                href="https://www.gupshup.io/whatsapp/optin/?bId=3f9057df-b2fc-4173-a8cd-8db79f6d168a&bName=easyhome&s=URL&lang=es"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <span className="text-lg">¿Necesitas ayuda? &nbsp;</span>
                 <BsWhatsapp className="text-2xl" />
-              </a>
+              </Link>
             </div>
             <div className="nav-reverse flex h-12 place-items-center gap-4">
               <div className="flex h-12 items-center">
