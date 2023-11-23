@@ -70,10 +70,11 @@ export default function Home({ products }) {
     </Layout>
   );
 }
-
 export async function getServerSideProps() {
   await db.connect();
-  const products = await Product.find().lean();
+  // Ordena los productos por fecha de creación en orden descendente
+  // Asegúrate de que tus productos tienen un campo que registre esta fecha
+  const products = await Product.find().sort({ createdAt: -1 }).lean();
   return {
     props: {
       products: products.map(db.convertDocToObj),
