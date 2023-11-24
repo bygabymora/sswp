@@ -30,7 +30,7 @@ function Auth({ children, adminOnly }) {
   const { status, data: session } = useSession({
     required: true,
     onUnauthenticated() {
-      router.push('/unauthorized?message=Login required');
+      router.push('/unauthorized?message=Ingresa aquí');
     },
   });
 
@@ -38,7 +38,7 @@ function Auth({ children, adminOnly }) {
     return <div>Loading...</div>;
   }
   if (adminOnly && !session.user.isAdmin) {
-    router.push('/unauthorized?message=Admin login required to access page');
+    router.push('/unauthorized?message=No tienes permisos de administrador');
     return <div>Redirecting...</div>;
   }
 

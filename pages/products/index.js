@@ -10,6 +10,9 @@ export default function Products({ products }) {
       <h2 className="section__title" id="products">
         Productos
       </h2>
+      <p className="text-center text-sm md:text-lg">
+        ¡Escoje los sujetadores que más se adapten a ti!
+      </p>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
         {products.map((product) => (
           <ProductItem product={product} key={product.slug}></ProductItem>
@@ -21,7 +24,8 @@ export default function Products({ products }) {
 
 export async function getServerSideProps() {
   await db.connect();
-  const products = await Product.find().lean();
+
+  const products = await Product.find().sort({ createdAt: -1 }).lean();
   return {
     props: {
       products: products.map(db.convertDocToObj),

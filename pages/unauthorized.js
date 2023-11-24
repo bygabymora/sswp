@@ -11,7 +11,7 @@ export default function Unauthorized() {
     <Layout title="Unauthorized Page">
       <div className="mx-auto max-w-screen-md w-full text-center items-center">
         <h1 className="text-center text-2xl font-semibold">
-          You are not authorized to view this page.
+          No estás autorizado a ver esta página, por favor ingresa a tu cuenta.
         </h1>
         <br />
         {message && (
