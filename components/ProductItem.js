@@ -47,7 +47,7 @@ export const ProductItem = ({ product }) => {
       <h2 className="font-bold my-2 h-[3.5rem] flex justify-center items-center">
         {product.name}
       </h2>
-      <div className="grid grid-cols-2 justify-between h-[14rem] ">
+      <div className="grid grid-cols-2 justify-between h-[10rem] ">
         <Link
           href={{ pathname: `products/${product.slug}` }}
           className="justify-center items-center text-center flex-1"
@@ -56,48 +56,49 @@ export const ProductItem = ({ product }) => {
             <Image
               src={`${product.image}`}
               alt={product.description}
-              className="product-image"
+              className="max-w-full h-auto"
               width={800}
               height={1000}
             />
           </div>
         </Link>
-        <div className="flex flex-col justify-center items-center p-5">
+        <div className="flex flex-col justify-center items-center mb-2">
           <Link href={{ pathname: `products/${product.slug}` }}>
             <h2 className="font-bold text-lg">{product.name}</h2>
-            <div className="mb-2 flex items-center flex-col text-center justify-center lg:block">
-              <div className="font-bold mt-4">Cantidad</div>
-              <div className="flex items-center justify-center flex-row">
-                <button
-                  className="border px-2 py-1 card"
-                  onClick={() => setQty(Math.max(1, qty - 1))}
-                  disabled={qty <= 1}
-                >
-                  -
-                </button>
-                <span className="px-1 mt-4">{isOutOfStock ? 0 : qty}</span>
-                <button
-                  className="border px-2 py-1 card"
-                  onClick={() => {
-                    if (qty < product.countInStock) {
-                      setQty(qty + 1);
-                    } else {
-                      alert(
-                        `Lo siento, no tenemos suficientes unidades de ${product.slug} en este momento`
-                      );
-                    }
-                  }}
-                  disabled={isOutOfStock}
-                >
-                  +
-                </button>
-              </div>
-            </div>
           </Link>
         </div>
       </div>
       <div className="grid grid-cols-2 justify-between h-[4rem] ">
-        <div className="font-bold text-xs ml-3">{product.includes}</div>
+        <div className="font-bold text-sm ml-3">
+          <div className="mb-2  lg:block">
+            <div className="font-bold mt-4">Cantidad</div>
+            <div className="flex items-center justify-center flex-row">
+              <button
+                className="border px-2 py-1 card"
+                onClick={() => setQty(Math.max(1, qty - 1))}
+                disabled={qty <= 1}
+              >
+                -
+              </button>
+              <span className="px-1 mt-4">{isOutOfStock ? 0 : qty}</span>
+              <button
+                className="border px-2 py-1 card"
+                onClick={() => {
+                  if (qty < product.countInStock) {
+                    setQty(qty + 1);
+                  } else {
+                    alert(
+                      `Lo siento, no tenemos suficientes unidades de ${product.name} en este momento`
+                    );
+                  }
+                }}
+                disabled={isOutOfStock}
+              >
+                +
+              </button>
+            </div>
+          </div>
+        </div>
         <div className="flex justify-center items-center text-xl font-bold text-gray-500">
           ${formatNumberWithDots(product.price)}
         </div>

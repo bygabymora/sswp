@@ -36,8 +36,9 @@ const StaticBanner = () => {
         <h2 className="banner-title">
           Averigua porque nuestros clientes nos prefieren
         </h2>
-        <p className="banner-description">
-          Sujetadores para sábanas de calidad y comodidad insuperables.
+        <p className="banner-description font-bold text-[2rem]">
+          ¡Todas las órdenes mayores de $80.000 tienen envío gratis a todo
+          Colombia!
         </p>
         <Link
           className="flex justify-center items-center"
