@@ -43,55 +43,66 @@ export const ProductItem = ({ product }) => {
   };
 
   return (
-    <div className="card">
-      <Link href={{ pathname: `products/${product.slug}` }}>
-        <Image
-          src={`${product.image}`}
-          alt={product.description}
-          className="product-image"
-          width={300}
-          height={300}
-        />
-      </Link>
-      <div className="flex flex-col justify-center items-center p-5">
-        <Link href={{ pathname: `products/${product.slug}` }}>
-          <h2 className="font-bold text-lg">{product.name}</h2>
-          <h2 className="font-bold text-xs">
-            <br />
-            {product.includes}
-          </h2>
-        </Link>
-        <div className="mb-2 flex items-center flex-col text-center justify-center lg:block">
-          <div className="font-bold mt-4">Cantidad</div>
-          <div className="flex items-center flex-row">
-            <button
-              className="border px-2 py-1 card"
-              onClick={() => setQty(Math.max(1, qty - 1))}
-              disabled={qty <= 1}
-            >
-              -
-            </button>
-            <span className="px-1 mt-4">{isOutOfStock ? 0 : qty}</span>
-            <button
-              className="border px-2 py-1 card"
-              onClick={() => {
-                if (qty < product.countInStock) {
-                  setQty(qty + 1);
-                } else {
-                  alert(
-                    `Lo siento, no tenemos suficientes unidades de ${product.slug} en este momento`
-                  );
-                }
-              }}
-              disabled={isOutOfStock}
-            >
-              +
-            </button>
+    <div className="block justify-center card  items-center text-center my-3 text-xs lg:text-lg">
+      <h2 className="font-bold my-2 h-[3.5rem] flex justify-center items-center">
+        {product.name}
+      </h2>
+      <div className="grid grid-cols-2 justify-between h-[14rem] ">
+        <Link
+          href={{ pathname: `products/${product.slug}` }}
+          className="justify-center items-center text-center flex-1"
+        >
+          <div className="flex justify-center items-center">
+            <Image
+              src={`${product.image}`}
+              alt={product.description}
+              className="product-image"
+              width={800}
+              height={1000}
+            />
           </div>
+        </Link>
+        <div className="flex flex-col justify-center items-center p-5">
+          <Link href={{ pathname: `products/${product.slug}` }}>
+            <h2 className="font-bold text-lg">{product.name}</h2>
+            <div className="mb-2 flex items-center flex-col text-center justify-center lg:block">
+              <div className="font-bold mt-4">Cantidad</div>
+              <div className="flex items-center justify-center flex-row">
+                <button
+                  className="border px-2 py-1 card"
+                  onClick={() => setQty(Math.max(1, qty - 1))}
+                  disabled={qty <= 1}
+                >
+                  -
+                </button>
+                <span className="px-1 mt-4">{isOutOfStock ? 0 : qty}</span>
+                <button
+                  className="border px-2 py-1 card"
+                  onClick={() => {
+                    if (qty < product.countInStock) {
+                      setQty(qty + 1);
+                    } else {
+                      alert(
+                        `Lo siento, no tenemos suficientes unidades de ${product.slug} en este momento`
+                      );
+                    }
+                  }}
+                  disabled={isOutOfStock}
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </Link>
         </div>
-        <p className="text-sm text-gray-500">
+      </div>
+      <div className="grid grid-cols-2 justify-between h-[4rem] ">
+        <div className="font-bold text-xs ml-4">{product.includes}</div>
+        <div className="flex justify-center items-center text-xl font-bold text-gray-500">
           ${formatNumberWithDots(product.price)}
-        </p>
+        </div>
+      </div>
+      <div className="flex flex-row justify-center items-center p-5 gap-2">
         <button
           className="primary-button align-middle mt-2"
           type="button"

@@ -44,9 +44,15 @@ export default function Home({ products }) {
     <Layout title="Home Page">
       <StaticBanner />
       <Banner />
-      <h2 className="section__title" id="products">
+
+      <h2 className="section__title my-2" id="productos">
         Nuestros Productos
       </h2>
+      <div>
+        <p className="text-center text-sm md:text-lg">
+          ¡Escoje los sujetadores que más se adapten a ti!
+        </p>
+      </div>
       <Carousel
         showArrows={true}
         showThumbs={false}
