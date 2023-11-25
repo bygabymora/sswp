@@ -17,8 +17,7 @@ export default function Footer() {
             Estamos aquí para responder cualquier pregunta o inquietud que
             puedas tener. Si necesitas más información sobre nuestros
             sujetadores para sábanas o deseas recibir asesoramiento
-            personalizado, no dudes en ponerte en contacto con nuestro equipo
-            experto.
+            personalizado, no dudes en ponerte en contacto con nosotros.
           </p>
         </div>
         <div className="grid grid-cols-1">
