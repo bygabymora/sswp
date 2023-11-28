@@ -121,9 +121,12 @@ function OrderScreen() {
     trackNumber,
   } = order;
 
-  const orderItemsString = orderItems
-    .map((item) => `Producto: ${item.name}, Cantidad: ${item.quantity}`)
-    .join('\n');
+  const orderItemsString =
+    orderItems && Array.isArray(orderItems)
+      ? orderItems
+          .map((item) => `Producto: ${item.name}, Cantidad: ${item.quantity}`)
+          .join('\n')
+      : '';
 
   const brutPrice = itemsPrice * 0.81;
   useEffect(() => {
