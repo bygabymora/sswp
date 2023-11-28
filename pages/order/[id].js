@@ -121,6 +121,10 @@ function OrderScreen() {
     trackNumber,
   } = order;
 
+  const orderItemsString = orderItems
+    .map((item) => `Producto: ${item.name}, Cantidad: ${item.quantity}`)
+    .join('\n');
+
   const brutPrice = itemsPrice * 0.81;
   useEffect(() => {
     if (
@@ -163,6 +167,14 @@ function OrderScreen() {
     formData.append('total_order', totalPrice);
     formData.append('payment_method', paymentMethod);
     formData.append('shipping_preference', shippingAddress.notes);
+    formData.append('order_id_url', orderId);
+    const orderItemsString = orderItems
+      .map(
+        (item) =>
+          `Producto: ${item.name}, Cantidad: ${item.quantity}, Precio: $${item.price}`
+      )
+      .join('\n');
+    formData.append('order_items', orderItemsString);
 
     emailjs
       .sendForm(
@@ -191,6 +203,14 @@ function OrderScreen() {
     formData.append('shipping_preference', shippingAddress.notes);
     formData.append('track_url', trackUrlRef);
     formData.append('track_number', trackNumberRef);
+    formData.append('order_id_url', orderId);
+    const orderItemsString = orderItems
+      .map(
+        (item) =>
+          `Producto: ${item.name}, Cantidad: ${item.quantity}, Precio: $${item.price}`
+      )
+      .join('\n');
+    formData.append('order_items', orderItemsString);
 
     emailjs
       .sendForm(
@@ -219,6 +239,11 @@ function OrderScreen() {
     formData.append('shipping_preference', shippingAddress.notes);
     formData.append('track_url', trackUrlRef.current.value);
     formData.append('track_number', trackNumberRef.current.value);
+    formData.append('order_id_url', orderId);
+    const orderItemsString = orderItems
+      .map((item) => `Producto: ${item.name}, Cantidad: ${item.quantity}`)
+      .join('\n');
+    formData.append('order_items', orderItemsString);
 
     emailjs
       .sendForm(
@@ -246,6 +271,11 @@ function OrderScreen() {
     formData.append('payment_method', paymentMethod);
     formData.append('shipping_preference', shippingAddress.notes);
     formData.append('full_order_id', orderId);
+    formData.append('order_id_url', orderId);
+    const orderItemsString = orderItems
+      .map((item) => `Producto: ${item.name}, Cantidad: ${item.quantity}`)
+      .join('\n');
+    formData.append('order_items', orderItemsString);
 
     emailjs
       .sendForm(
@@ -273,6 +303,11 @@ function OrderScreen() {
     formData.append('payment_method', paymentMethod);
     formData.append('shipping_preference', shippingAddress.notes);
     formData.append('full_order_id', orderId);
+    formData.append('order_id_url', orderId);
+    const orderItemsString = orderItems
+      .map((item) => `Producto: ${item.name}, Cantidad: ${item.quantity}`)
+      .join('\n');
+    formData.append('order_items', orderItemsString);
 
     emailjs
       .sendForm(
@@ -623,6 +658,18 @@ function OrderScreen() {
             </div>
           </div>
           <form ref={form} hidden>
+            <input
+              type="hidden"
+              name="order_items"
+              value={orderItemsString}
+              readOnly
+            />
+            <input
+              type="hidden"
+              name="order_id_url"
+              value={`https://easyhomedesigner.vercel.app/order/${orderId}`}
+              readOnly
+            />
             <input
               type="hidden"
               name="order_id"
