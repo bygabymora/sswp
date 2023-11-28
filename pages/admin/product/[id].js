@@ -63,6 +63,8 @@ export default function AdminProductEditScreen() {
         setValue('name', data.name);
         setValue('slug', data.slug);
         setValue('image', data.image);
+        setValue('image2', data.image2);
+        setValue('image3', data.image3);
         setValue('reference', data.reference);
         setValue('size', data.size);
         setValue('description', data.description);
@@ -108,6 +110,8 @@ export default function AdminProductEditScreen() {
     name,
     slug,
     image,
+    image2,
+    image3,
     size,
     reference,
     description,
@@ -122,6 +126,8 @@ export default function AdminProductEditScreen() {
         name,
         slug,
         image,
+        image2,
+        image3,
         reference,
         size,
         description,
@@ -212,6 +218,30 @@ export default function AdminProductEditScreen() {
                   {...register('image', {
                     required: 'Por favor ingrese una imagen',
                   })}
+                />
+                {errors.image && (
+                  <div className="text-red-500">{errors.image.message}</div>
+                )}
+              </div>
+              <div className="mb-4">
+                <label htmlFor="image2">Imagen 2</label>
+                <input
+                  type="text"
+                  className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                  id="image"
+                  {...register('image2')}
+                />
+                {errors.image && (
+                  <div className="text-red-500">{errors.image.message}</div>
+                )}
+              </div>
+              <div className="mb-4">
+                <label htmlFor="image3">Imagen 3</label>
+                <input
+                  type="text"
+                  className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                  id="image"
+                  {...register('image3')}
                 />
                 {errors.image && (
                   <div className="text-red-500">{errors.image.message}</div>
