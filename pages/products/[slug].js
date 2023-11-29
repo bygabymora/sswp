@@ -61,7 +61,9 @@ export default function ProductScreen(props) {
     setShowPopup(false);
     router.push('/cart');
   };
-
+  console.log(product.image);
+  console.log(product.image2);
+  console.log(product.image3);
   return (
     <Layout title={product.manufacturer}>
       <div className="py-2">
