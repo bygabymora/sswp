@@ -124,7 +124,10 @@ function OrderScreen() {
   const orderItemsString =
     orderItems && Array.isArray(orderItems)
       ? orderItems
-          .map((item) => `Producto: ${item.name}, Cantidad: ${item.quantity}`)
+          .map(
+            (item) =>
+              `Producto: ${item.name}, Cantidad: ${item.quantity}, Incluye: ${item.includes}`
+          )
           .join('\n')
       : '';
 
@@ -174,7 +177,7 @@ function OrderScreen() {
     const orderItemsString = orderItems
       .map(
         (item) =>
-          `Producto: ${item.name}, Cantidad: ${item.quantity}, Precio: $${item.price}`
+          `Producto: ${item.name}, Cantidad: ${item.quantity}, Precio: $${item.price}, Incluye: ${item.includes}`
       )
       .join('\n');
     formData.append('order_items', orderItemsString);

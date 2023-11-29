@@ -20,8 +20,7 @@ const postHandler = async (req, res) => {
   const newProduct = new Product({
     name: 'Nombre del producto',
     slug: 'Código' + Math.random(),
-    image:
-      'https://res.cloudinary.com/dcjahs0jp/image/upload/v1692313973/tgesmy2eeunhammc5koa.png',
+    image: '/images/default.svg',
     reference: 'Referencia',
     description: 'Descripción del producto',
     price: 0,

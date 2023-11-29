@@ -41,11 +41,10 @@ function reducer(state, action) {
 export default function AdminProductEditScreen() {
   const { query } = useRouter();
   const productId = query.id;
-  const [{ loading, error, loadingUpdate, loadingUpload }, dispatch] =
-    useReducer(reducer, {
-      loading: true,
-      error: '',
-    });
+  const [{ loading, error, loadingUpdate }, dispatch] = useReducer(reducer, {
+    loading: true,
+    error: '',
+  });
 
   const {
     register,
@@ -81,30 +80,6 @@ export default function AdminProductEditScreen() {
   }, [productId, setValue]);
 
   const router = useRouter();
-
-  const uploadHandler = async (e, imageField = 'image') => {
-    const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
-    try {
-      dispatch({ type: 'UPLOAD_REQUEST' });
-      const {
-        data: { signature, timestamp },
-      } = await axios('/api/admin/cloudinary-sign');
-
-      const file = e.target.files[0];
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('signature', signature);
-      formData.append('timestamp', timestamp);
-      formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
-      const { data } = await axios.post(url, formData);
-      dispatch({ type: 'UPLOAD_SUCCESS' });
-      setValue(imageField, data.secure_url);
-      toast.success('File uploaded successfully');
-    } catch (err) {
-      dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
-      toast.error(getError(err));
-    }
-  };
 
   const submitHandler = async ({
     name,
@@ -247,17 +222,7 @@ export default function AdminProductEditScreen() {
                   <div className="text-red-500">{errors.image.message}</div>
                 )}
               </div>
-              <div className="mb-4">
-                <label htmlFor="imageFile">Cargar Imagen</label>
-                <input
-                  type="file"
-                  className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                  id="imageFile"
-                  onChange={uploadHandler}
-                />
 
-                {loadingUpload && <div>Uploading....</div>}
-              </div>
               <div className="mb-4">
                 <label hidden htmlFor="reference">
                   Referencia
@@ -275,7 +240,6 @@ export default function AdminProductEditScreen() {
                 )}
               </div>
               <div>
-                <h2>Each</h2>
                 <div className="mb-4">
                   <label htmlFor="description">Descripción</label>
                   <input
@@ -293,7 +257,7 @@ export default function AdminProductEditScreen() {
                   )}
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="price">Price Each</label>
+                  <label htmlFor="price">Precio</label>
                   <input
                     type="text"
                     className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"

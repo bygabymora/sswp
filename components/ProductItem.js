@@ -43,11 +43,11 @@ export const ProductItem = ({ product }) => {
   };
 
   return (
-    <div className="block justify-center card  items-center text-center my-3 text-xs lg:text-lg">
+    <div className="block justify-center card  items-center text-center my-3 text-xs lg:text-[1rem]">
       <h2 className="font-bold my-2 h-[3.5rem] flex justify-center items-center">
         {product.name}
       </h2>
-      <div className="grid grid-cols-2 justify-between h-[16rem] ">
+      <div className="grid grid-cols-2 justify-between h-[14rem] ">
         <Link
           href={{ pathname: `products/${product.slug}` }}
           className="justify-center items-center text-center flex-1"
@@ -62,10 +62,12 @@ export const ProductItem = ({ product }) => {
             />
           </div>
         </Link>
-        <div className="flex flex-col justify-center items-center p-5">
+        <div className="flex flex-col  items-center p-5">
           <Link href={{ pathname: `products/${product.slug}` }}>
-            <h2 className="font-bold text-lg">{product.name}</h2>
-            <div className="mb-2 flex items-center flex-col text-center justify-center lg:block">
+            <div className="h-[7rem]">
+              <h2 className="font-bold text-sm ">{product.includes}</h2>
+            </div>
+            <div className="mb-2 flex items-center flex-col text-center justify-center lg:block ">
               <div className="font-bold mt-4">Cantidad</div>
               <div className="flex items-center justify-center flex-row">
                 <button
@@ -96,8 +98,7 @@ export const ProductItem = ({ product }) => {
           </Link>
         </div>
       </div>
-      <div className="grid grid-cols-2 justify-between h-[4rem] ">
-        <div className="font-bold text-xs ml-3">{product.includes}</div>
+      <div className="grid grid-cols-1 justify-between h-[2rem] ">
         <div className="flex justify-center items-center text-xl font-bold text-gray-500">
           ${formatNumberWithDots(product.price)}
         </div>
