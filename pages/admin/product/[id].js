@@ -203,11 +203,11 @@ export default function AdminProductEditScreen() {
                 <input
                   type="text"
                   className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                  id="image"
+                  id="image2"
                   {...register('image2')}
                 />
-                {errors.image && (
-                  <div className="text-red-500">{errors.image.message}</div>
+                {errors.image2 && (
+                  <div className="text-red-500">{errors.image2.message}</div>
                 )}
               </div>
               <div className="mb-4">
@@ -215,11 +215,11 @@ export default function AdminProductEditScreen() {
                 <input
                   type="text"
                   className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                  id="image"
+                  id="image3"
                   {...register('image3')}
                 />
-                {errors.image && (
-                  <div className="text-red-500">{errors.image.message}</div>
+                {errors.image3 && (
+                  <div className="text-red-500">{errors.image3.message}</div>
                 )}
               </div>
 
