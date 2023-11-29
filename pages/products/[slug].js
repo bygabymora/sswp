@@ -72,42 +72,39 @@ export default function ProductScreen(props) {
           Regresar a productos.
         </Link>
       </div>
-      <div className="product-grid">
-        <div className="product-image">
-          <Image
-            src={currentImage}
-            alt={product.reference}
-            width={500}
-            height={800}
-          />
-        </div>
-        <div className="image-thumbnails">
-          {[product.image, product.image2, product.image3].map((img, index) => (
+      <div className="grid grid-cols-1 md:grid-cols-2">
+        <div className="flex flex-col md:flex-row gap-2">
+          <div className="product-image col-span-1 md:mb-5">
             <Image
-              key={index}
-              src={img}
-              alt={`Thumbnail ${index}`}
-              onClick={() => changeImage(img)}
-              style={{ width: '100px', height: '100px', cursor: 'pointer' }}
-              width={100}
-              height={100}
+              src={currentImage}
+              alt={product.reference}
+              width={500}
+              height={800}
             />
-          ))}
+          </div>
+          <div className="flex flex-row md:flex-col justify-center md:justify-start col-span-1">
+            {[product.image, product.image2, product.image3].map(
+              (img, index) => (
+                <Image
+                  key={index}
+                  src={img}
+                  alt={`Thumbnail ${index}`}
+                  onClick={() => changeImage(img)}
+                  style={{ width: '100px', height: '100px', cursor: 'pointer' }}
+                  width={100}
+                  height={100}
+                />
+              )
+            )}
+          </div>
         </div>
         <div className="product-info">
-          <div className="">
-            <ul>
-              <li>
-                <h1 className="text-xl font-bold">{product.name}</h1>
-              </li>
-              <li>
-                <h1 className="text-xl">{product.description}</h1>
-              </li>
-            </ul>
+          <div className="flex items-center justify-center">
+            <h1 className="text-xl font-bold">{product.name}</h1>
           </div>
           <div>
             <div className="card p-5">
-              <div className="mb-2 flex items-center justify-center lg:block">
+              <div className="mb-2 flex items-center justify-center ">
                 <div className="font-bold mt-4">Cantidad &nbsp;</div>
                 <div className="flex items-center flex-row">
                   <button
