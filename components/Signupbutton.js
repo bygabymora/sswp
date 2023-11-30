@@ -51,7 +51,7 @@ const SignupButton = () => {
   return (
     <div className="relative">
       <Menu as="div" className="flex-col flex items-center w-fit h-full">
-        <Menu.Button className="font-bold">
+        <Menu.Button aria-label="usuario" className="font-bold">
           <BsPerson
             className="h-6 w-6  cursor-pointer place-self-center"
             onClick={handleMenuToggle}

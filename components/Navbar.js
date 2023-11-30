@@ -89,6 +89,7 @@ const Navbar = () => {
             <button
               className="nav__search-button"
               onClick={() => router.push('/')}
+              aria-label="Buscar"
             >
               <BiSearch className="nav__search-icon" />
             </button>
