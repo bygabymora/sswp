@@ -43,11 +43,11 @@ export const ProductItem = ({ product }) => {
   };
 
   return (
-    <div className=" justify-center card   items-center text-center my-3 text-xs surface2 lg:text-[1rem] md:h-[24rem] lg:h-[26rem] xl:h-[26rem] 2xl:h-[35rem] flex flex-col">
+    <div className=" justify-center card   items-center text-center my-3 text-xs surface2 lg:text-[1rem] md:h-[24rem] lg:h-[26rem] xl:h-[26rem] 2xl:h-[25rem] flex flex-col">
       <h2 className="font-bold my-2 h-[3.5rem] flex justify-center items-center">
         {product.name}
       </h2>
-      <div className="grid grid-cols-2 justify-between surface3 md:h-[14rem] lg:h-[16rem] xl:h-[16rem] 2xl:h-[25rem]">
+      <div className="grid grid-cols-2 justify-between surface3 md:h-[14rem] lg:h-[16rem] xl:h-[16rem] 2xl:h-[15rem]">
         <Link
           href={{ pathname: `products/${product.slug}` }}
           className="justify-center items-center text-center flex-1"
@@ -106,7 +106,7 @@ export const ProductItem = ({ product }) => {
 
       <div className="flex flex-row justify-center items-center p-5 gap-2">
         <button
-          className="primary-button align-middle mt-2"
+          className="primary-button align-middle sm:mt-2 mt-1 h-[4rem] sm:h-[3rem] w-full"
           type="button"
           onClick={addToCartHandler}
           disabled={product.countInStock === 0 || isOutOfStock}
@@ -114,7 +114,7 @@ export const ProductItem = ({ product }) => {
           {isOutOfStock ? 'Fuera de inventario' : 'Añadir al carrito'}
         </button>
         <button
-          className="primary-button align-middle mt-2"
+          className="primary-button align-middle sm:mt-2 mt-1 h-[4rem] sm:h-[3rem] w-full"
           type="button"
           onClick={buyNowHandler}
           disabled={product.countInStock === 0 || isOutOfStock}

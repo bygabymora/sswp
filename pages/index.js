@@ -142,7 +142,7 @@ function Carousel({ products }) {
         &nbsp;Previo
       </button>
       <div
-        className="carousel-items surface h-[26rem] md:h-[26rem] lg:h-[28rem] 2xl:h-[38rem] xl:h-[30rem] sm:h-[26rem]"
+        className="carousel-items surface h-[26rem] md:h-[26rem] lg:h-[28rem] 2xl:h-[25rem] xl:h-[30rem] sm:h-[26rem]"
         style={{
           transform: `translateX(-${currentSlide * (100 / visibleItems)}%)`,
         }}
