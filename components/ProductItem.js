@@ -95,14 +95,13 @@ export const ProductItem = ({ product }) => {
                 </button>
               </div>
             </div>
+            <div className="flex justify-center items-center text-xl font-bold text-gray-500">
+              ${formatNumberWithDots(product.price)}
+            </div>
           </Link>
         </div>
       </div>
-      <div className="grid grid-cols-1 justify-between h-[2rem] ">
-        <div className="flex justify-center items-center text-xl font-bold text-gray-500">
-          ${formatNumberWithDots(product.price)}
-        </div>
-      </div>
+
       <div className="flex flex-row justify-center items-center p-5 gap-2">
         <button
           className="primary-button align-middle mt-2"
