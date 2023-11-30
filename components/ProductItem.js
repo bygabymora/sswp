@@ -43,38 +43,31 @@ export const ProductItem = ({ product }) => {
   };
 
   return (
-    <div className="block justify-center card  items-center text-center my-3 text-xs lg:text-[1rem]">
+    <div className=" justify-center card   items-center text-center my-3 text-xs surface2 lg:text-[1rem] md:h-[24rem] lg:h-[26rem] xl:h-[26rem] 2xl:h-[35rem] flex flex-col">
       <h2 className="font-bold my-2 h-[3.5rem] flex justify-center items-center">
         {product.name}
       </h2>
-      <div className="grid grid-cols-2 justify-between h-[14rem] ">
+      <div className="grid grid-cols-2 justify-between surface3 md:h-[14rem] lg:h-[16rem] xl:h-[16rem] 2xl:h-[25rem]">
         <Link
           href={{ pathname: `products/${product.slug}` }}
           className="justify-center items-center text-center flex-1"
         >
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center ">
             <Image
               src={`${product.image}`}
               alt={product.description}
-              className="max-w-full h-auto lg:hidden"
-              width={800}
-              height={1000}
-            />
-          </div>
-          <div className="flex justify-center items-center">
-            <Image
-              src={`${product.image4}`}
-              alt={product.description}
-              className=" h-auto hidden lg:block"
+              className="max-w-full h-auto md:w-auto md:h-[14rem] surface3"
               width={800}
               height={1000}
             />
           </div>
         </Link>
-        <div className="flex flex-col  items-center p-5">
+        <div className="flex flex-col  items-center p-3">
           <Link href={{ pathname: `products/${product.slug}` }}>
-            <div className="h-[7rem]">
-              <h2 className="font-bold text-sm ">{product.includes}</h2>
+            <div className="h-[7rem] md:m-2">
+              <h2 className="font-bold text-sm md:text-[0.8rem] ">
+                {product.includes}
+              </h2>
             </div>
             <div className="mb-2 flex items-center flex-col text-center justify-center lg:block ">
               <div className="font-bold mt-4">Cantidad</div>
