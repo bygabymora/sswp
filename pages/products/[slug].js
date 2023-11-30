@@ -64,6 +64,7 @@ export default function ProductScreen(props) {
   console.log(product.image);
   console.log(product.image2);
   console.log(product.image3);
+  console.log(product.image4);
   return (
     <Layout title={product.manufacturer}>
       <div className="py-2">

@@ -56,7 +56,16 @@ export const ProductItem = ({ product }) => {
             <Image
               src={`${product.image}`}
               alt={product.description}
-              className="max-w-full h-auto"
+              className="max-w-full h-auto xl:hidden"
+              width={800}
+              height={1000}
+            />
+          </div>
+          <div className="flex justify-center items-center">
+            <Image
+              src={`${product.image}`}
+              alt={product.description}
+              className=" h-auto hidden xl:block"
               width={800}
               height={1000}
             />

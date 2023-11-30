@@ -64,6 +64,7 @@ export default function AdminProductEditScreen() {
         setValue('image', data.image);
         setValue('image2', data.image2);
         setValue('image3', data.image3);
+        setValue('image4', data.image4);
         setValue('reference', data.reference);
         setValue('size', data.size);
         setValue('description', data.description);
@@ -87,6 +88,7 @@ export default function AdminProductEditScreen() {
     image,
     image2,
     image3,
+    image4,
     size,
     reference,
     description,
@@ -103,6 +105,7 @@ export default function AdminProductEditScreen() {
         image,
         image2,
         image3,
+        image4,
         reference,
         size,
         description,
@@ -220,6 +223,18 @@ export default function AdminProductEditScreen() {
                 />
                 {errors.image3 && (
                   <div className="text-red-500">{errors.image3.message}</div>
+                )}
+              </div>
+              <div className="mb-4">
+                <label htmlFor="image4">Imagen 3</label>
+                <input
+                  type="text"
+                  className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                  id="image4"
+                  {...register('image4')}
+                />
+                {errors.image4 && (
+                  <div className="text-red-500">{errors.image4.message}</div>
                 )}
               </div>
 
