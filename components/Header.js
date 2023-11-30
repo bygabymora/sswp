@@ -79,6 +79,7 @@ const Header = () => {
               <div className="flex h-12 items-center">
                 <Link
                   href={{ pathname: '/cart' }}
+                  aria-label="Carrito de compras"
                   className="flex text-xl font-bold p-2"
                 >
                   <BsCart2 />

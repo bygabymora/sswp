@@ -40,36 +40,45 @@ const ContactUs = () => {
 
       <form className="contact__form" ref={form} onSubmit={sendEmail}>
         <div className="contact__form-div">
-          <lable className="contact__form-tag">Nombre*</lable>
+          <lable className="contact__form-tag " aria-label="Nombre">
+            Nombre*
+          </lable>
           <input
             type="text"
             name="user_name"
             className="contact__form-input"
             onChange={(e) => setName(e.target.value)}
             value={name}
+            aria-label="Nombre"
             required
           />
         </div>
 
         <div className="contact__form-div">
-          <lable className="contact__form-tag">Email*</lable>
+          <lable className="contact__form-tag" aria-label="Email">
+            Email*
+          </lable>
           <input
             type="email"
             name="user_email"
             className="contact__form-input"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
+            aria-label="Email"
             required
           />
         </div>
 
         <div className="contact__form-div">
-          <lable className="contact__form-tag">Mensaje*</lable>
+          <lable className="contact__form-tag" aria-label="Mensaje">
+            Mensaje*
+          </lable>
           <textarea
             name="message"
             className="contact__form-input contact__message"
             onChange={(e) => setMessage(e.target.value)}
             value={message}
+            aria-label="Mensaje"
             required
           />
         </div>
