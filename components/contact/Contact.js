@@ -17,7 +17,7 @@ const Contact = () => {
               Puedes contactarnos por WhatsApp o Email
             </div>
             <div className="contact__card">
-              <h3 className="contact__card-title">WhatsApp</h3>
+              <h2 className="contact__card-title">WhatsApp</h2>
               <a
                 className="contact__card-data"
                 href=" https://wa.me/573044450405 "
@@ -28,7 +28,7 @@ const Contact = () => {
             </div>
 
             <div className="contact__card">
-              <h3 className="contact__card-title">Email</h3>
+              <h2 className="contact__card-title">Email</h2>
               <Link
                 href="mailto:sujetadoreseasyhome@gmail.com"
                 className="contact__card-data"
