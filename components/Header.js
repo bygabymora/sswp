@@ -31,7 +31,7 @@ const Header = () => {
     <>
       <header className="header  flex flex-col">
         <div className="md:mx-auto md:max-w-[1600px] md:mb-2 flex text-right p-2 equal-button-size btn-contact items-center justify-center mr-4 py-2 sm:mb-0 text-white bg-title-color-dark hover:bg-title-color rounded sm:text-3xl lg:text-4xl md:justify-center md:order-last lg:hidden xl:hidden ">
-          <Link
+          <a
             className="flex flex-row "
             href="https://wa.me/573044450405"
             target="_blank"
@@ -39,7 +39,7 @@ const Header = () => {
           >
             <span className="text-lg">¿Necesitas ayuda? &nbsp;</span>
             <BsWhatsapp className="text-2xl" />
-          </Link>
+          </a>
         </div>
 
         <nav className="nav container">
@@ -65,7 +65,7 @@ const Header = () => {
               </Link>
             </div>
             <div className=" hidden md:mx-auto md:max-w-[1600px] md:mb-2   p-2 equal-button-size btn-contact items-center justify-center  py-2 sm:mb-0 text-white bg-title-color-dark hover:bg-title-color rounded sm:text-3xl lg:text-2xl md:justify-center md:order-last lg:block xl:block ">
-              <Link
+              <a
                 className="flex flex-row "
                 href="https://wa.me/573044450405"
                 target="_blank"
@@ -73,7 +73,7 @@ const Header = () => {
               >
                 <span className="text-lg">¿Necesitas ayuda? &nbsp;</span>
                 <BsWhatsapp className="text-2xl" />
-              </Link>
+              </a>
             </div>
             <div className="nav-reverse flex h-12 place-items-center gap-4">
               <div className="flex h-12 items-center">

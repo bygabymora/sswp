@@ -18,13 +18,13 @@ const Contact = () => {
             </div>
             <div className="contact__card">
               <h3 className="contact__card-title">WhatsApp</h3>
-              <Link
+              <a
                 className="contact__card-data"
                 href=" https://wa.me/573044450405 "
                 target="_blank"
               >
                 304 445 0405
-              </Link>
+              </a>
             </div>
 
             <div className="contact__card">

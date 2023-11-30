@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { BiMessageAdd } from 'react-icons/bi';
 import Layout from '../../../components/Layout';
-import Link from 'next/link';
+
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 
@@ -68,12 +68,13 @@ export default function ManufacturerForm() {
         <h2 className="setion__text self-center text-center mb-3">
           Si deseas hacer algún cambio a tu orden, puedes enviarnos un mensaje
           por Whatsapp{' '}
-          <Link
+          <a
             className="font-bold underline"
             href="https://wa.me/573044450405"
+            target="_blank"
           >
             304 4450405
-          </Link>{' '}
+          </a>{' '}
           o llena el siguiente formulario y nos contactaremos contigo lo más
           pronto posible.{' '}
           <span className="font-bold underline">
