@@ -102,8 +102,8 @@ export default function ProductScreen(props) {
           <div className="flex items-center justify-center">
             <h1 className="text-xl font-bold">{product.name}</h1>
           </div>
-          <div>
-            <div className="card p-5">
+          <div className="mb-4">
+            <div className="card  p-5">
               <div className="mb-2 flex items-center justify-center ">
                 <div className="font-bold mt-4">Cantidad &nbsp;</div>
                 <div className="flex items-center flex-row">
