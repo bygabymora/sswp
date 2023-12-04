@@ -43,7 +43,7 @@ const Banner = () => {
       <div className="absolute inset-0 w-full ">
         <Image
           className="object-cover w-full h-full hidden -z-40 lg:block xl:hidden"
-          src={Banner1}
+          src={Banner2}
           alt="Banner"
         />
         <Image
@@ -56,8 +56,8 @@ const Banner = () => {
       <div className="relative z-10 grid lg:grid-cols-1 md:grid-cols-1 banner-container mx-auto px-4 py-8 items-center  w-[100%] ">
         <div className="absolute inset-0 w-full -z-40">
           <Image
-            className="object-cover w-full h-full lg:hidden "
-            src={Banner2}
+            className="object-cover w-full  lg:hidden "
+            src={Banner1}
             alt="Banner"
           />
         </div>
