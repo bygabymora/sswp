@@ -84,7 +84,10 @@ export default function ProductScreen(props) {
           Descubre todos nuestros productos.
         </Link>
       </div>
-      <CountdownTimer />
+      {(product.slug === 'Psujetadoresbrochex4' ||
+        product.slug === 'Psujetadoresliguerox4' ||
+        product.slug === 'Psujetadoresx4' ||
+        product.slug === 'Psujetadoresx7') && <CountdownTimer />}
       <br />
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div className="block md:hidden">
