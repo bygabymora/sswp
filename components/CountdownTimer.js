@@ -8,18 +8,29 @@ const CountdownTimer = () => {
   const { countdownStart } = state;
 
   useEffect(() => {
+    let startTime;
+
     if (!countdownStart) {
-      dispatch({ type: 'SET_COUNTDOWN_START' });
-    }
-    // Check if there is a countdown start time stored in cookies
-    let startTime = Cookies.get('countdownStart');
-    if (!startTime) {
-      // If not, set the current time as the start time and store it in cookies
-      startTime = new Date();
-      Cookies.set('countdownStart', startTime.toISOString(), { expires: 5 });
+      // Check if there is a countdown start time stored in cookies
+      startTime = Cookies.get('countdownStart');
+
+      if (!startTime) {
+        // If not, set the current time as the start time and store it in cookies
+        startTime = new Date();
+        Cookies.set('countdownStart', startTime.toISOString(), {
+          expires: 0.21,
+        }); // 5 hours expiration
+        dispatch({
+          type: 'SET_COUNTDOWN_START',
+          payload: startTime.toISOString(),
+        });
+      } else {
+        // Parse the stored time
+        startTime = new Date(startTime);
+      }
     } else {
-      // Parse the stored time
-      startTime = new Date(startTime);
+      // Use the start time from the store
+      startTime = new Date(countdownStart);
     }
 
     // Function to update the time left
@@ -46,7 +57,7 @@ const CountdownTimer = () => {
   // Format time left as hh:mm:ss
   const formatTimeLeft = () => {
     if (timeLeft === null) return 'Loading...';
-    if (timeLeft === 0) return '¡El tiempo ha finalizado!';
+    if (timeLeft === 0) return 'El tiempo ha finalizado!';
 
     let seconds = Math.floor((timeLeft / 1000) % 60);
     let minutes = Math.floor((timeLeft / 1000 / 60) % 60);
