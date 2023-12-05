@@ -14,6 +14,7 @@ import { RiSecurePaymentLine } from 'react-icons/ri';
 import { TbTruckDelivery } from 'react-icons/tb';
 import Mercadopago from '../../public/images/mercadopago.svg';
 import General from '../../public/images/general.svg';
+import { PiSealCheckDuotone } from 'react-icons/pi';
 
 export default function ProductScreen(props) {
   const formatNumberWithDots = (number) => {
@@ -66,6 +67,10 @@ export default function ProductScreen(props) {
     setShowPopup(false);
     router.push('/cart');
   };
+  const buyNowHandler = async () => {
+    addToCartHandler();
+    router.push('Login?redirect=/shipping');
+  };
   console.log(product.image);
   console.log(product.image2);
   console.log(product.image3);
@@ -75,7 +80,7 @@ export default function ProductScreen(props) {
       <div className="py-2">
         <Link href={'/products'} className="flex gap-4 items-center">
           <BsBackspace />
-          Regresar a productos.
+          Descubre todos nuestros productos.
         </Link>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2">
@@ -87,18 +92,22 @@ export default function ProductScreen(props) {
 
             <div className=" mt-3 text-center text-xs flex flex-row text-green-500 justify-center  items-center">
               <RiSecurePaymentLine className="text-2xl " />
-              &nbsp; Tu compra siempre protegida por &nbsp;
+              &nbsp; Tu compra siempre protegida &nbsp;
               <Image
                 src={Mercadopago}
                 alt="Mercadopago"
-                width={75}
-                height={30}
+                width={60}
+                height={24}
               />
               .
             </div>
             <div className=" mt-3 text-center flex flex-row text-green-500 justify-center text-xs items-center">
               <TbTruckDelivery className="text-2xl" /> &nbsp; También puedes
               pagar contraentregra.
+            </div>
+            <div className=" mt-3 text-center flex text-xs flex-row text-green-700 justify-center font-bold items-center">
+              <PiSealCheckDuotone className="text-2xl" /> &nbsp; Garatía de
+              satisfacción de 30 días.
             </div>
           </div>
         </div>
@@ -128,11 +137,13 @@ export default function ProductScreen(props) {
           </div>
         </div>
         <div className="product-info">
-          <div className="flex items-center flex-col justify-center">
+          <div className="flex items-center flex-col justify-center mt-3">
             <h1 className="text-xl font-bold">{product.name}</h1>
-            <p>{product.includes}</p>
+            <p className="text-lg text-center mt-2">
+              {product.includes} &nbsp; {product.description}
+            </p>
           </div>
-          <br />
+
           <div className="mb-4">
             <div className="card  p-5">
               <div className="mb-2 flex items-center justify-center ">
@@ -178,14 +189,24 @@ export default function ProductScreen(props) {
                     : 'En inventario'}
                 </div>
               </div>
-              <button
-                className="primary-button cart-button"
-                type="button"
-                onClick={addToCartHandler}
-                disabled={product.countInStock === 0 || isOutOfStock}
-              >
-                {isOutOfStock ? 'Fuera de inventario' : 'Añadir al carrito'}
-              </button>
+              <div className="mb-2 flex justify-between gap-1">
+                <button
+                  className="primary-button cart-button"
+                  type="button"
+                  onClick={addToCartHandler}
+                  disabled={product.countInStock === 0 || isOutOfStock}
+                >
+                  {isOutOfStock ? 'Fuera de inventario' : 'Añadir al carrito'}
+                </button>
+                <button
+                  className="primary-button cart-button"
+                  type="button"
+                  onClick={buyNowHandler}
+                  disabled={product.countInStock === 0 || isOutOfStock}
+                >
+                  {isOutOfStock ? 'Fuera de inventario' : 'Comprar ahora'}
+                </button>
+              </div>
               {showPopup && (
                 <div className="popup">
                   <div className="popup-content">
@@ -238,7 +259,7 @@ export default function ProductScreen(props) {
 
                 <div className=" mt-3 text-center flex flex-row text-green-500 justify-center">
                   <RiSecurePaymentLine className="text-2xl " />
-                  &nbsp; Tu compra siempre protegida por &nbsp;
+                  &nbsp; Tu compra siempre protegida con &nbsp;
                   <Image
                     src={Mercadopago}
                     alt="Mercadopago"
@@ -251,12 +272,16 @@ export default function ProductScreen(props) {
                   <TbTruckDelivery className="text-2xl" /> &nbsp; También puedes
                   pagar contraentregra.
                 </div>
+                <div className=" mt-3 text-center flex flex-row text-green-700 justify-center font-bold">
+                  <PiSealCheckDuotone className="text-2xl" /> &nbsp; Garatía de
+                  satisfacción por 30 días después de la entrega.
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
+      <br />
       <Testimonios />
     </Layout>
   );
