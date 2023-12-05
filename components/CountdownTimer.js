@@ -43,6 +43,7 @@ const CountdownTimer = () => {
         setTimeLeft(timeLeft);
       } else {
         setTimeLeft(0);
+        Cookies.remove('countdownStart');
       }
     };
 
@@ -56,8 +57,9 @@ const CountdownTimer = () => {
 
   // Format time left as hh:mm:ss
   const formatTimeLeft = () => {
-    if (timeLeft === null) return 'Loading...';
-    if (timeLeft === 0) return 'El tiempo ha finalizado!';
+    if (timeLeft === null || timeLeft === 0) {
+      return null;
+    }
 
     let seconds = Math.floor((timeLeft / 1000) % 60);
     let minutes = Math.floor((timeLeft / 1000 / 60) % 60);
