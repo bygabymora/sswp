@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import { trackCustomEvent } from '../../utils/facebookPixel';
+import { trackCustomEvent } from '../utils/facebookPixel';
 
 export const ProductItem = ({ product }) => {
   const formatNumberWithDots = (number) => {
