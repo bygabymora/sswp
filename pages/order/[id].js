@@ -336,7 +336,7 @@ function OrderScreen() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const { trackCustomEvent } = require('../utils/facebookPixel');
+      const { trackCustomEvent } = require('../../utils/facebookPixel');
       trackCustomEvent('Purchase', {
         value: order.totalPrice,
         currency: 'COP', // Change the currency if needed
@@ -367,7 +367,7 @@ function OrderScreen() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const paymentStatus = urlParams.get('status');
-    const { trackCustomEvent } = require('../utils/facebookPixel');
+    const { trackCustomEvent } = require('../../utils/facebookPixel');
     if (paymentStatus === 'success') {
       if (typeof window !== 'undefined') {
         trackCustomEvent('Purchase', {

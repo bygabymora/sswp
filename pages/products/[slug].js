@@ -27,7 +27,7 @@ export default function ProductScreen(props) {
     const {
       trackCustomEvent,
       trackPageView,
-    } = require('../utils/facebookPixel');
+    } = require('../../utils/facebookPixel');
     if (typeof window !== 'undefined') {
       trackPageView();
       trackCustomEvent('ViewProduct', { slug: product.slug });
