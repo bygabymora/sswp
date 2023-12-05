@@ -214,7 +214,11 @@ img {
 /* Assuming each ProductItem has a fixed width */
 .carousel-item {
   flex: 0 0 auto;
-  width: 100%; /* default to 3 items visible */
+  width: calc(100% / 3); /* default to 3 items visible */
+}
+.carousel-item2 {
+  flex: 0 0 auto;
+  width: 100%;
 }
 
 @media (max-width: 768px) {

@@ -39,7 +39,7 @@ function Carousel() {
       </button>
       <div className="carousel-items">
         <div
-          className="carousel-item px-3 lg:px-0"
+          className="carousel-item2 px-3 lg:px-0"
           key={testimonios[currentSlide].id}
         >
           <Testimonio testimonio={testimonios[currentSlide]} />
