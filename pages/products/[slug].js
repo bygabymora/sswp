@@ -1,4 +1,5 @@
 import Layout from '../../components/Layout';
+import Testimonios from '../../components/Testimonios';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { BsBackspace, BsCart2 } from 'react-icons/bs';
@@ -12,6 +13,7 @@ import { toast } from 'react-toastify';
 import { RiSecurePaymentLine } from 'react-icons/ri';
 import { TbTruckDelivery } from 'react-icons/tb';
 import Mercadopago from '../../public/images/mercadopago.svg';
+import General from '../../public/images/general.svg';
 
 export default function ProductScreen(props) {
   const formatNumberWithDots = (number) => {
@@ -23,7 +25,7 @@ export default function ProductScreen(props) {
   const [showPopup, setShowPopup] = useState(false);
   const [isOutOfStock, setIsOutOfStock] = useState(false);
   const [qty, setQty] = useState(1);
-  const [currentImage, setCurrentImage] = useState(product.image);
+  const [currentImage, setCurrentImage] = useState(General);
   const changeImage = (image) => {
     setCurrentImage(image);
   };
@@ -100,7 +102,7 @@ export default function ProductScreen(props) {
             </div>
           </div>
         </div>
-        <div className="flex flex-col md:flex-row gap-2">
+        <div className="flex flex-col md:flex-row gap-2 items-center">
           <div className="product-image col-span-1 md:mb-5">
             <Image
               src={currentImage}
@@ -109,15 +111,15 @@ export default function ProductScreen(props) {
               height={800}
             />
           </div>
-          <div className="flex flex-row md:flex-col justify-center md:justify-start col-span-1">
-            {[product.image, product.image2, product.image3].map(
+          <div className="flex flex-row md:flex-col justify-center md:justify-start col-span-1 ">
+            {[General, product.image4, product.image2, product.image3].map(
               (img, index) => (
                 <Image
                   key={index}
                   src={img}
                   alt={`Thumbnail ${index}`}
                   onClick={() => changeImage(img)}
-                  style={{ width: '100px', height: '100px', cursor: 'pointer' }}
+                  style={{ width: '80px', height: '100px', cursor: 'pointer' }}
                   width={100}
                   height={100}
                 />
@@ -126,9 +128,11 @@ export default function ProductScreen(props) {
           </div>
         </div>
         <div className="product-info">
-          <div className="flex items-center justify-center">
+          <div className="flex items-center flex-col justify-center">
             <h1 className="text-xl font-bold">{product.name}</h1>
+            <p>{product.includes}</p>
           </div>
+          <br />
           <div className="mb-4">
             <div className="card  p-5">
               <div className="mb-2 flex items-center justify-center ">
@@ -252,6 +256,8 @@ export default function ProductScreen(props) {
           </div>
         </div>
       </div>
+
+      <Testimonios />
     </Layout>
   );
 }

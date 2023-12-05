@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { IoMdStar } from 'react-icons/io';
 
 export default function Testimonio({ testimonial }) {
   return (
@@ -15,7 +16,14 @@ export default function Testimonio({ testimonial }) {
       </div>
 
       <div className="testimonial-content">
-        <h3 className="font-bold">{testimonial?.title}</h3>
+        <div className="flex flex-row items-center text-center justify-center">
+          <h1 className="font-bold">{testimonial?.title} &nbsp;</h1>
+          <IoMdStar />
+          <IoMdStar />
+          <IoMdStar />
+          <IoMdStar />
+          <IoMdStar />
+        </div>
         <p>{testimonial?.description}</p>
         <p className="font-bold">- {testimonial?.name}</p>
       </div>
