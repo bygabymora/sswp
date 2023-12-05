@@ -15,10 +15,10 @@ export function initFacebookPixel(pixelId) {
   }
 }
 
-export function trackPageView() {
+export function trackPageView(event, data) {
   if (typeof window !== 'undefined') {
     if (isBrowser && window.fbq) {
-      ReactPixel.pageView();
+      ReactPixel.pageView(event, data);
     }
   }
 }
