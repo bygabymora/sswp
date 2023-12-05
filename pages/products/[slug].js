@@ -20,11 +20,11 @@ import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
 export default function ProductScreen(props) {
-  const trackPageView = dynamic(() => import('../utils/facebookPixel'), {
+  const trackPageView = dynamic(() => import('../../utils/facebookPixel'), {
     ssr: false,
   });
 
-  const trackCustomEvent = dynamic(() => import('../utils/facebookPixel'), {
+  const trackCustomEvent = dynamic(() => import('../../utils/facebookPixel'), {
     ssr: false,
   });
   const formatNumberWithDots = (number) => {

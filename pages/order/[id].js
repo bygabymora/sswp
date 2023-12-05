@@ -53,7 +53,7 @@ function reducer(state, action) {
 }
 
 function OrderScreen() {
-  const trackCustomEvent = dynamic(() => import('../utils/facebookPixel'), {
+  const trackCustomEvent = dynamic(() => import('../../utils/facebookPixel'), {
     ssr: false,
   });
   const formatNumberWithDots = (number) => {
