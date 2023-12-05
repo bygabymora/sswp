@@ -10,7 +10,7 @@ const Banner = () => {
   const router = useRouter();
 
   const handleCallButtonClick = () => {
-    window.location.href = 'tel:8132520727';
+    window.location.href = 'tel:3044450445';
   };
 
   const handleLinkClick = (section) => {
