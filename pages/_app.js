@@ -5,7 +5,7 @@ import { SessionProvider, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import CookieAcceptancePopup from '../components/CookieAcceptancePopup';
-import initFacebookPixel from '../utils/facebookPixel';
+import { initFacebookPixel } from '../utils/facebookPixel';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   React.useEffect(() => {
