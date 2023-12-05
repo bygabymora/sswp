@@ -24,14 +24,9 @@ export default function ProductScreen(props) {
   };
   const { product } = props;
   useEffect(() => {
-    const {
-      trackCustomEvent,
-      trackPageView,
-    } = require('../../utils/facebookPixel');
+    const { trackCustomEvent } = require('../../utils/facebookPixel');
     if (typeof window !== 'undefined') {
-      trackPageView();
       trackCustomEvent('ViewProduct', { slug: product.slug });
-
       trackCustomEvent('AddToCart', {
         content_ids: product._id,
         content_name: product.name,
