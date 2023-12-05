@@ -11,7 +11,7 @@ export default function Products({ products }) {
         Productos
       </h2>
       <p className="text-center text-sm md:text-lg">
-        ¡Escoje los sujetadores que más se adapten a ti!
+        ¡Escoge los sujetadores que más se adapten a ti!
       </p>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
         {products.map((product) => (
