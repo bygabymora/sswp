@@ -20,9 +20,9 @@ export const ProductItem = ({ product }) => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const { trackCustomEvent } = require('../utils/facebookPixel');
-      trackCustomEvent('Product viewed', product.name);
+      trackCustomEvent('Product viewed', { slug: product.slug });
     }
-  }, [product._id, product.name, product.price, qty]);
+  }, [product.slug]);
 
   const addToCartHandler = async () => {
     const exisItem = cart.cartItems.find((x) => x.slug === product.slug);
