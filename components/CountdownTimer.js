@@ -16,7 +16,7 @@ const CountdownTimer = () => {
     if (!startTime) {
       // If not, set the current time as the start time and store it in cookies
       startTime = new Date();
-      Cookies.set('countdownStart', startTime.toISOString(), { expires: 7 });
+      Cookies.set('countdownStart', startTime.toISOString(), { expires: 5 });
     } else {
       // Parse the stored time
       startTime = new Date(startTime);
@@ -46,7 +46,7 @@ const CountdownTimer = () => {
   // Format time left as hh:mm:ss
   const formatTimeLeft = () => {
     if (timeLeft === null) return 'Loading...';
-    if (timeLeft === 0) return 'Time is up!';
+    if (timeLeft === 0) return '¡El tiempo ha finalizado!';
 
     let seconds = Math.floor((timeLeft / 1000) % 60);
     let minutes = Math.floor((timeLeft / 1000 / 60) % 60);

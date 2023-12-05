@@ -67,12 +67,12 @@ function reducer(state, action) {
         },
       };
     case 'ACCEPT_COOKIES':
-      Cookies.set('cookieAccepted', true);
+      Cookies.set('cookieAccepted', true, { expires: 365 });
       return { ...state, cookieAccepted: true };
 
     case 'SET_COUNTDOWN_START': {
       const startTime = action.payload || new Date().toISOString();
-      Cookies.set('countdownStart', startTime, { expires: 7 });
+      Cookies.set('countdownStart', startTime, { expires: 5 });
       return { ...state, countdownStart: startTime };
     }
 
