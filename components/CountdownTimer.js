@@ -58,7 +58,7 @@ const CountdownTimer = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-gray-400 to-red-400 text-white p-4 rounded-md shadow-lg flex justify-between items-center">
+    <div className="bg-gradient-to-r from-gray-200 to-red-400 text-gray-600 p-4 rounded-md shadow-lg flex justify-between items-center">
       <div>
         <h2 className="text-lg font-bold">¡No pierdas esta oportudidad!</h2>
         <p className="text-sm">Compra ahora y disfruta de esta oferta.</p>
