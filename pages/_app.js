@@ -5,12 +5,15 @@ import { SessionProvider, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import CookieAcceptancePopup from '../components/CookieAcceptancePopup';
-import { initFacebookPixel } from '../utils/facebookPixel';
+import dynamic from 'next/dynamic';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+  const initFacebookPixel = dynamic(() => import('../utils/facebookPixel'), {
+    ssr: false,
+  });
   React.useEffect(() => {
     initFacebookPixel('462439775168143');
-  }, []);
+  }, [initFacebookPixel]);
   return (
     <SessionProvider session={session}>
       <StoreProvider>

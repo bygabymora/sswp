@@ -6,9 +6,12 @@ import { useContext } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import { trackCustomEvent } from '../utils/facebookPixel';
+import dynamic from 'next/dynamic';
 
 export const ProductItem = ({ product }) => {
+  const trackCustomEvent = dynamic(() => import('../utils/facebookPixel'), {
+    ssr: false,
+  });
   const formatNumberWithDots = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   };

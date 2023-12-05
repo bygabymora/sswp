@@ -10,7 +10,8 @@ import { useSession } from 'next-auth/react';
 import { AiTwotoneLock } from 'react-icons/ai';
 import Mercadopago from '../../public/images/assets/mercadopago.png';
 import emailjs from '@emailjs/browser';
-import { trackCustomEvent } from '../../utils/facebookPixel';
+
+import dynamic from 'next/dynamic';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -52,6 +53,9 @@ function reducer(state, action) {
 }
 
 function OrderScreen() {
+  const trackCustomEvent = dynamic(() => import('../utils/facebookPixel'), {
+    ssr: false,
+  });
   const formatNumberWithDots = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   };
@@ -398,7 +402,7 @@ function OrderScreen() {
       );
       handleAprove();
     }
-  }, [order._id]);
+  }, [order._id, orderId, totalPrice, trackCustomEvent]);
 
   const handleButtonClick = () => {
     handlePayment();

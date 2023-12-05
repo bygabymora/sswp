@@ -17,9 +17,16 @@ import General from '../../public/images/general.svg';
 import { PiSealCheckDuotone } from 'react-icons/pi';
 import CountdownTimer from '../../components/CountdownTimer';
 import { useEffect } from 'react';
-import { trackPageView, trackCustomEvent } from '../../utils/facebookPixel';
+import dynamic from 'next/dynamic';
 
 export default function ProductScreen(props) {
+  const trackPageView = dynamic(() => import('../utils/facebookPixel'), {
+    ssr: false,
+  });
+
+  const trackCustomEvent = dynamic(() => import('../utils/facebookPixel'), {
+    ssr: false,
+  });
   const formatNumberWithDots = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   };
@@ -27,7 +34,7 @@ export default function ProductScreen(props) {
   useEffect(() => {
     trackPageView();
     trackCustomEvent('ViewProduct', { slug: product.slug });
-  }, [product.slug]);
+  }, [product.slug, trackCustomEvent, trackPageView]);
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const [showPopup, setShowPopup] = useState(false);
