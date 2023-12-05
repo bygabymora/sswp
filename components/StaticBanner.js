@@ -33,9 +33,10 @@ const StaticBanner = () => {
   return (
     <div className="static-banner-container md:mt-10 mt-3">
       <div className="banner-content">
-        <h2 className="banner-title">
-          Averigua porque nuestros clientes nos prefieren
-        </h2>
+        <h1 className="banner-title">
+          ¡Con más de 20 años de experiencia en el mercado!
+        </h1>
+        <h2>Averigua porque nuestros clientes nos prefieren.</h2>
         <p className="banner-description font-bold text-[2rem]">
           ¡Todas las órdenes mayores de $80.000 tienen envío gratis a todo
           Colombia!

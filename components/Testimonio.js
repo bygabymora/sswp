@@ -4,7 +4,7 @@ import { IoMdStar } from 'react-icons/io';
 
 export default function Testimonio({ testimonio }) {
   return (
-    <div className="testimonial-container h-[30%]">
+    <div className="testimonial-container">
       <div className="avatar-container">
         <Image
           src={testimonio?.avatar}

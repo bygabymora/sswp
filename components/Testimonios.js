@@ -32,12 +32,12 @@ function Carousel() {
       <button
         onClick={prevSlide}
         disabled={currentSlide === 0}
-        className="w-full mt-3 flex flex-row items-center justify-center mb-2"
+        className="w-full mt-3 flex flex-row items-center justify-center"
       >
         <BiSkipPreviousCircle className="text-lg" />
         &nbsp;Previo
       </button>
-      <div className="carousel-items">
+      <div className="carousel-items w-full mt-3 flex flex-row items-center justify-center mb-2">
         <div
           className="carousel-item2 px-3 lg:px-0"
           key={testimonios[currentSlide].id}
@@ -61,14 +61,6 @@ export default function Testimonios({ testimonios }) {
   return (
     <section className="bg-white">
       <div className="container mx-auto">
-        <div className="flex flex-col items-center justify-center">
-          <h2 className="text-3xl font-bold text-center text-gray-800">
-            Testimonios
-          </h2>
-          <p className="text-lg text-center text-gray-600">
-            Lo que dicen nuestros clientes
-          </p>
-        </div>
         <div className="flex flex-col items-center justify-center w-full">
           <Carousel testimonios={testimonios} className="w-full" />
         </div>

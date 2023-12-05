@@ -7,10 +7,6 @@ const Contact = () => {
   return (
     <section className="contact" id="contacto">
       <div className="contact__container">
-        <h1 className="section__title">¡Contáctanos!</h1>
-        <span className="section__subtitle">
-          Contáctanos si tienes alguna duda o pregunta.
-        </span>
         <div className="contact__container container grid">
           <div className="contact__content">
             <div className="contact__title text-black">

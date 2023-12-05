@@ -178,19 +178,37 @@ export default function Home({ products }) {
     <Layout title="Home Page">
       <StaticBanner />
       <Banner />
-
-      <h2 className="section__title my-2" id="productos">
-        Nuestros Productos
-      </h2>
-      <div>
-        <p className="text-center text-sm md:text-lg">
-          ¡Escoge los sujetadores que más se ajusten a tu forma de vida!
+      <div className="my-5">
+        <h1
+          className="section__title text-3xl font-bold text-center text-gray-800"
+          id="productos"
+        >
+          Nuestros Productos
+        </h1>
+        <div>
+          <p className="text-lg text-center text-gray-600">
+            ¡Escoge los sujetadores que más se ajusten a tu forma de vida!
+          </p>
+        </div>
+      </div>
+      <Carousel products={products} />
+      <div className="my-5">
+        <h1 className="section__title text-3xl font-bold text-center text-gray-800">
+          Testimonios
+        </h1>
+        <p className="text-lg text-center text-gray-600">
+          Lo que dicen nuestros clientes
         </p>
       </div>
-
-      <Carousel products={products} />
-
       <Testimonios />
+      <div className="my-5">
+        <h1 className="section__title text-3xl font-bold text-center text-gray-800">
+          ¡Contáctanos!
+        </h1>
+        <p className="text-lg text-center text-gray-600">
+          Contáctanos si tienes alguna duda o pregunta.
+        </p>
+      </div>
 
       <Contact className="mt-2" />
     </Layout>
