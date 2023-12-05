@@ -16,12 +16,18 @@ import Mercadopago from '../../public/images/mercadopago.svg';
 import General from '../../public/images/general.svg';
 import { PiSealCheckDuotone } from 'react-icons/pi';
 import CountdownTimer from '../../components/CountdownTimer';
+import { useEffect } from 'react';
+import { trackPageView, trackCustomEvent } from '../../utils/facebookPixel';
 
 export default function ProductScreen(props) {
   const formatNumberWithDots = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   };
   const { product } = props;
+  useEffect(() => {
+    trackPageView();
+    trackCustomEvent('ViewProduct', { slug: product.slug });
+  }, [product.slug]);
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const [showPopup, setShowPopup] = useState(false);
@@ -44,7 +50,14 @@ export default function ProductScreen(props) {
     const exisItem = state.cart.cartItems.find((x) => x.slug === product.slug);
     const quantity = exisItem ? exisItem.quantity + qty : qty;
     const { data } = await axios.get(`/api/products/${product._id}`);
-
+    trackCustomEvent('AddToCart', {
+      content_ids: product._id,
+      content_name: product.name,
+      content_type: 'product',
+      value: product.price,
+      currency: 'COP',
+      quantity: qty, // The quantity being added to the cart
+    });
     if (data.countInStock < quantity) {
       setIsOutOfStock(true);
       return;
