@@ -184,7 +184,7 @@ export default function Home({ products }) {
       </h2>
       <div>
         <p className="text-center text-sm md:text-lg">
-          ¡Escoge los sujetadores que más se adapten a ti!
+          ¡Escoge los sujetadores que más se ajusten a tu forma de vida!
         </p>
       </div>
 
