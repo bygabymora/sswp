@@ -41,7 +41,7 @@ export default function ProductScreen(props) {
         quantity: qty,
       });
     }
-  }, [product.slug]);
+  }, [product._id, product.name, product.price, product.slug, qty]);
 
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
