@@ -1,30 +1,32 @@
 import ReactPixel from 'react-facebook-pixel';
 
+const isBrowser = typeof window !== 'undefined';
+
 const options = {
   autoConfig: true,
   debug: false,
 };
 
 export function initFacebookPixel(pixelId) {
-  if (!window.fbq) {
+  if (isBrowser && !window.fbq) {
     ReactPixel.init(pixelId, null, options);
   }
 }
 
 export function trackPageView() {
-  if (window.fbq) {
+  if (isBrowser && window.fbq) {
     ReactPixel.pageView();
   }
 }
 
 export function trackCustomEvent(event, data) {
-  if (window.fbq) {
+  if (isBrowser && window.fbq) {
     ReactPixel.track(event, data);
   }
 }
 
 export function trackAddToCart(data) {
-  if (window.fbq) {
+  if (isBrowser && window.fbq) {
     ReactPixel.track('AddToCart', data);
   }
 }
