@@ -24,7 +24,9 @@ function reducer(state, action) {
           )
         : [...state.cart.cartItems, newItem];
 
-      Cookies.set('cart', JSON.stringify({ ...state.cart, cartItems }));
+      Cookies.set('cart', JSON.stringify({ ...state.cart, cartItems }), {
+        expires: 365,
+      });
 
       return { ...state, cart: { ...state.cart, cartItems } };
     }
@@ -32,7 +34,9 @@ function reducer(state, action) {
       const cartItems = state.cart.cartItems.filter(
         (item) => item.slug !== action.payload.slug
       );
-      Cookies.set('cart', JSON.stringify({ ...state.cart, cartItems }));
+      Cookies.set('cart', JSON.stringify({ ...state.cart, cartItems }), {
+        expires: 365,
+      });
       return { ...state, cart: { ...state.cart, cartItems } };
     }
 
