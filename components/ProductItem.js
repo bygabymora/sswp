@@ -6,12 +6,9 @@ import { useContext } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
+import { trackCustomEvent } from '../utils/facebookPixel';
 
 export const ProductItem = ({ product }) => {
-  const trackCustomEvent = dynamic(() => import('../utils/facebookPixel'), {
-    ssr: false,
-  });
   const formatNumberWithDots = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   };
@@ -25,14 +22,16 @@ export const ProductItem = ({ product }) => {
     const exisItem = cart.cartItems.find((x) => x.slug === product.slug);
     const quantity = exisItem ? exisItem.quantity + qty : qty;
     const { data } = await axios.get(`/api/products/${product._id}`);
-    trackCustomEvent('AddToCart', {
-      content_ids: product._id,
-      content_name: product.name,
-      content_type: 'product',
-      value: product.price,
-      currency: 'COP',
-      quantity: qty, // The quantity being added to the cart
-    });
+    if (typeof window !== 'undefined') {
+      trackCustomEvent('AddToCart', {
+        content_ids: product._id,
+        content_name: product.name,
+        content_type: 'product',
+        value: product.price,
+        currency: 'COP',
+        quantity: qty, // The quantity being added to the cart
+      });
+    }
     if (data.countInStock < quantity) {
       setIsOutOfStock(true);
       return;

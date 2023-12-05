@@ -10,8 +10,7 @@ import { useSession } from 'next-auth/react';
 import { AiTwotoneLock } from 'react-icons/ai';
 import Mercadopago from '../../public/images/assets/mercadopago.png';
 import emailjs from '@emailjs/browser';
-
-import dynamic from 'next/dynamic';
+import { trackCustomEvent } from '../../utils/facebookPixel';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -53,9 +52,6 @@ function reducer(state, action) {
 }
 
 function OrderScreen() {
-  const trackCustomEvent = dynamic(() => import('../../utils/facebookPixel'), {
-    ssr: false,
-  });
   const formatNumberWithDots = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   };
@@ -345,12 +341,14 @@ function OrderScreen() {
       const { data } = await axios.put(`/api/orders/${order._id}/pay`);
       dispatch({ type: 'PAY_SUCCESS', payload: data });
       toast.success('La orden se ha pagado de manera exitosa.');
-      trackCustomEvent('Purchase', {
-        value: order.totalPrice,
-        currency: 'COP', // Change the currency if needed
-        content_ids: orderId,
-        content_type: 'product',
-      });
+      if (typeof window !== 'undefined') {
+        trackCustomEvent('Purchase', {
+          value: order.totalPrice,
+          currency: 'COP', // Change the currency if needed
+          content_ids: orderId,
+          content_type: 'product',
+        });
+      }
       setPaymentComplete(true);
       sendEmail3();
       setTimeout(() => {
@@ -367,12 +365,14 @@ function OrderScreen() {
     const paymentStatus = urlParams.get('status');
 
     if (paymentStatus === 'success') {
-      trackCustomEvent('Purchase', {
-        value: totalPrice,
-        currency: 'COP',
-        content_ids: orderId,
-        content_type: 'product',
-      });
+      if (typeof window !== 'undefined') {
+        trackCustomEvent('Purchase', {
+          value: totalPrice,
+          currency: 'COP',
+          content_ids: orderId,
+          content_type: 'product',
+        });
+      }
       const handleAprove = async () => {
         try {
           dispatch({ type: 'PAY_REQUEST' });
@@ -402,7 +402,7 @@ function OrderScreen() {
       );
       handleAprove();
     }
-  }, [order._id, orderId, totalPrice, trackCustomEvent]);
+  }, [order._id, orderId, totalPrice]);
 
   const handleButtonClick = () => {
     handlePayment();
