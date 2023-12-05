@@ -9,6 +9,9 @@ import db from '../../utils/db';
 import Product from '../../models/Product';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { RiSecurePaymentLine } from 'react-icons/ri';
+import { TbTruckDelivery } from 'react-icons/tb';
+import Mercadopago from '../../public/images/mercadopago.svg';
 
 export default function ProductScreen(props) {
   const formatNumberWithDots = (number) => {
@@ -74,6 +77,29 @@ export default function ProductScreen(props) {
         </Link>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2">
+        <div className="block md:hidden">
+          <div className="card 2 p-5 static-banner-container3 ">
+            <div className="font-bold text-center text-red-500">
+              ¡Envío GRATIS por compras superiores a $80.000!
+            </div>
+
+            <div className=" mt-3 text-center text-xs flex flex-row text-green-500 justify-center  items-center">
+              <RiSecurePaymentLine className="text-2xl " />
+              &nbsp; Tu compra siempre protegida por &nbsp;
+              <Image
+                src={Mercadopago}
+                alt="Mercadopago"
+                width={75}
+                height={30}
+              />
+              .
+            </div>
+            <div className=" mt-3 text-center flex flex-row text-green-500 justify-center text-xs items-center">
+              <TbTruckDelivery className="text-2xl" /> &nbsp; También puedes
+              pagar contraentregra.
+            </div>
+          </div>
+        </div>
         <div className="flex flex-col md:flex-row gap-2">
           <div className="product-image col-span-1 md:mb-5">
             <Image
@@ -199,6 +225,29 @@ export default function ProductScreen(props) {
                   </button>
                 </form>
               )}
+            </div>
+            <div className="hidden md:block">
+              <div className="card 2 p-5 static-banner-container2 flex flex-col ">
+                <div className="font-bold text-center text-red-500">
+                  ¡Envío GRATIS por compras superiores a $80.000!
+                </div>
+
+                <div className=" mt-3 text-center flex flex-row text-green-500 justify-center">
+                  <RiSecurePaymentLine className="text-2xl " />
+                  &nbsp; Tu compra siempre protegida por &nbsp;
+                  <Image
+                    src={Mercadopago}
+                    alt="Mercadopago"
+                    width={75}
+                    height={30}
+                  />
+                  .
+                </div>
+                <div className=" mt-3 text-center flex flex-row text-green-500 justify-center">
+                  <TbTruckDelivery className="text-2xl" /> &nbsp; También puedes
+                  pagar contraentregra.
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -444,7 +444,24 @@ img {
   align-items: center;
   animation: moveUp 2s ease infinite alternate; /* Animation properties */
 }
-
+.static-banner-container2 {
+  width: 96%;
+  height: 100%;
+  background-color: #f7f7f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: moveUp 2s ease infinite alternate; /* Animation properties */
+}
+.static-banner-container3 {
+  width: 93%;
+  height: 100%;
+  background-color: #f7f7f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: moveUp 2s ease infinite alternate; /* Animation properties */
+}
 .banner-content {
   text-align: center;
   padding: 20px;
