@@ -1,12 +1,11 @@
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Store } from '../utils/Store';
 import { useContext } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import { trackCustomEvent } from '../utils/facebookPixel';
 
 export const ProductItem = ({ product }) => {
   const formatNumberWithDots = (number) => {
@@ -18,11 +17,9 @@ export const ProductItem = ({ product }) => {
   const [qty, setQty] = useState(1);
   const router = useRouter();
 
-  const addToCartHandler = async () => {
-    const exisItem = cart.cartItems.find((x) => x.slug === product.slug);
-    const quantity = exisItem ? exisItem.quantity + qty : qty;
-    const { data } = await axios.get(`/api/products/${product._id}`);
+  useEffect(() => {
     if (typeof window !== 'undefined') {
+      const { trackCustomEvent } = require('../utils/facebookPixel');
       trackCustomEvent('AddToCart', {
         content_ids: product._id,
         content_name: product.name,
@@ -32,6 +29,13 @@ export const ProductItem = ({ product }) => {
         quantity: qty, // The quantity being added to the cart
       });
     }
+  }, [product._id, product.name, product.price, qty]);
+
+  const addToCartHandler = async () => {
+    const exisItem = cart.cartItems.find((x) => x.slug === product.slug);
+    const quantity = exisItem ? exisItem.quantity + qty : qty;
+    const { data } = await axios.get(`/api/products/${product._id}`);
+
     if (data.countInStock < quantity) {
       setIsOutOfStock(true);
       return;

@@ -10,7 +10,6 @@ import { useSession } from 'next-auth/react';
 import { AiTwotoneLock } from 'react-icons/ai';
 import Mercadopago from '../../public/images/assets/mercadopago.png';
 import emailjs from '@emailjs/browser';
-import { trackCustomEvent } from '../../utils/facebookPixel';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -335,20 +334,25 @@ function OrderScreen() {
 
   //-----------//
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const { trackCustomEvent } = require('../utils/facebookPixel');
+      trackCustomEvent('Purchase', {
+        value: order.totalPrice,
+        currency: 'COP', // Change the currency if needed
+        content_ids: orderId,
+        content_type: 'product',
+      });
+    }
+  }, [order._id, orderId, order.totalPrice]);
+
   const handlePayment = async () => {
     try {
       dispatch({ type: 'PAY_REQUEST' });
       const { data } = await axios.put(`/api/orders/${order._id}/pay`);
       dispatch({ type: 'PAY_SUCCESS', payload: data });
       toast.success('La orden se ha pagado de manera exitosa.');
-      if (typeof window !== 'undefined') {
-        trackCustomEvent('Purchase', {
-          value: order.totalPrice,
-          currency: 'COP', // Change the currency if needed
-          content_ids: orderId,
-          content_type: 'product',
-        });
-      }
+
       setPaymentComplete(true);
       sendEmail3();
       setTimeout(() => {
@@ -363,7 +367,7 @@ function OrderScreen() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const paymentStatus = urlParams.get('status');
-
+    const { trackCustomEvent } = require('../utils/facebookPixel');
     if (paymentStatus === 'success') {
       if (typeof window !== 'undefined') {
         trackCustomEvent('Purchase', {
