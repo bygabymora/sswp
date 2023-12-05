@@ -18,7 +18,7 @@ const CountdownTimer = () => {
         // If not, set the current time as the start time and store it in cookies
         startTime = new Date();
         Cookies.set('countdownStart', startTime.toISOString(), {
-          expires: 0.21,
+          expires: 0.25,
         }); // 5 hours expiration
         dispatch({
           type: 'SET_COUNTDOWN_START',
