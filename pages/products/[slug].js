@@ -217,7 +217,7 @@ export default function ProductScreen(props) {
               {showPopup && (
                 <div className="popup">
                   <div className="popup-content">
-                    <p>item añadido al carrito.</p>
+                    <p>Item añadido al carrito.</p>
                     <br />
                     <div className="flex gap-1 justify-evenly">
                       <button

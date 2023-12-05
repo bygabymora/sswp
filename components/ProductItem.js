@@ -28,7 +28,7 @@ export const ProductItem = ({ product }) => {
     }
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
 
-    toast.success('item añadido al carrito');
+    toast.success('Item añadido al carrito');
 
     if (product.countInStock < quantity) {
       alert('No tenemos suficiente inventario para esta compra');
