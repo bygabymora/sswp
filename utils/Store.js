@@ -35,6 +35,7 @@ function reducer(state, action) {
       Cookies.set('cart', JSON.stringify({ ...state.cart, cartItems }));
       return { ...state, cart: { ...state.cart, cartItems } };
     }
+
     case 'CART_RESET':
       return {
         ...state,
@@ -68,6 +69,12 @@ function reducer(state, action) {
     case 'ACCEPT_COOKIES':
       Cookies.set('cookieAccepted', true);
       return { ...state, cookieAccepted: true };
+
+    case 'SET_COUNTDOWN_START': {
+      const startTime = action.payload || new Date().toISOString();
+      Cookies.set('countdownStart', startTime, { expires: 7 });
+      return { ...state, countdownStart: startTime };
+    }
 
     default:
       return state;

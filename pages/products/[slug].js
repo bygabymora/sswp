@@ -15,6 +15,7 @@ import { TbTruckDelivery } from 'react-icons/tb';
 import Mercadopago from '../../public/images/mercadopago.svg';
 import General from '../../public/images/general.svg';
 import { PiSealCheckDuotone } from 'react-icons/pi';
+import CountdownTimer from '../../components/CountdownTimer';
 
 export default function ProductScreen(props) {
   const formatNumberWithDots = (number) => {
@@ -83,6 +84,8 @@ export default function ProductScreen(props) {
           Descubre todos nuestros productos.
         </Link>
       </div>
+      <CountdownTimer />
+      <br />
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div className="block md:hidden">
           <div className="card 2 p-5 static-banner-container3 ">
@@ -138,9 +141,10 @@ export default function ProductScreen(props) {
         </div>
         <div className="product-info">
           <div className="flex items-center flex-col justify-center mt-3">
-            <h1 className="text-xl font-bold">{product.name}</h1>
-            <p className="text-lg text-center mt-2">
-              {product.includes} &nbsp; {product.description}
+            <h1 className="text-xl font-bold ">{product.name}</h1>
+            <p className="text-lg text-center mt-2 ">
+              {product.includes} &nbsp;
+              <span className="font-bold">{product.description}</span>
             </p>
           </div>
 
