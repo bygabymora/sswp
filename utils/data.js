@@ -15,61 +15,7 @@ const data = {
       isAdmin: false,
     },
   ],
-  products: [
-    {
-      name: 'Sujetadores x 7',
-      slug: '0001',
-      image: '/images/sujetadoresx7.png',
-      reference: '0001',
-      description:
-        'Juego de 7 sujetadores para sábanas con sistema de puas y liguero. ',
-      price: 25000,
-      size: 'Large',
-      countInStock: 10,
-      notes: 'El liguero se puede quitar y poner según la necesidad.',
-      includes: '7 sujetadores con sistema de agujas.',
-    },
-    {
-      name: 'Sujetadores x 4',
-      slug: '0002',
-      image: '/images/sujetadoresx4.png',
-      reference: '0002',
-      description: 'Juego de 4 sujetadores para sábanas con sistema de puas.',
-      price: 25000,
-      size: 'Medium',
-      countInStock: 10,
-      notes: 'El liguero se puede quitar y poner según la necesidad.',
-      includes: '4 sujetadores con sistema de agujas.',
-    },
 
-    {
-      name: 'Sujetadores liguero x 4',
-      slug: '0003',
-      image: '/images/sujetadoresliguero.png',
-      reference: '0003',
-      description:
-        'Juego de 4 sujetadores para sábanas con sistema de liguero en ambas puntas.',
-      price: 25000,
-      size: 'Medium',
-      countInStock: 10,
-      notes: 'El liguero se puede quitar y poner según la necesidad.',
-      includes: '4 sujetadores con sistema de liguero con liguero.',
-    },
-
-    {
-      name: 'Sujetadores liguero y broche x 4',
-      slug: '0004',
-      image: '/images/sujetadoresbroche.png',
-      reference: '0004',
-      description:
-        'Juego de 4 sujetadores para sábanas con sistema de liguero en ambas puntas y broche para unir en el centro.',
-      price: 25000,
-      size: 'Medium',
-      countInStock: 10,
-      notes: 'El liguero se puede quitar y poner según la necesidad.',
-      includes: '4 sujetadores con sistema de liguero más broche.',
-    },
-  ],
   testimonios: [
     {
       id: 1,

@@ -2,13 +2,13 @@ import React from 'react';
 import Image from 'next/image';
 import { IoMdStar } from 'react-icons/io';
 
-export default function Testimonio({ testimonial }) {
+export default function Testimonio({ testimonio }) {
   return (
-    <div className="testimonial-container">
+    <div className="testimonial-container h-[30%]">
       <div className="avatar-container">
         <Image
-          src={testimonial?.avatar}
-          alt={testimonial?.name}
+          src={testimonio?.avatar}
+          alt={testimonio?.name}
           width={1000}
           height={1000}
           className="avatar"
@@ -17,15 +17,15 @@ export default function Testimonio({ testimonial }) {
 
       <div className="testimonial-content">
         <div className="flex flex-row items-center text-center justify-center">
-          <h1 className="font-bold">{testimonial?.title} &nbsp;</h1>
+          <h1 className="font-bold">{testimonio?.title} &nbsp;</h1>
           <IoMdStar />
           <IoMdStar />
           <IoMdStar />
           <IoMdStar />
           <IoMdStar />
         </div>
-        <p>{testimonial?.description}</p>
-        <p className="font-bold">- {testimonial?.name}</p>
+        <p>{testimonio?.description}</p>
+        <p className="font-bold">- {testimonio?.name}</p>
       </div>
     </div>
   );
