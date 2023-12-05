@@ -20,14 +20,7 @@ export const ProductItem = ({ product }) => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const { trackCustomEvent } = require('../utils/facebookPixel');
-      trackCustomEvent('AddToCart', {
-        content_ids: product._id,
-        content_name: product.name,
-        content_type: 'product',
-        value: product.price,
-        currency: 'COP',
-        quantity: qty, // The quantity being added to the cart
-      });
+      trackCustomEvent('Product viewed', product.name);
     }
   }, [product._id, product.name, product.price, qty]);
 
