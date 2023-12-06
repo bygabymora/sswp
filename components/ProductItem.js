@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { Store } from '../utils/Store';
 import { useContext } from 'react';
@@ -16,13 +16,6 @@ export const ProductItem = ({ product }) => {
   const [isOutOfStock, setIsOutOfStock] = useState(false);
   const [qty, setQty] = useState(1);
   const router = useRouter();
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const { trackCustomEvent } = require('../utils/facebookPixel');
-      trackCustomEvent('Product viewed', { slug: product.slug });
-    }
-  }, [product.slug]);
 
   const addToCartHandler = async () => {
     const exisItem = cart.cartItems.find((x) => x.slug === product.slug);

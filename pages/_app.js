@@ -13,8 +13,6 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     if (typeof window !== 'undefined') {
       const { initFacebookPixel } = require('../utils/facebookPixel');
       initFacebookPixel('462439775168143');
-      const { trackPageView } = require('../utils/facebookPixel');
-      trackPageView('PageView', 'Home page');
     }
   }, []);
   return (
