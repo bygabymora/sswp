@@ -25,8 +25,12 @@ export default function ProductScreen(props) {
   const { product } = props;
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const { trackCustomEvent } = require('../../utils/facebookPixel');
+      const {
+        trackCustomEvent,
+        trackPageView,
+      } = require('../../utils/facebookPixel');
       trackCustomEvent('ViewProduct', { slug: product.slug });
+      trackPageView('ViewProduct', { slug: product.slug });
     }
   }, [product.slug]);
 
