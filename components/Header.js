@@ -43,7 +43,7 @@ const Header = () => {
         </div>
 
         <nav className="nav">
-          <div className="flex h-12 items-center lg:justify-between">
+          <div className="flex items-center">
             <div className="flex h-12 items-center">
               <Link
                 href="/"
