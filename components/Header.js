@@ -42,9 +42,9 @@ const Header = () => {
           </a>
         </div>
 
-        <nav className="nav">
-          <div className="flex items-center">
-            <div className="flex h-12 items-center">
+        <nav className="nav w-full">
+          <div className="flex items-center justify-between ">
+            <div className="flex items-center">
               <Link
                 href="/"
                 className="nav__logo logo"
@@ -64,9 +64,10 @@ const Header = () => {
                 </div>
               </Link>
             </div>
-            <div className=" hidden md:mx-auto md:max-w-[1600px] md:mb-2   p-2 equal-button-size btn-contact items-center justify-center  py-2 sm:mb-0 text-white bg-title-color-dark hover:bg-title-color rounded sm:text-3xl lg:text-2xl md:justify-center md:order-last lg:block xl:block ">
+
+            <div className=" hidden md:mx-auto md:max-w-[1600px] md:mb-2  p-2 equal-button-size btn-contact items-center justify-center  py-2 sm:mb-0 text-white bg-title-color-dark hover:bg-title-color rounded sm:text-3xl lg:text-2xl md:justify-center md:order-last lg:block xl:block ">
               <a
-                className="flex flex-row "
+                className="flex flex-row items-center justify-center "
                 href="https://wa.me/573044450405"
                 target="_blank"
                 rel="noopener noreferrer"
