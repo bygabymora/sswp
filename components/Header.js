@@ -29,7 +29,7 @@ const Header = () => {
   };
   return (
     <>
-      <header className="header  flex flex-col">
+      <header className="header  flex flex-col justify-between">
         <div className="md:mx-auto md:max-w-[1600px] md:mb-2 flex text-right p-2 equal-button-size btn-contact items-center justify-center mr-4 py-2 sm:mb-0 text-white bg-title-color-dark hover:bg-title-color rounded sm:text-3xl lg:text-4xl md:justify-center md:order-last lg:hidden xl:hidden ">
           <a
             className="flex flex-row "

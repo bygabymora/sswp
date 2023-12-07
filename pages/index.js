@@ -200,7 +200,9 @@ export default function Home({ products }) {
           Lo que dicen nuestros clientes
         </p>
       </div>
-      <Testimonios />
+      <div className="carousel-container">
+        <Testimonios />
+      </div>
       <div className="my-5">
         <h1 className="section__title text-3xl font-bold text-center text-gray-800">
           ¡Contáctanos!
