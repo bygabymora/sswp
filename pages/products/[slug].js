@@ -98,7 +98,7 @@ export default function ProductScreen(props) {
         product.slug === 'Psujetadoresx4' ||
         product.slug === 'Psujetadoresx7') && <CountdownTimer />}
       <br />
-      <div className="flex items-center flex-col justify-center mt-3">
+      <div className="flex items-center flex-col justify-center my-3">
         <h1 className="text-xl font-bold ">{product.name}</h1>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2">
