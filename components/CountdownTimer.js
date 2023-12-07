@@ -71,14 +71,18 @@ const CountdownTimer = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-gray-200 to-red-400 text-gray-600 p-4 rounded-md shadow-lg flex justify-between items-center">
-      <div>
-        <h2 className="text-lg font-bold">¡No pierdas esta oportudidad!</h2>
-        <p className="text-sm">Compra ahora y disfruta de esta oferta.</p>
+    <div className="bg-gradient-to-r from-gray-200 to-red-400 text-gray-600 p-4 rounded-md shadow-lg flex justify-between items-center h-[6rem]">
+      <div className="h-[5rem] w-[50%]">
+        <h2 className="md:text-lg tex-xs font-bold ">
+          ¡No pierdas esta oportudidad!
+        </h2>
+        <p className="text-xs md:text-lg">
+          Compra ahora y disfruta de esta oferta.
+        </p>
       </div>
-      <div className="bg-white text-gray-800 rounded px-4 py-2 ml-4">
-        <p className="font-semibold">Tiempo restante:</p>
-        <p className="text-lg font-bold">{formatTimeLeft()} horas</p>
+      <div className="bg-white text-gray-800 rounded px-4 py-2 ml-4 h-[4rem] justify-center items-center text-center flex md:gap-2">
+        <p className="text-xs md:text-lg font-semibold ">Tiempo restante:</p>
+        <p className="text-xs md:text-lg font-bold">{formatTimeLeft()} horas</p>
       </div>
     </div>
   );

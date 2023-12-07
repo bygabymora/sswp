@@ -84,10 +84,7 @@ export default function ProductScreen(props) {
     addToCartHandler();
     router.push('Login?redirect=/shipping');
   };
-  console.log(product.image);
-  console.log(product.image2);
-  console.log(product.image3);
-  console.log(product.image4);
+
   return (
     <Layout title={product.manufacturer}>
       <div className="py-2">
@@ -101,34 +98,10 @@ export default function ProductScreen(props) {
         product.slug === 'Psujetadoresx4' ||
         product.slug === 'Psujetadoresx7') && <CountdownTimer />}
       <br />
+      <div className="flex items-center flex-col justify-center mt-3">
+        <h1 className="text-xl font-bold ">{product.name}</h1>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2">
-        <div className="block md:hidden">
-          <div className="card 2 p-5 static-banner-container3 ">
-            <div className="font-bold text-center text-red-500">
-              ¡Envío GRATIS por compras superiores a $80.000!
-            </div>
-
-            <div className=" mt-3 text-center text-xs flex flex-row text-green-500 justify-center  items-center">
-              <RiSecurePaymentLine className="text-2xl " />
-              &nbsp; Tu compra siempre protegida &nbsp;
-              <Image
-                src={Mercadopago}
-                alt="Mercadopago"
-                width={60}
-                height={24}
-              />
-              .
-            </div>
-            <div className=" mt-3 text-center flex flex-row text-green-500 justify-center text-xs items-center">
-              <TbTruckDelivery className="text-2xl" /> &nbsp; También puedes
-              pagar contraentregra.
-            </div>
-            <div className=" mt-3 text-center flex text-xs flex-row text-green-700 justify-center font-bold items-center">
-              <PiSealCheckDuotone className="text-2xl" /> &nbsp; Garatía de
-              satisfacción de 30 días.
-            </div>
-          </div>
-        </div>
         <div className="flex flex-col md:flex-row gap-2 items-center">
           <div className="product-image col-span-1 md:mb-5">
             <Image
@@ -156,8 +129,7 @@ export default function ProductScreen(props) {
         </div>
         <div className="product-info">
           <div className="flex items-center flex-col justify-center mt-3">
-            <h1 className="text-xl font-bold ">{product.name}</h1>
-            <p className="text-lg text-center mt-2 ">
+            <p className="text-lg text-center  ">
               {product.includes} &nbsp;
               <span className="font-bold">{product.description}</span>
             </p>
@@ -294,6 +266,33 @@ export default function ProductScreen(props) {
                 <div className=" mt-3 text-center flex flex-row text-green-700 justify-center font-bold">
                   <PiSealCheckDuotone className="text-2xl" /> &nbsp; Garatía de
                   satisfacción por 30 días después de la entrega.
+                </div>
+              </div>
+            </div>
+            <div className="block md:hidden">
+              <div className="card 2 p-5 static-banner-container3 ">
+                <div className="font-bold text-center text-red-500">
+                  ¡Envío GRATIS por compras superiores a $80.000!
+                </div>
+
+                <div className=" mt-3 text-center text-xs flex flex-row text-green-500 justify-center  items-center">
+                  <RiSecurePaymentLine className="text-2xl " />
+                  &nbsp; Tu compra siempre protegida &nbsp;
+                  <Image
+                    src={Mercadopago}
+                    alt="Mercadopago"
+                    width={60}
+                    height={24}
+                  />
+                  .
+                </div>
+                <div className=" mt-3 text-center flex flex-row text-green-500 justify-center text-xs items-center">
+                  <TbTruckDelivery className="text-2xl" /> &nbsp; También puedes
+                  pagar contraentregra.
+                </div>
+                <div className=" mt-3 text-center flex text-xs flex-row text-green-700 justify-center font-bold items-center">
+                  <PiSealCheckDuotone className="text-2xl" /> &nbsp; Garatía de
+                  satisfacción de 30 días.
                 </div>
               </div>
             </div>
