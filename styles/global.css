@@ -148,6 +148,7 @@ img {
 }
 .main {
   margin-top: 8rem;
+  width: 100%;
 }
 .grid {
   display: grid;
@@ -238,16 +239,15 @@ img {
   width: 100%;
   position: fixed;
   top: 0;
-  left: 0;
   z-index: var(--z-fixed);
   background-color: var(--body-color);
   padding: 0.5rem;
 }
 
 .nav {
-  height: 7rem;
+  height: 8rem;
   display: flex;
-  justify-content: flex-start;
+
   align-items: center;
   column-gap: 1rem;
   width: 100%;
@@ -839,6 +839,9 @@ img {
   .section {
     padding: 6rem 0 4rem;
   }
+  .main {
+    margin-top: 3rem;
+  }
 }
 
 /* For large devices */
@@ -849,8 +852,8 @@ img {
     height: auto;
   }
   .container {
-    margin-left: var(--mb-1-5);
-    margin-right: var(--mb-1-5);
+    margin-left: 3rem;
+    margin-right: 3rem;
   }
 
   .button {
@@ -865,7 +868,9 @@ img {
 /* For medium devices */
 @media screen and (max-width: 830px) {
   .container {
-    width: 95%;
+    width: 90%;
+    margin-left: 3rem;
+    margin-right: 3rem;
   }
   .image-container {
     @apply order-first;
@@ -892,7 +897,7 @@ img {
   }
 
   .nav {
-    height: var(--header-height);
+    height: 6rem;
     width: 90%;
   }
   .nav-reverse {
@@ -994,7 +999,7 @@ img {
     margin-bottom: var(--mb-3);
   }
   .main {
-    margin-top: 2rem;
+    margin-top: 0rem;
   }
   .equal-button-size {
     flex: 1;
@@ -1018,15 +1023,18 @@ img {
 }
 
 /* For small devices */
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 450px) {
   :root {
     --big-font-size: 2.25rem;
   }
-
-  .container {
-    margin-left: var(--mb-1);
-    margin-right: var(--mb-1);
+  .nav {
+    height: 4rem;
+    width: 90%;
   }
+  .main {
+    margin-top: 0rem;
+  }
+
   .nav__menu {
     padding: 2rem 0.25rem 4rem;
   }

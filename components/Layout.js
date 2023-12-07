@@ -17,7 +17,7 @@ export default function Layout({ title, children }) {
       <div className="flex min-h-screen flex-col justify-between ">
         <Header />
 
-        <main className="main container">{children}</main>
+        <main className="main">{children}</main>
 
         <Footer />
       </div>
