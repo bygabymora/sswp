@@ -175,7 +175,10 @@ function Carousel({ products }) {
 
 export default function Home({ products }) {
   return (
-    <Layout title="Home Page">
+    <Layout
+      title="Home Page"
+      className="align-middle items-center justify-center content-center self-center text-center"
+    >
       <StaticBanner />
       <Banner />
       <div className="my-5">
@@ -200,9 +203,9 @@ export default function Home({ products }) {
           Lo que dicen nuestros clientes
         </p>
       </div>
-      <div className="carousel-container">
-        <Testimonios />
-      </div>
+
+      <Testimonios />
+
       <div className="my-5">
         <h1 className="section__title text-3xl font-bold text-center text-gray-800">
           ¡Contáctanos!

@@ -6,8 +6,8 @@ import Link from 'next/link';
 const Contact = () => {
   return (
     <section className="contact" id="contacto">
-      <div className="contact__container">
-        <div className="contact__container container grid">
+      <div className="">
+        <div className="contact__container  grid">
           <div className="contact__content">
             <div className="contact__title text-black">
               Puedes contactarnos por WhatsApp o Email
