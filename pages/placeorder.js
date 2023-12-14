@@ -73,6 +73,13 @@ export default function PlaceOrderScreen() {
           cartItems: [],
         })
       );
+      const { trackPurchase } = require('../utils/facebookPixel');
+      trackPurchase({
+        value: totalPrice,
+        currency: 'COP',
+        content_ids: data._id,
+        content_type: 'product',
+      });
       router.push(`/order/${data._id}`);
     } catch (err) {
       setLoading(false);
@@ -86,7 +93,6 @@ export default function PlaceOrderScreen() {
       taxPrice,
     });
   };
-
   return (
     <Layout title="Ordenar">
       <CheckoutWizard activeStep={3} />

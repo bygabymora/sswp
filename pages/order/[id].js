@@ -124,10 +124,7 @@ function OrderScreen() {
   const orderItemsString =
     orderItems && Array.isArray(orderItems)
       ? orderItems
-          .map(
-            (item) =>
-              `Producto: ${item.name}, Cantidad: ${item.quantity}, Incluye: ${item.includes}`
-          )
+          .map((item) => `Producto: ${item.name}, Cantidad: ${item.quantity}`)
           .join('\n')
       : '';
 
@@ -177,7 +174,7 @@ function OrderScreen() {
     const orderItemsString = orderItems
       .map(
         (item) =>
-          `Producto: ${item.name}, Cantidad: ${item.quantity}, Precio: $${item.price}, Incluye: ${item.includes}`
+          `Producto: ${item.name}, Cantidad: ${item.quantity}, Precio: $${item.price}`
       )
       .join('\n');
     formData.append('order_items', orderItemsString);
@@ -334,26 +331,22 @@ function OrderScreen() {
 
   //-----------//
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const { trackCustomEvent } = require('../../utils/facebookPixel');
-      trackCustomEvent('Purchase', {
-        value: order.totalPrice,
-        currency: 'COP', // Change the currency if needed
-        content_ids: orderId,
-        content_type: 'product',
-      });
-    }
-  }, [order._id, orderId, order.totalPrice]);
-
   const handlePayment = async () => {
     try {
       dispatch({ type: 'PAY_REQUEST' });
       const { data } = await axios.put(`/api/orders/${order._id}/pay`);
       dispatch({ type: 'PAY_SUCCESS', payload: data });
       toast.success('La orden se ha pagado de manera exitosa.');
-
       setPaymentComplete(true);
+      const { trackCustomEvent } = require('../../utils/facebookPixel');
+      if (typeof window !== 'undefined') {
+        trackCustomEvent('Paid', {
+          value: totalPrice,
+          currency: 'COP',
+          content_ids: orderId,
+          content_type: 'product',
+        });
+      }
       sendEmail3();
       setTimeout(() => {
         window.location.reload();
@@ -370,7 +363,7 @@ function OrderScreen() {
     const { trackCustomEvent } = require('../../utils/facebookPixel');
     if (paymentStatus === 'success') {
       if (typeof window !== 'undefined') {
-        trackCustomEvent('Purchase', {
+        trackCustomEvent('Paid', {
           value: totalPrice,
           currency: 'COP',
           content_ids: orderId,
@@ -461,7 +454,7 @@ function OrderScreen() {
     <Layout
       title={`Orden ${orderId.substring(orderId.length - 8).toUpperCase()}`}
     >
-      <h1 className="mb-4 text-xl">{`Order ${orderId
+      <h1 className="mb-4 text-xl">{`Orden ${orderId
         .substring(orderId.length - 8)
         .toUpperCase()}`}</h1>
       {loading ? (

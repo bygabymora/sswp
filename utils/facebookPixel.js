@@ -38,3 +38,9 @@ export function trackAddToCart(data) {
     }
   }
 }
+
+export const trackPurchase = (data) => {
+  if (typeof window !== 'undefined') {
+    ReactPixel.track('Purchase', data);
+  }
+};
