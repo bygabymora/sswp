@@ -338,9 +338,9 @@ function OrderScreen() {
       dispatch({ type: 'PAY_SUCCESS', payload: data });
       toast.success('La orden se ha pagado de manera exitosa.');
       setPaymentComplete(true);
-      const { trackCustomEvent } = require('../../utils/facebookPixel');
+      const { trackPurchase } = require('../../utils/facebookPixel');
       if (typeof window !== 'undefined') {
-        trackCustomEvent('Paid', {
+        trackPurchase('Purchase', {
           value: totalPrice,
           currency: 'COP',
           content_ids: orderId,
@@ -360,10 +360,10 @@ function OrderScreen() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const paymentStatus = urlParams.get('status');
-    const { trackCustomEvent } = require('../../utils/facebookPixel');
+    const { trackPurchase } = require('../../utils/facebookPixel');
     if (paymentStatus === 'success') {
       if (typeof window !== 'undefined') {
-        trackCustomEvent('Paid', {
+        trackPurchase('Purchace', {
           value: totalPrice,
           currency: 'COP',
           content_ids: orderId,
