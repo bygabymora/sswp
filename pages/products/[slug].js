@@ -53,7 +53,13 @@ export default function ProductScreen(props) {
     const exisItem = state.cart.cartItems.find((x) => x.slug === product.slug);
     const quantity = exisItem ? exisItem.quantity + qty : qty;
     const { data } = await axios.get(`/api/products/${product._id}`);
-
+    const { trackAddToCart } = require('../../utils/facebookPixel');
+    trackAddToCart({
+      content_ids: [product._id],
+      content_name: product.name,
+      value: product.price,
+      currency: 'COP',
+    });
     if (data.countInStock < quantity) {
       setIsOutOfStock(true);
       return;
