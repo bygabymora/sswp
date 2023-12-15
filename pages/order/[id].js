@@ -112,6 +112,7 @@ function OrderScreen() {
     orderItems,
     itemsPrice,
     taxPrice,
+    shippingCost,
     totalPrice,
     isPaid,
     paidAt,
@@ -573,6 +574,12 @@ function OrderScreen() {
                   <div className="mb-2 px-3 flex justify-between">
                     <div>I.V.A.</div>
                     <div>${formatNumberWithDots(taxPrice)}</div>
+                  </div>
+                </li>
+                <li>
+                  <div className="mb-2 flex justify-between">
+                    <div>Costo de Envío</div>
+                    <div>${formatNumberWithDots(shippingCost)}</div>
                   </div>
                 </li>
 

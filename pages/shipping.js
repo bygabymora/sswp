@@ -196,7 +196,7 @@ export default function ShippingScreen() {
           </p>
 
           <p className="text-lg font-bold">
-            ¡Si tu orden es mayor a $80.000 el envío es gratis!
+            ¡Si tu orden es mayor a $70.000 el envío es gratis!
           </p>
         </div>
         {lastOrder && (

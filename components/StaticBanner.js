@@ -38,7 +38,7 @@ const StaticBanner = () => {
         </h1>
         <h2>Averigua porque nuestros clientes nos prefieren.</h2>
         <p className="banner-description font-bold text-[2rem]">
-          ¡Todas las órdenes mayores de $80.000 tienen envío gratis a todo
+          ¡Todas las órdenes mayores de $70.000 tienen envío gratis a todo
           Colombia!
         </p>
         <Link

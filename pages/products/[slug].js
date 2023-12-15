@@ -248,7 +248,7 @@ export default function ProductScreen(props) {
             <div className="hidden md:block">
               <div className="card 2 p-5 static-banner-container2 flex flex-col ">
                 <div className="font-bold text-center text-red-500">
-                  ¡Envío GRATIS por compras superiores a $80.000!
+                  ¡Envío GRATIS por compras superiores a $70.000!
                 </div>
 
                 <div className=" mt-3 text-center flex flex-row text-green-500 justify-center">
@@ -275,7 +275,7 @@ export default function ProductScreen(props) {
             <div className="block md:hidden">
               <div className="card 2 p-5 static-banner-container3 ">
                 <div className="font-bold text-center text-red-500">
-                  ¡Envío GRATIS por compras superiores a $80.000!
+                  ¡Envío GRATIS por compras superiores a $70.000!
                 </div>
 
                 <div className=" mt-3 text-center text-xs flex flex-row text-green-500 justify-center  items-center">
