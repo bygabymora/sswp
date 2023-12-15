@@ -2,7 +2,8 @@ import Layout from '../../components/Layout';
 import Testimonios from '../../components/Testimonios';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { BsBackspace, BsCart2 } from 'react-icons/bs';
+import { BsCart2 } from 'react-icons/bs';
+import { IoArrowBackCircleSharp } from 'react-icons/io5';
 import Image from 'next/image';
 import React, { useContext, useState } from 'react';
 import { Store } from '../../utils/Store';
@@ -92,8 +93,8 @@ export default function ProductScreen(props) {
     <Layout title={product.name}>
       <div className="py-2">
         <Link href={'/products'} className="flex gap-4 items-center font-bold">
-          <BsBackspace />
-          Descubre todos nuestros productos y promociones.
+          <IoArrowBackCircleSharp className="text-xl" />
+          <div>Descubre todos nuestros productos y promociones.</div>
         </Link>
       </div>
       {(product.slug === 'Psujetadoresbrochex4' ||
