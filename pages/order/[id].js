@@ -577,9 +577,12 @@ function OrderScreen() {
                   </div>
                 </li>
                 <li>
-                  <div className="mb-2 flex justify-between">
-                    <div>Costo de Envío</div>
-                    <div>${formatNumberWithDots(shippingCost)}</div>
+                  <div className="mb-2  px-3 flex justify-between">
+                    {shippingCost === 0 ? (
+                      <div>Gratis</div>
+                    ) : (
+                      <div>${formatNumberWithDots(shippingCost)}</div>
+                    )}
                   </div>
                 </li>
 

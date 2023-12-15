@@ -196,7 +196,11 @@ export default function PlaceOrderScreen() {
                 <li>
                   <div className="mb-2 flex justify-between">
                     <div>Costo de Envío</div>
-                    <div>${formatNumberWithDots(shippingCost)}</div>
+                    {shippingCost === 0 ? (
+                      <div>Gratis</div>
+                    ) : (
+                      <div>${formatNumberWithDots(shippingCost)}</div>
+                    )}
                   </div>
                 </li>
 
