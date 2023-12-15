@@ -89,11 +89,11 @@ export default function ProductScreen(props) {
   };
 
   return (
-    <Layout title={product.manufacturer}>
+    <Layout title={product.name}>
       <div className="py-2">
-        <Link href={'/products'} className="flex gap-4 items-center">
+        <Link href={'/products'} className="flex gap-4 items-center font-bold">
           <BsBackspace />
-          Descubre todos nuestros productos.
+          Descubre todos nuestros productos y promociones.
         </Link>
       </div>
       {(product.slug === 'Psujetadoresbrochex4' ||
