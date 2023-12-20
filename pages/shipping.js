@@ -373,7 +373,11 @@ export default function ShippingScreen() {
       <form
         className="mx-2"
         onSubmit={handleSubmit(
-          showLoginForm ? handleLoginSubmit : handleRegisterSubmit
+          !session && showLoginForm
+            ? handleLoginSubmit
+            : !session && !showLoginForm
+            ? handleRegisterSubmit
+            : handleContinueSubmit
         )}
       >
         {!session && (
