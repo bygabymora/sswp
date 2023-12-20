@@ -101,7 +101,7 @@ export default function Login() {
                 /^(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d@$!%*?&]+$/.test(value) ||
                 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
             })}
-            placeholder="Password"
+            placeholder="Contraseña"
           />
 
           {errors.password && (

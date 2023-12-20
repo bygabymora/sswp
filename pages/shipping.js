@@ -109,6 +109,7 @@ export default function ShippingScreen() {
     formState: { errors },
     setValue,
     getValues,
+    reset,
   } = useForm();
 
   const router = useRouter();
@@ -295,6 +296,10 @@ export default function ShippingScreen() {
 
   const toggleForm = () => {
     setShowLoginForm(!showLoginForm);
+    reset({
+      fullName: '',
+      password: '',
+    });
   };
 
   const handleLoginSubmit = (
@@ -411,7 +416,7 @@ export default function ShippingScreen() {
                       },
                     })}
                     placeholder="Email"
-                  ></input>
+                  />
                   {errors.email && (
                     <div className="text-blue-950">{errors.email.message}</div>
                   )}
@@ -425,7 +430,6 @@ export default function ShippingScreen() {
                   </label>
                   <input
                     className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                    autoFocus
                     id="password"
                     type="password"
                     {...register('password', {
@@ -440,7 +444,7 @@ export default function ShippingScreen() {
                         ) ||
                         'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
                     })}
-                    placeholder="Password"
+                    placeholder="Contraseña"
                   />
 
                   {errors.password && (
@@ -473,6 +477,7 @@ export default function ShippingScreen() {
                     Email
                   </label>
                   <input
+                    autoFocus
                     type="email"
                     {...register('email', {
                       required: 'Por favor ingresa el Email',
@@ -484,7 +489,8 @@ export default function ShippingScreen() {
                     })}
                     className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                     id="email"
-                  ></input>
+                    placeholder="Email"
+                  />
                   {errors.email && (
                     <div className="text-red-500">{errors.email.message}</div>
                   )}
@@ -515,7 +521,8 @@ export default function ShippingScreen() {
                     className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                     id="password"
                     autoFocus
-                  ></input>
+                    placeholder="Contraseña"
+                  />
                   {errors.password && (
                     <div className="text-red-500 ">
                       {errors.password.message}
@@ -541,6 +548,7 @@ export default function ShippingScreen() {
                         message: 'Confirma la contraseña',
                       },
                     })}
+                    placeholder="Confirma la contraseña"
                   />
                   {errors.confirmPassword && (
                     <div className="text-red-500 ">
@@ -606,7 +614,6 @@ export default function ShippingScreen() {
               id="fullName"
               placeholder="Ingrese el nombre completo"
               {...register('fullName', { required: true, minLength: 3 })}
-              autoFocus
               autoCapitalize="true"
               required
             />
@@ -740,13 +747,13 @@ export default function ShippingScreen() {
               htmlFor="notes"
               className="block mb-2 text-sm font-bold text-gray-700"
             >
-              Notas
+              Instrucciones especiales para el envío
             </label>
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               type="text"
               id="notes"
-              placeholder="Ingrese las notas"
+              placeholder="Instrucciones de envío"
               {...register('notes', { required: false, minLength: 3 })}
               autoCapitalize="true"
             />
