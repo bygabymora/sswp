@@ -12,6 +12,7 @@ import { signIn } from 'next-auth/react';
 import { getError } from '../utils/error';
 
 import { toast } from 'react-toastify';
+import { FaArrowDown } from 'react-icons/fa';
 
 export default function ShippingScreen() {
   const usStates = [
@@ -375,10 +376,20 @@ export default function ShippingScreen() {
           <div>
             {showLoginForm ? (
               <div>
-                <h1 className="mb-1 text-xl font-bold">
-                  Ingresa los datos de tu cuenta
-                </h1>
-
+                <div className="flex  gap-3  text-black">
+                  <div className="mb-1 text-xl font-bold">
+                    Ingresa los datos de tu cuenta
+                  </div>
+                  <div className="">
+                    <button
+                      className="primary-button flex items-center gap-2"
+                      onClick={toggleForm}
+                    >
+                      No tengo una cuenta
+                      <FaArrowDown className="" />
+                    </button>
+                  </div>
+                </div>
                 <div className="mb-4">
                   <label
                     className="block mb-2 text-sm font-bold text-gray-700"
@@ -438,15 +449,21 @@ export default function ShippingScreen() {
                     </div>
                   )}
                 </div>
-                <div className="mb-4 justify-between">
-                  <button className="primary-button" onClick={toggleForm}>
-                    No tengo una cuenta
-                  </button>
-                </div>
               </div>
             ) : (
               <div>
-                <h1 className="mb-1 text-xl font-bold">Crea una cuenta</h1>
+                <div className="flex items-center gap-3 text-black">
+                  <div className="text-xl font-bold">Crea una cuenta</div>
+                  <div>
+                    <button
+                      className="primary-button flex items-center gap-2"
+                      onClick={toggleForm}
+                    >
+                      Ya tengo una cuenta
+                      <FaArrowDown className="" />
+                    </button>
+                  </div>
+                </div>
 
                 <div className="mb-4">
                   <label
@@ -536,11 +553,6 @@ export default function ShippingScreen() {
                         Las contraseñas no son iguales
                       </div>
                     )}
-                </div>
-                <div className="mb-4 justify-between">
-                  <button className="primary-button" onClick={toggleForm}>
-                    Ya tengo una cuenta
-                  </button>
                 </div>
               </div>
             )}
