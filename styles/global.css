@@ -250,6 +250,15 @@ img {
   padding: 0.5rem;
 }
 
+.header2 {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: var(--z-fixed);
+  background-color: var(--body-color);
+  padding: 0.5rem;
+}
+
 .nav {
   height: 8rem;
   display: flex;
@@ -905,6 +914,17 @@ img {
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(0, 0, 0, 0.12);
   }
 
+  .header2 {
+    top: initial;
+    bottom: 4px;
+    background-color: var(--body-color);
+    width: 90%;
+    padding: 2%;
+    margin: 3% 3% 3% 3%;
+    border-radius: 13px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+  }
+
   .search-bar {
     width: 100%;
     position: fixed;
@@ -1047,7 +1067,7 @@ img {
   }
   .nav {
     height: 4rem;
-    width: 90%;
+    width: 80%;
   }
   .main {
     margin-top: 0rem;
