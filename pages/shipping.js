@@ -13,6 +13,7 @@ import { getError } from '../utils/error';
 
 import { toast } from 'react-toastify';
 import { FaArrowDown } from 'react-icons/fa';
+import Link from 'next/link';
 
 export default function ShippingScreen() {
   const usStates = [
@@ -297,8 +298,8 @@ export default function ShippingScreen() {
   const toggleForm = () => {
     setShowLoginForm(!showLoginForm);
     reset({
-      fullName: '',
       password: '',
+      confirmPassword: '',
     });
   };
 
@@ -430,7 +431,6 @@ export default function ShippingScreen() {
               </label>
               <input
                 className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                autoFocus
                 id="email"
                 type="email"
                 {...register('email', {
@@ -441,6 +441,7 @@ export default function ShippingScreen() {
                   },
                 })}
                 placeholder="Email"
+                required
               />
               {errors.email && (
                 <div className="text-blue-950">{errors.email.message}</div>
@@ -468,7 +469,18 @@ export default function ShippingScreen() {
                     'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
                 })}
                 placeholder="Contraseña"
+                required
               />
+              {showLoginForm && (
+                <div className="mb-4">
+                  <Link
+                    href="/forgot-password"
+                    className="text-sm text-blue-600 hover:text-blue-500"
+                  >
+                    ¿Olvidaste tu contraseña?
+                  </Link>
+                </div>
+              )}
 
               {errors.password && (
                 <div className="text-blue-950">{errors.password.message}</div>
@@ -495,6 +507,7 @@ export default function ShippingScreen() {
                     },
                   })}
                   placeholder="Confirma la contraseña"
+                  required
                 />
                 {errors.confirmPassword && (
                   <div className="text-red-500 ">

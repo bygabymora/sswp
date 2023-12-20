@@ -13,34 +13,29 @@ async function handler(req, res) {
     return res.status(401).send({ message: 'Registro Requerido' });
   }
 
-  const { name, email, password } = req.body;
+  const { email, password } = req.body;
 
   if (
-    !name ||
     !email ||
     !email.includes('@') ||
     (password && password.trim().length < 5)
   ) {
-    res.status(422).json({
-      message: 'Validation error',
-    });
+    res.status(422).json({ message: 'Validation error' });
     return;
   }
 
   await db.connect();
-  const toUpdateUser = await User.findById(user._id);
-  toUpdateUser.name = name;
-  toUpdateUser.email = email;
+  const toUpdateUser = await User.findOne({ email: email });
 
-  if (password) {
+  if (toUpdateUser) {
     toUpdateUser.password = bcryptjs.hashSync(password);
+    await toUpdateUser.save();
+    await db.disconnect();
+    res.send({ message: 'User updated' });
+  } else {
+    await db.disconnect();
+    res.status(404).send({ message: 'User not found' });
   }
-
-  await toUpdateUser.save();
-  await db.disconnect();
-  res.send({
-    message: 'User updated',
-  });
 }
 
 export default handler;
