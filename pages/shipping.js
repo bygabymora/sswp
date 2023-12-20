@@ -8,6 +8,10 @@ import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
+import { getError } from '../utils/error';
+
+import { toast } from 'react-toastify';
 
 export default function ShippingScreen() {
   const usStates = [
@@ -54,6 +58,7 @@ export default function ShippingScreen() {
   const [selectedSuggestion, setSelectedSuggestion] = useState(-1); // Initialize to -1, meaning no suggestion is selected
   const [lastOrder, setLastOrder] = useState(null);
   const [useLastAddress, setUseLastAddress] = useState(false);
+  const [showLoginForm, setShowLoginForm] = useState(true);
 
   const handleStateChange = (event) => {
     const inputValue = event.target.value.toLowerCase();
@@ -102,6 +107,7 @@ export default function ShippingScreen() {
     register,
     formState: { errors },
     setValue,
+    getValues,
   } = useForm();
 
   const router = useRouter();
@@ -122,7 +128,6 @@ export default function ShippingScreen() {
 
   const submitHandler = ({
     fullName,
-
     phone,
     address,
     state,
@@ -153,6 +158,109 @@ export default function ShippingScreen() {
     router.push('/payment');
   };
 
+  const submitHandler2 = async ({
+    fullName,
+    phone,
+    address,
+    state,
+    city,
+    postalCode,
+    notes,
+    email,
+    password,
+  }) => {
+    try {
+      const result = await signIn('credentials', {
+        redirect: false,
+        email: email,
+        password: password,
+      });
+
+      if (result.error) {
+        toast.error(result.error);
+      } else {
+        toast.success('Login exitoso, puedes continuar con la compra');
+        dispatch({
+          type: 'SAVE_SHIPPING_ADDRESS',
+          payload: { fullName, phone, address, state, city, postalCode, notes },
+        });
+        Cookies.set(
+          'cart',
+          JSON.stringify({
+            ...cart,
+            shippingAddress: {
+              fullName,
+              phone,
+              address,
+              state,
+              city,
+              postalCode,
+              notes,
+            },
+          })
+        );
+        router.push('/payment');
+      }
+    } catch (err) {
+      toast.error(getError(err));
+    }
+  };
+
+  const submitHandler3 = async ({
+    fullName,
+    phone,
+    address,
+    state,
+    city,
+    postalCode,
+    notes,
+    email,
+    password,
+  }) => {
+    try {
+      await axios.post('/api/auth/signup', {
+        name: fullName,
+        email: email,
+        password: password,
+      });
+
+      const result = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
+      });
+
+      if (result.error) {
+        toast.error(result.error);
+      } else {
+        // Display a success toast message
+        toast.success('Registro exitoso puedes continuar con la compra');
+        dispatch({
+          type: 'SAVE_SHIPPING_ADDRESS',
+          payload: { fullName, phone, address, state, city, postalCode, notes },
+        });
+        Cookies.set(
+          'cart',
+          JSON.stringify({
+            ...cart,
+            shippingAddress: {
+              fullName,
+              phone,
+              address,
+              state,
+              city,
+              postalCode,
+              notes,
+            },
+          })
+        );
+        router.push('/payment');
+      }
+    } catch (err) {
+      toast.error(getError(err));
+    }
+  };
+
   useEffect(() => {
     const fetchLastOrder = async () => {
       try {
@@ -163,8 +271,12 @@ export default function ShippingScreen() {
       }
     };
 
-    fetchLastOrder();
-  }, []);
+    if (session) {
+      fetchLastOrder();
+    } else {
+      setLastOrder(null);
+    }
+  }, [session]);
 
   useEffect(() => {
     setValue('fullName', session?.user?.name);
@@ -178,18 +290,71 @@ export default function ShippingScreen() {
       setValue('postalCode', shippingAddress.postalCode);
       setValue('notes', shippingAddress.notes);
     }
-  }, [lastOrder, session?.user?.name, setValue, useLastAddress]);
+  }, [lastOrder, session, session?.user?.name, setValue, useLastAddress]);
+
+  const toggleForm = () => {
+    setShowLoginForm(!showLoginForm);
+  };
+
+  const handleLoginSubmit = (
+    fullName,
+    phone,
+    address,
+    state,
+    city,
+    postalCode,
+    notes,
+    email,
+    password
+  ) => {
+    submitHandler2(
+      fullName,
+      phone,
+      address,
+      state,
+      city,
+      postalCode,
+      notes,
+      email,
+      password
+    );
+  };
+
+  const handleRegisterSubmit = (
+    fullName,
+    phone,
+    address,
+    state,
+    city,
+    postalCode,
+    notes,
+    email,
+    password
+  ) => {
+    submitHandler3(
+      fullName,
+      phone,
+      address,
+      state,
+      city,
+      postalCode,
+      notes,
+      email,
+      password
+    );
+  };
+
+  const handleContinueSubmit = (data) => {
+    submitHandler(data);
+  };
 
   return (
     <Layout title="Dirección de envío">
-      <CheckoutWizard activeStep={1}></CheckoutWizard>
-      <form
-        className="mx-auto max-w-screen-md w-full "
-        onSubmit={handleSubmit(submitHandler)}
-      >
-        <div>
-          <h1 className="text-2xl font-bold">Dirección de envío</h1>
-          <br />
+      <CheckoutWizard activeStep={0}></CheckoutWizard>
+
+      <div className="mb-3">
+        <h1 className="text-2xl font-bold">Dirección de envío</h1>
+        <div className="text-center card p-3">
           <p>
             El envío tiene un valor de $12.000 en Bogotá D.C. y de $15.000 en el
             resto del país.
@@ -199,9 +364,195 @@ export default function ShippingScreen() {
             ¡Si tu orden es mayor a $70.000 el envío es gratis!
           </p>
         </div>
+      </div>
+      <form
+        className="mx-2"
+        onSubmit={handleSubmit(
+          showLoginForm ? handleLoginSubmit : handleRegisterSubmit
+        )}
+      >
+        {!session && (
+          <div>
+            {showLoginForm ? (
+              <div>
+                <h1 className="mb-1 text-xl font-bold">
+                  Ingresa los datos de tu cuenta
+                </h1>
+
+                <div className="mb-4">
+                  <label
+                    className="block mb-2 text-sm font-bold text-gray-700"
+                    htmlFor="email"
+                  >
+                    Email
+                  </label>
+                  <input
+                    className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    autoFocus
+                    id="email"
+                    type="email"
+                    {...register('email', {
+                      required: 'Por favor ingresa tu Email',
+                      pattern: {
+                        value:
+                          /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
+                        message: 'Email invalido',
+                      },
+                    })}
+                    placeholder="Email"
+                  ></input>
+                  {errors.email && (
+                    <div className="text-blue-950">{errors.email.message}</div>
+                  )}
+                </div>
+                <div className="mb-4">
+                  <label
+                    className="block mb-2 text-sm font-bold text-gray-700"
+                    htmlFor="password"
+                  >
+                    Contraseña
+                  </label>
+                  <input
+                    className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    autoFocus
+                    id="password"
+                    type="password"
+                    {...register('password', {
+                      required: 'Por favor ingresa tu contraseña',
+                      minLength: {
+                        value: 8,
+                        message: 'Contraseña debe tener al menos 8 caracteres',
+                      },
+                      validate: (value) =>
+                        /^(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d@$!%*?&]+$/.test(
+                          value
+                        ) ||
+                        'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
+                    })}
+                    placeholder="Password"
+                  />
+
+                  {errors.password && (
+                    <div className="text-blue-950">
+                      {errors.password.message}
+                    </div>
+                  )}
+                </div>
+                <div className="mb-4 justify-between">
+                  <button className="primary-button" onClick={toggleForm}>
+                    No tengo una cuenta
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <h1 className="mb-1 text-xl font-bold">Crea una cuenta</h1>
+
+                <div className="mb-4">
+                  <label
+                    className="block mb-2 text-sm font-bold text-gray-700"
+                    htmlFor="email"
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    {...register('email', {
+                      required: 'Por favor ingresa el Email',
+                      pattern: {
+                        value:
+                          /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
+                        message: 'Please enter valid email',
+                      },
+                    })}
+                    className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    id="email"
+                  ></input>
+                  {errors.email && (
+                    <div className="text-red-500">{errors.email.message}</div>
+                  )}
+                </div>
+                <div className="mb-4">
+                  <label
+                    className="block mb-2 text-sm font-bold text-gray-700"
+                    htmlFor="password"
+                  >
+                    Contraseña
+                  </label>
+                  <input
+                    type="password"
+                    {...register('password', {
+                      required: 'Por favor ingresa la contraseña',
+                      minLength: {
+                        value: 8,
+                        message:
+                          'La contraseña debe tener al menos 8 caracteres',
+                      },
+                      pattern: {
+                        value:
+                          /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/,
+                        message:
+                          'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un caracter especial',
+                      },
+                    })}
+                    className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    id="password"
+                    autoFocus
+                  ></input>
+                  {errors.password && (
+                    <div className="text-red-500 ">
+                      {errors.password.message}
+                    </div>
+                  )}
+                </div>
+                <div className="mb-4">
+                  <label
+                    className="block mb-2 text-sm font-bold text-gray-700"
+                    htmlFor="confirmPassword"
+                  >
+                    Confirma la contraseña
+                  </label>
+                  <input
+                    className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    type="password"
+                    id="confirmPassword"
+                    {...register('confirmPassword', {
+                      required: 'Por favor confirma la contraseña',
+                      validate: (value) => value === getValues('password'),
+                      minLength: {
+                        value: 6,
+                        message: 'Confirma la contraseña',
+                      },
+                    })}
+                  />
+                  {errors.confirmPassword && (
+                    <div className="text-red-500 ">
+                      {errors.confirmPassword.message}
+                    </div>
+                  )}
+                  {errors.confirmPassword &&
+                    errors.confirmPassword.type === 'validate' && (
+                      <div className="text-red-500 ">
+                        Las contraseñas no son iguales
+                      </div>
+                    )}
+                </div>
+                <div className="mb-4 justify-between">
+                  <button className="primary-button" onClick={toggleForm}>
+                    Ya tengo una cuenta
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
         {lastOrder && (
           <div className="mb-2 mt-2">
-            <label htmlFor="useLastAddress" className="font-bold">
+            <label
+              htmlFor="useLastAddress"
+              className="block mb-2 text-sm font-bold text-gray-700"
+            >
               Deseas usar la dirección de su último pedido?
             </label>{' '}
             &nbsp;
@@ -229,141 +580,209 @@ export default function ShippingScreen() {
             </div>
           </div>
         )}
-        <div className="mb-4 contact__form-div">
-          <label htmlFor="fullName">Nombre completo*</label>
-          <input
-            className="w-full contact__form-input"
-            type="text"
-            id="fullName"
-            placeholder="Ingrese el nombre completo"
-            {...register('fullName', { required: true, minLength: 3 })}
-            autoFocus
-            autoCapitalize="true"
-            required
-          />
-          {errors.fullName && (
-            <p className="text-red-500">El nombre es requerido.</p>
-          )}
-        </div>
-        <div className="mb-4 contact__form-div">
-          <label htmlFor="phone">Teléfono*</label>
-          <input
-            className="w-full contact__form-input"
-            type="text"
-            id="phone"
-            placeholder="Ingrese el teléfono"
-            {...register('phone', { required: true, minLength: 3 })}
-            autoCapitalize="true"
-            required
-          />
-          {errors.phone && (
-            <p className="text-red-500">El teléfono es requerido.</p>
-          )}
-        </div>
-
-        <div className="mb-4 contact__form-div">
-          <label htmlFor="address">Dirección*</label>
-          <input
-            className="w-full contact__form-input"
-            type="text"
-            id="adress"
-            placeholder="Ingrese la dirección"
-            {...register('address', { required: true, minLength: 3 })}
-            autoCapitalize="true"
-            required
-          />
-          {errors.address && (
-            <p className="text-red-500">La dirección es requerida.</p>
-          )}
-        </div>
-        <div className="mb-4 contact__form-div">
-          <label htmlFor="state">Departamento o Bogotá D.C.*</label>
-          <input
-            className="w-full contact__form-input"
-            type="text"
-            id="state"
-            placeholder="Ingrese el departamento"
-            {...register('state', { required: true, minLength: 3 })}
-            onChange={handleStateChange}
-            onFocus={() => setShowSuggestions(true)}
-            onKeyDown={handleKeyDown} // Add the onKeyDown event handler
-            autoCapitalize="true"
-            required
-          />
-          {errors.state && (
-            <p className="text-red-500">El departamento es requerido.</p>
-          )}
-          {filteredStates.length > 0 &&
-            inputValue.length >= 3 &&
-            showSuggestions && (
-              <div className="mt-2 bg-white border border-gray-300 rounded-md absolute z-10 w-full">
-                {filteredStates.map((state, index) => (
-                  <div
-                    key={index}
-                    className={`cursor-pointer py-1 px-4 hover:bg-gray-200 ${
-                      index === selectedSuggestion ? 'bg-gray-200' : ''
-                    }`} // Highlight the selected suggestion
-                    onClick={() => handleSelectState(state)}
-                  >
-                    {state}
-                  </div>
-                ))}
-              </div>
+        <div>
+          <div className="mb-4 ">
+            <label
+              htmlFor="fullName"
+              className="block mb-2 text-sm font-bold text-gray-700"
+            >
+              Nombre completo*
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              type="text"
+              id="fullName"
+              placeholder="Ingrese el nombre completo"
+              {...register('fullName', { required: true, minLength: 3 })}
+              autoFocus
+              autoCapitalize="true"
+              required
+            />
+            {errors.fullName && (
+              <p className="text-red-500">El nombre es requerido.</p>
             )}
-        </div>
-        <div className="mb-4 contact__form-div">
-          <label htmlFor="city">Ciudad*</label>
-          <input
-            className="w-full contact__form-input"
-            type="text"
-            id="city"
-            placeholder="Ingrese la ciudad"
-            {...register('city', { required: true, minLength: 3 })}
-            autoCapitalize="true"
-            required
-          />
-          {errors.city && (
-            <p className="text-red-500">La ciudad es requerida.</p>
-          )}
-        </div>
-        <div className="mb-4 contact__form-div">
-          <label htmlFor="postalCode">Código Postal*</label>
-          <input
-            className="w-full contact__form-input"
-            type="text"
-            id="postalCode"
-            placeholder="Ingrese el código postal"
-            {...register('postalCode', { required: true, minLength: 3 })}
-            autoCapitalize="true"
-            required
-          />
-          {errors.postalCode && (
-            <p className="text-red-500">El código postal es requerido.</p>
-          )}
-        </div>
-        <div className="mb-4 contact__form-div">
-          <label htmlFor="notes">Notas</label>
-          <input
-            className="w-full contact__form-input"
-            type="text"
-            id="notes"
-            placeholder="Ingrese las notas"
-            {...register('notes', { required: false, minLength: 3 })}
-            autoCapitalize="true"
-          />
-          {errors.notes && (
-            <p className="text-red-500">Las notas son requeridas.</p>
-          )}
-        </div>
+          </div>
+          <div className="mb-4 contact__form-div">
+            <label
+              htmlFor="phone"
+              className="block mb-2 text-sm font-bold text-gray-700"
+            >
+              Teléfono*
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              type="text"
+              id="phone"
+              placeholder="Ingrese el teléfono"
+              {...register('phone', { required: true, minLength: 3 })}
+              autoCapitalize="true"
+              required
+            />
+            {errors.phone && (
+              <p className="text-red-500">El teléfono es requerido.</p>
+            )}
+          </div>
 
-        <div className="mb-4 contact__form-div">
-          <button className="primary-button w-full" type="submit">
-            Continuar
-          </button>
+          <div className="mb-4 contact__form-div">
+            <label
+              htmlFor="address"
+              className="block mb-2 text-sm font-bold text-gray-700"
+            >
+              Dirección*
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              type="text"
+              id="adress"
+              placeholder="Ingrese la dirección"
+              {...register('address', { required: true, minLength: 3 })}
+              autoCapitalize="true"
+              required
+            />
+            {errors.address && (
+              <p className="text-red-500">La dirección es requerida.</p>
+            )}
+          </div>
+          <div className="mb-4 contact__form-div">
+            <label
+              htmlFor="state"
+              className="block mb-2 text-sm font-bold text-gray-700"
+            >
+              Departamento o Bogotá D.C.*
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              type="text"
+              id="state"
+              placeholder="Ingrese el departamento"
+              {...register('state', { required: true, minLength: 3 })}
+              onChange={handleStateChange}
+              onFocus={() => setShowSuggestions(true)}
+              onKeyDown={handleKeyDown} // Add the onKeyDown event handler
+              autoCapitalize="true"
+              required
+            />
+            {errors.state && (
+              <p className="text-red-500">El departamento es requerido.</p>
+            )}
+            {filteredStates.length > 0 &&
+              inputValue.length >= 3 &&
+              showSuggestions && (
+                <div className="mt-2 bg-white border border-gray-300 rounded-md absolute z-10 w-full">
+                  {filteredStates.map((state, index) => (
+                    <div
+                      key={index}
+                      className={`cursor-pointer py-1 px-4 hover:bg-gray-200 ${
+                        index === selectedSuggestion ? 'bg-gray-200' : ''
+                      }`} // Highlight the selected suggestion
+                      onClick={() => handleSelectState(state)}
+                    >
+                      {state}
+                    </div>
+                  ))}
+                </div>
+              )}
+          </div>
+          <div className="mb-4 contact__form-div">
+            <label
+              htmlFor="city"
+              className="block mb-2 text-sm font-bold text-gray-700"
+            >
+              Ciudad*
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              type="text"
+              id="city"
+              placeholder="Ingrese la ciudad"
+              {...register('city', { required: true, minLength: 3 })}
+              autoCapitalize="true"
+              required
+            />
+            {errors.city && (
+              <p className="text-red-500">La ciudad es requerida.</p>
+            )}
+          </div>
+          <div className="mb-4 contact__form-div">
+            <label
+              htmlFor="postalCode"
+              className="block mb-2 text-sm font-bold text-gray-700"
+            >
+              Código Postal*
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              type="text"
+              id="postalCode"
+              placeholder="Ingrese el código postal"
+              {...register('postalCode', { required: true, minLength: 3 })}
+              autoCapitalize="true"
+              required
+            />
+            {errors.postalCode && (
+              <p className="text-red-500">El código postal es requerido.</p>
+            )}
+          </div>
+          <div className="mb-4 contact__form-div">
+            <label
+              htmlFor="notes"
+              className="block mb-2 text-sm font-bold text-gray-700"
+            >
+              Notas
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              type="text"
+              id="notes"
+              placeholder="Ingrese las notas"
+              {...register('notes', { required: false, minLength: 3 })}
+              autoCapitalize="true"
+            />
+            {errors.notes && (
+              <p className="text-red-500">Las notas son requeridas.</p>
+            )}
+          </div>
+          <div className="mb-4 flex gap-2 items center">
+            <input
+              type="checkbox"
+              className="border-gray-300 rounded-sm"
+              id="terms"
+              required
+            />
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="terms"
+            >
+              Acepto los términos, condiciones y política de tratamiento de
+              datos.
+            </label>
+          </div>
+
+          <div className="mb-4 contact__form-div">
+            {session ? (
+              <button
+                className="primary-button w-full"
+                type="submit"
+                onClick={() => handleSubmit(handleContinueSubmit)()}
+              >
+                Continuar
+              </button>
+            ) : (
+              <>
+                {showLoginForm ? (
+                  <button className="primary-button w-full" type="submit ">
+                    Ingresar y Continuar
+                  </button>
+                ) : (
+                  <button className="primary-button w-full" type="submit">
+                    Registrarse y Continuar
+                  </button>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </form>
     </Layout>
   );
 }
-
-ShippingScreen.auth = true;

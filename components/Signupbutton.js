@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from 'react';
 import { BsPerson } from 'react-icons/bs';
 import { signOut, useSession } from 'next-auth/react';
 import { Menu } from '@headlessui/react';
-import DropdownLink from './DropdownLink';
+import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { Store } from '../utils/Store';
 
@@ -45,7 +45,7 @@ const SignupButton = () => {
   const logoutClickHandler = () => {
     Cookies.remove('cart');
     dispatch({ type: 'CART_RESET' });
-    signOut({ callbackUrl: '/Login' });
+    signOut({ callbackUrl: '/' });
   };
 
   return (
@@ -75,32 +75,32 @@ const SignupButton = () => {
                     Hola! {session.user.name}
                   </div>
                   <Menu.Item>
-                    <DropdownLink href="/profile" className="dropdown-link">
+                    <Link href="/profile" className="dropdown-link">
                       <div className="ml-2">Perfil</div>
-                    </DropdownLink>
+                    </Link>
                   </Menu.Item>
                   <Menu.Item className="dropdown-link">
-                    <DropdownLink href="/order-history">
+                    <Link href="/order-history">
                       <div className="ml-2">Historial de órdenes</div>
-                    </DropdownLink>
+                    </Link>
                   </Menu.Item>
                   {session.user.isAdmin && (
                     <Menu.Item className="dropdown-link ">
                       <div>
-                        <DropdownLink href="/admin/dashboard">
+                        <Link href="/admin/dashboard">
                           <div className="ml-2">Panel de administrador</div>
-                        </DropdownLink>
+                        </Link>
                       </div>
                     </Menu.Item>
                   )}
                   <Menu.Item>
-                    <DropdownLink
+                    <Link
                       href="/"
                       className="dropdown-link font-bold"
                       onClick={logoutClickHandler}
                     >
                       <div className="mb-2 ml-2">Salir</div>
-                    </DropdownLink>
+                    </Link>
                   </Menu.Item>
                 </Menu.Items>
               </>
@@ -108,14 +108,14 @@ const SignupButton = () => {
               <>
                 <Menu.Items className="bg-white grid grid-cols-1 dropdown-menu">
                   <Menu.Item>
-                    <DropdownLink href="/Login" className="dropdown-link">
+                    <Link href="/Login" className="dropdown-link">
                       Ingresa
-                    </DropdownLink>
+                    </Link>
                   </Menu.Item>
                   <Menu.Item>
-                    <DropdownLink href="/Register" className="dropdown-link">
+                    <Link href="/Register" className="dropdown-link">
                       Regístrate
-                    </DropdownLink>
+                    </Link>
                   </Menu.Item>
                 </Menu.Items>
               </>

@@ -46,7 +46,7 @@ export const ProductItem = ({ product }) => {
 
   const buyNowHandler = async () => {
     addToCartHandler();
-    router.push('Login?redirect=/shipping');
+    router.push('/shipping');
   };
 
   return (

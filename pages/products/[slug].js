@@ -86,7 +86,7 @@ export default function ProductScreen(props) {
   };
   const buyNowHandler = async () => {
     addToCartHandler();
-    router.push('Login?redirect=/shipping');
+    router.push('/shipping');
   };
 
   return (
