@@ -359,8 +359,7 @@ export default function ShippingScreen() {
       <CheckoutWizard activeStep={0}></CheckoutWizard>
 
       <div className="mb-3">
-        <h1 className="text-2xl font-bold">Dirección de envío</h1>
-        <div className="text-center card p-3">
+        <div className="text-center border border-b-gray-400 p-3 mb-4">
           <p>
             El envío tiene un valor de $12.000 en Bogotá D.C. y de $15.000 en el
             resto del país.
@@ -382,7 +381,7 @@ export default function ShippingScreen() {
             {showLoginForm ? (
               <div>
                 <div className="flex  gap-3  text-black">
-                  <div className="mb-1 text-xl font-bold">
+                  <div className="text-2xl font-bold text-black">
                     Ingresa los datos de tu cuenta
                   </div>
                   <div className="">
@@ -395,69 +394,13 @@ export default function ShippingScreen() {
                     </button>
                   </div>
                 </div>
-                <div className="mb-4">
-                  <label
-                    className="block mb-2 text-sm font-bold text-gray-700"
-                    htmlFor="email"
-                  >
-                    Email
-                  </label>
-                  <input
-                    className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                    autoFocus
-                    id="email"
-                    type="email"
-                    {...register('email', {
-                      required: 'Por favor ingresa tu Email',
-                      pattern: {
-                        value:
-                          /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
-                        message: 'Email invalido',
-                      },
-                    })}
-                    placeholder="Email"
-                  />
-                  {errors.email && (
-                    <div className="text-blue-950">{errors.email.message}</div>
-                  )}
-                </div>
-                <div className="mb-4">
-                  <label
-                    className="block mb-2 text-sm font-bold text-gray-700"
-                    htmlFor="password"
-                  >
-                    Contraseña
-                  </label>
-                  <input
-                    className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                    id="password"
-                    type="password"
-                    {...register('password', {
-                      required: 'Por favor ingresa tu contraseña',
-                      minLength: {
-                        value: 8,
-                        message: 'Contraseña debe tener al menos 8 caracteres',
-                      },
-                      validate: (value) =>
-                        /^(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d@$!%*?&]+$/.test(
-                          value
-                        ) ||
-                        'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
-                    })}
-                    placeholder="Contraseña"
-                  />
-
-                  {errors.password && (
-                    <div className="text-blue-950">
-                      {errors.password.message}
-                    </div>
-                  )}
-                </div>
               </div>
             ) : (
               <div>
                 <div className="flex items-center gap-3 text-black">
-                  <div className="text-xl font-bold">Crea una cuenta</div>
+                  <div className="text-2xl font-bold text-black">
+                    Crea una contraseña para tu cuenta
+                  </div>
                   <div>
                     <button
                       className="primary-button flex items-center gap-2"
@@ -468,105 +411,102 @@ export default function ShippingScreen() {
                     </button>
                   </div>
                 </div>
-
-                <div className="mb-4">
-                  <label
-                    className="block mb-2 text-sm font-bold text-gray-700"
-                    htmlFor="email"
-                  >
-                    Email
-                  </label>
-                  <input
-                    autoFocus
-                    type="email"
-                    {...register('email', {
-                      required: 'Por favor ingresa el Email',
-                      pattern: {
-                        value:
-                          /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
-                        message: 'Please enter valid email',
-                      },
-                    })}
-                    className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                    id="email"
-                    placeholder="Email"
-                  />
-                  {errors.email && (
-                    <div className="text-red-500">{errors.email.message}</div>
-                  )}
-                </div>
-                <div className="mb-4">
-                  <label
-                    className="block mb-2 text-sm font-bold text-gray-700"
-                    htmlFor="password"
-                  >
-                    Contraseña
-                  </label>
-                  <input
-                    type="password"
-                    {...register('password', {
-                      required: 'Por favor ingresa la contraseña',
-                      minLength: {
-                        value: 8,
-                        message:
-                          'La contraseña debe tener al menos 8 caracteres',
-                      },
-                      pattern: {
-                        value:
-                          /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/,
-                        message:
-                          'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un caracter especial',
-                      },
-                    })}
-                    className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                    id="password"
-                    autoFocus
-                    placeholder="Contraseña"
-                  />
-                  {errors.password && (
-                    <div className="text-red-500 ">
-                      {errors.password.message}
-                    </div>
-                  )}
-                </div>
-                <div className="mb-4">
-                  <label
-                    className="block mb-2 text-sm font-bold text-gray-700"
-                    htmlFor="confirmPassword"
-                  >
-                    Confirma la contraseña
-                  </label>
-                  <input
-                    className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                    type="password"
-                    id="confirmPassword"
-                    {...register('confirmPassword', {
-                      required: 'Por favor confirma la contraseña',
-                      validate: (value) => value === getValues('password'),
-                      minLength: {
-                        value: 6,
-                        message: 'Confirma la contraseña',
-                      },
-                    })}
-                    placeholder="Confirma la contraseña"
-                  />
-                  {errors.confirmPassword && (
-                    <div className="text-red-500 ">
-                      {errors.confirmPassword.message}
-                    </div>
-                  )}
-                  {errors.confirmPassword &&
-                    errors.confirmPassword.type === 'validate' && (
-                      <div className="text-red-500 ">
-                        Las contraseñas no son iguales
-                      </div>
-                    )}
-                </div>
               </div>
             )}
           </div>
         )}
+        {!session && (
+          <div className="card p-2 mb-2">
+            <div className="mb-4">
+              <label
+                className="block mb-2 text-sm font-bold text-gray-700"
+                htmlFor="email"
+              >
+                Email
+              </label>
+              <input
+                className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                autoFocus
+                id="email"
+                type="email"
+                {...register('email', {
+                  required: 'Por favor ingresa tu Email',
+                  pattern: {
+                    value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
+                    message: 'Email invalido',
+                  },
+                })}
+                placeholder="Email"
+              />
+              {errors.email && (
+                <div className="text-blue-950">{errors.email.message}</div>
+              )}
+            </div>
+            <div className="mb-4">
+              <label
+                className="block mb-2 text-sm font-bold text-gray-700"
+                htmlFor="password"
+              >
+                Contraseña
+              </label>
+              <input
+                className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                id="password"
+                type="password"
+                {...register('password', {
+                  required: 'Por favor ingresa tu contraseña',
+                  minLength: {
+                    value: 8,
+                    message: 'Contraseña debe tener al menos 8 caracteres',
+                  },
+                  validate: (value) =>
+                    /^(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d@$!%*?&]+$/.test(value) ||
+                    'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
+                })}
+                placeholder="Contraseña"
+              />
 
+              {errors.password && (
+                <div className="text-blue-950">{errors.password.message}</div>
+              )}
+            </div>
+            {!showLoginForm && (
+              <div className="mb-4">
+                <label
+                  className="block mb-2 text-sm font-bold text-gray-700"
+                  htmlFor="confirmPassword"
+                >
+                  Confirma la contraseña
+                </label>
+                <input
+                  className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                  type="password"
+                  id="confirmPassword"
+                  {...register('confirmPassword', {
+                    required: 'Por favor confirma la contraseña',
+                    validate: (value) => value === getValues('password'),
+                    minLength: {
+                      value: 6,
+                      message: 'Confirma la contraseña',
+                    },
+                  })}
+                  placeholder="Confirma la contraseña"
+                />
+                {errors.confirmPassword && (
+                  <div className="text-red-500 ">
+                    {errors.confirmPassword.message}
+                  </div>
+                )}
+                {errors.confirmPassword &&
+                  errors.confirmPassword.type === 'validate' && (
+                    <div className="text-red-500 ">
+                      Las contraseñas no son iguales
+                    </div>
+                  )}
+              </div>
+            )}
+          </div>
+        )}
         {lastOrder && (
           <div className="mb-2 mt-2">
             <label
@@ -600,7 +540,10 @@ export default function ShippingScreen() {
             </div>
           </div>
         )}
-        <div>
+        <div className="mt-8 ">
+          <div className="text-2xl font-bold text-black">
+            Dirección de envío
+          </div>
           <div className="mb-4 ">
             <label
               htmlFor="fullName"
