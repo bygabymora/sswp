@@ -253,16 +253,29 @@ export default function ProductScreen(props) {
                   ¡Envío GRATIS por compras superiores a $70.000!
                 </div>
 
-                <div className=" mt-3 text-center flex flex-row text-green-500 justify-center items-center">
-                  <RiSecurePaymentLine className="text-2xl " />
-                  &nbsp; Tu compra siempre protegida &nbsp;
-                  <Image src={Mercadopago} alt="Mercadopago" width={120} />
+                <div className="mt-3 text-center text-green-500">
+                  <div className="flex flex-row justify-center items-center">
+                    <RiSecurePaymentLine className="text-2xl" />
+                    &nbsp; Tu compra siempre protegida &nbsp;
+                  </div>
+                  <div className="flex justify-center items-center">
+                    <Image src={Mercadopago} alt="Mercadopago" width={200} />
+                  </div>
                 </div>
-                <div className=" mt-3 text-center flex flex-row text-green-500 justify-center items-center">
-                  <TbTruckDelivery className="text-2xl" /> &nbsp; También puedes
-                  pagar contraentregra.
-                  <Image src={Contraentrega} alt="Contraentrega" width={120} />.
+                <div className="mt-3 text-center text-green-500">
+                  <div className="flex flex-row justify-center items-center">
+                    <TbTruckDelivery className="text-2xl" /> &nbsp; También
+                    puedes pagar contraentregra.
+                  </div>
+                  <div className="flex justify-center items-center">
+                    <Image
+                      src={Contraentrega}
+                      alt="Contraentrega"
+                      width={200}
+                    />
+                  </div>
                 </div>
+
                 <div className=" mt-3 text-center flex flex-row text-green-700 justify-center font-bold items-center">
                   <PiSealCheckDuotone className="text-2xl" /> &nbsp; Garatía de
                   satisfacción por 30 días después de la entrega.
@@ -274,17 +287,29 @@ export default function ProductScreen(props) {
                 <div className="font-bold text-center text-red-500">
                   ¡Envío GRATIS por compras superiores a $70.000!
                 </div>
+                <div className="mt-3 text-center text-green-500">
+                  <div className="flex flex-row justify-center items-center">
+                    <RiSecurePaymentLine className="text-2xl" />
+                    &nbsp; Tu compra siempre protegida &nbsp;
+                  </div>
+                  <div className="flex justify-center items-center">
+                    <Image src={Mercadopago} alt="Mercadopago" width={200} />
+                  </div>
+                </div>
+                <div className="mt-3 text-center text-green-500">
+                  <div className="flex flex-row justify-center items-center">
+                    <TbTruckDelivery className="text-2xl" /> &nbsp; También
+                    puedes pagar contraentregra.
+                  </div>
+                  <div className="flex justify-center items-center">
+                    <Image
+                      src={Contraentrega}
+                      alt="Contraentrega"
+                      width={200}
+                    />
+                  </div>
+                </div>
 
-                <div className=" mt-3 text-center text-xs flex flex-row text-green-500 justify-center  items-center">
-                  <RiSecurePaymentLine className="text-2xl " />
-                  &nbsp; Tu compra siempre protegida &nbsp;
-                  <Image src={Mercadopago} alt="Mercadopago" width={120} />.
-                </div>
-                <div className=" mt-3 text-center flex flex-row text-green-500 justify-center text-xs items-center">
-                  <TbTruckDelivery className="text-2xl" /> &nbsp; También puedes
-                  pagar contraentregra.
-                  <Image src={Contraentrega} alt="Contraentrega" width={120} />.
-                </div>
                 <div className=" mt-3 text-center flex text-xs flex-row text-green-700 justify-center font-bold items-center">
                   <PiSealCheckDuotone className="text-2xl" /> &nbsp; Garatía de
                   satisfacción de 30 días.
