@@ -174,7 +174,7 @@ export default function Recovery() {
                     /^(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d@$!%*?&]+$/.test(value) ||
                     'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
                 })}
-                placeholder="Contraseña"
+                placeholder="Código"
               />
 
               {errors.password && (
