@@ -11,7 +11,7 @@ import { useSession } from 'next-auth/react';
 import { signIn } from 'next-auth/react';
 import { getError } from '../utils/error';
 import Mercadopago from '../public/images/mercadopago2.svg';
-import Contraentrega from '../public/images/Contraentrega.svg';
+import Contraentrega from '../public/images/contraentrega.svg';
 import { toast } from 'react-toastify';
 import { FaArrowDown } from 'react-icons/fa';
 import Link from 'next/link';

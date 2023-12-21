@@ -18,7 +18,7 @@ import General from '../../public/images/general.svg';
 import { PiSealCheckDuotone } from 'react-icons/pi';
 import CountdownTimer from '../../components/CountdownTimer';
 import { useEffect } from 'react';
-import Contraentrega from '../../public/images/Contraentrega.svg';
+import Contraentrega from '../../public/images/contraentrega.svg';
 
 export default function ProductScreen(props) {
   const formatNumberWithDots = (number) => {

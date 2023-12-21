@@ -7,7 +7,7 @@ import Layout from '../components/Layout';
 import { Store } from '../utils/Store';
 import Image from 'next/image';
 import Mercadopago from '../public/images/mercadopago2.svg';
-import Contraentrega from '../public/images/Contraentrega.svg';
+import Contraentrega from '../public/images/contraentrega.svg';
 
 export default function PaymentScreen() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
