@@ -35,8 +35,8 @@ export default function Recovery() {
         password,
       });
       if (result.error) {
-        toast.error(result.error);
         toast.error('Código incorrecto');
+        toast.error(result.error);
       }
     } catch (err) {
       toast.error(getError(err));
