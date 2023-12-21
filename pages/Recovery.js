@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { signIn } from 'next-auth/react';
+import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
 import { getError } from '../utils/error';
 import { useSession } from 'next-auth/react';
@@ -69,6 +70,7 @@ export default function Recovery() {
 
   return (
     <div className="flex min-h-screen flex-col justify-between ">
+      <ToastContainer position="bottom-center" limit={1} />
       <main className="main">
         <header className="header2 flex flex-col">
           <div className="md:mx-auto md:max-w-[1600px] md:mb-2 flex text-right p-2 equal-button-size btn-contact items-center justify-center mr-4 py-2 sm:mb-0 text-white bg-title-color-dark hover:bg-title-color rounded sm:text-3xl lg:text-4xl md:justify-center md:order-last lg:hidden xl:hidden ">
