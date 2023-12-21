@@ -43,7 +43,7 @@ export default function PlaceOrderScreen() {
   const router = useRouter();
   useEffect(() => {
     if (!paymentMethod) {
-      router.push('/payment');
+      router.push('/shipping');
     }
   }, [paymentMethod, router]);
 
@@ -91,7 +91,7 @@ export default function PlaceOrderScreen() {
   };
   return (
     <Layout title="Ordenar">
-      <CheckoutWizard activeStep={2} />
+      <CheckoutWizard activeStep={1} />
       <h1 className="mb-4 text-xl">Ordenar</h1>
       {cartItems.length === 0 ? (
         <div>

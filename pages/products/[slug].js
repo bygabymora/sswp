@@ -13,11 +13,12 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { RiSecurePaymentLine } from 'react-icons/ri';
 import { TbTruckDelivery } from 'react-icons/tb';
-import Mercadopago from '../../public/images/mercadopago.svg';
+import Mercadopago from '../../public/images/mercadopago2.svg';
 import General from '../../public/images/general.svg';
 import { PiSealCheckDuotone } from 'react-icons/pi';
 import CountdownTimer from '../../components/CountdownTimer';
 import { useEffect } from 'react';
+import Contraentrega from '../../public/images/Contraentrega.svg';
 
 export default function ProductScreen(props) {
   const formatNumberWithDots = (number) => {
@@ -252,22 +253,17 @@ export default function ProductScreen(props) {
                   ¡Envío GRATIS por compras superiores a $70.000!
                 </div>
 
-                <div className=" mt-3 text-center flex flex-row text-green-500 justify-center">
+                <div className=" mt-3 text-center flex flex-row text-green-500 justify-center items-center">
                   <RiSecurePaymentLine className="text-2xl " />
-                  &nbsp; Tu compra siempre protegida con &nbsp;
-                  <Image
-                    src={Mercadopago}
-                    alt="Mercadopago"
-                    width={75}
-                    height={30}
-                  />
-                  .
+                  &nbsp; Tu compra siempre protegida &nbsp;
+                  <Image src={Mercadopago} alt="Mercadopago" width={120} />
                 </div>
-                <div className=" mt-3 text-center flex flex-row text-green-500 justify-center">
+                <div className=" mt-3 text-center flex flex-row text-green-500 justify-center items-center">
                   <TbTruckDelivery className="text-2xl" /> &nbsp; También puedes
                   pagar contraentregra.
+                  <Image src={Contraentrega} alt="Contraentrega" width={120} />.
                 </div>
-                <div className=" mt-3 text-center flex flex-row text-green-700 justify-center font-bold">
+                <div className=" mt-3 text-center flex flex-row text-green-700 justify-center font-bold items-center">
                   <PiSealCheckDuotone className="text-2xl" /> &nbsp; Garatía de
                   satisfacción por 30 días después de la entrega.
                 </div>
@@ -282,17 +278,12 @@ export default function ProductScreen(props) {
                 <div className=" mt-3 text-center text-xs flex flex-row text-green-500 justify-center  items-center">
                   <RiSecurePaymentLine className="text-2xl " />
                   &nbsp; Tu compra siempre protegida &nbsp;
-                  <Image
-                    src={Mercadopago}
-                    alt="Mercadopago"
-                    width={60}
-                    height={24}
-                  />
-                  .
+                  <Image src={Mercadopago} alt="Mercadopago" width={120} />.
                 </div>
                 <div className=" mt-3 text-center flex flex-row text-green-500 justify-center text-xs items-center">
                   <TbTruckDelivery className="text-2xl" /> &nbsp; También puedes
                   pagar contraentregra.
+                  <Image src={Contraentrega} alt="Contraentrega" width={120} />.
                 </div>
                 <div className=" mt-3 text-center flex text-xs flex-row text-green-700 justify-center font-bold items-center">
                   <PiSealCheckDuotone className="text-2xl" /> &nbsp; Garatía de

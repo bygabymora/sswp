@@ -10,10 +10,12 @@ import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { signIn } from 'next-auth/react';
 import { getError } from '../utils/error';
-
+import Mercadopago from '../public/images/mercadopago2.svg';
+import Contraentrega from '../public/images/Contraentrega.svg';
 import { toast } from 'react-toastify';
 import { FaArrowDown } from 'react-icons/fa';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function ShippingScreen() {
   const usStates = [
@@ -61,6 +63,16 @@ export default function ShippingScreen() {
   const [lastOrder, setLastOrder] = useState(null);
   const [useLastAddress, setUseLastAddress] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(true);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+  const { state, dispatch } = useContext(Store);
+  const { cart } = state;
+  const { shippingAddress, paymentMethod } = cart;
+  const router = useRouter();
+  useEffect(() => {
+    if (cart.paymentMethod) {
+      setSelectedPaymentMethod(cart.paymentMethod);
+    }
+  }, [cart.paymentMethod]);
 
   const handleStateChange = (event) => {
     const inputValue = event.target.value.toLowerCase();
@@ -113,12 +125,6 @@ export default function ShippingScreen() {
     reset,
   } = useForm();
 
-  const router = useRouter();
-
-  const { state, dispatch } = useContext(Store);
-  const { cart } = state;
-  const { shippingAddress } = cart;
-
   useEffect(() => {
     setValue('fullName', shippingAddress.fullName);
     setValue('phone', shippingAddress.phone);
@@ -127,7 +133,8 @@ export default function ShippingScreen() {
     setValue('city', shippingAddress.city);
     setValue('postalCode', shippingAddress.postalCode);
     setValue('notes', shippingAddress.notes);
-  }, [setValue, shippingAddress]);
+    setSelectedPaymentMethod(paymentMethod || '');
+  }, [paymentMethod, setValue, shippingAddress]);
 
   const submitHandler = ({
     fullName,
@@ -142,10 +149,12 @@ export default function ShippingScreen() {
       type: 'SAVE_SHIPPING_ADDRESS',
       payload: { fullName, phone, address, state, city, postalCode, notes },
     });
+
     Cookies.set(
       'cart',
       JSON.stringify({
         ...cart,
+
         shippingAddress: {
           fullName,
           phone,
@@ -158,7 +167,7 @@ export default function ShippingScreen() {
       })
     );
 
-    router.push('/payment');
+    router.push('/placeorder');
   };
 
   const submitHandler2 = async ({
@@ -187,10 +196,12 @@ export default function ShippingScreen() {
           type: 'SAVE_SHIPPING_ADDRESS',
           payload: { fullName, phone, address, state, city, postalCode, notes },
         });
+
         Cookies.set(
           'cart',
           JSON.stringify({
             ...cart,
+
             shippingAddress: {
               fullName,
               phone,
@@ -202,7 +213,7 @@ export default function ShippingScreen() {
             },
           })
         );
-        router.push('/payment');
+        router.push('/placeorder');
       }
     } catch (err) {
       toast.error(getError(err));
@@ -242,10 +253,13 @@ export default function ShippingScreen() {
           type: 'SAVE_SHIPPING_ADDRESS',
           payload: { fullName, phone, address, state, city, postalCode, notes },
         });
+
         Cookies.set(
           'cart',
+
           JSON.stringify({
             ...cart,
+            paymentMethod: selectedPaymentMethod,
             shippingAddress: {
               fullName,
               phone,
@@ -257,7 +271,7 @@ export default function ShippingScreen() {
             },
           })
         );
-        router.push('/payment');
+        router.push('/placeorder');
       }
     } catch (err) {
       toast.error(getError(err));
@@ -292,8 +306,16 @@ export default function ShippingScreen() {
       setValue('city', shippingAddress.city);
       setValue('postalCode', shippingAddress.postalCode);
       setValue('notes', shippingAddress.notes);
+      setSelectedPaymentMethod(paymentMethod || '');
     }
-  }, [lastOrder, session, session?.user?.name, setValue, useLastAddress]);
+  }, [
+    lastOrder,
+    paymentMethod,
+    session,
+    session?.user?.name,
+    setValue,
+    useLastAddress,
+  ]);
 
   const toggleForm = () => {
     setShowLoginForm(!showLoginForm);
@@ -314,6 +336,14 @@ export default function ShippingScreen() {
     email,
     password
   ) => {
+    dispatch({ type: 'SAVE_PAYMENT_METHOD', payload: selectedPaymentMethod });
+    Cookies.set(
+      'cart',
+      JSON.stringify({
+        ...cart,
+        paymentMethod: selectedPaymentMethod,
+      })
+    );
     submitHandler2(
       fullName,
       phone,
@@ -336,8 +366,17 @@ export default function ShippingScreen() {
     postalCode,
     notes,
     email,
-    password
+    password,
+    selectedPaymentMethod
   ) => {
+    dispatch({ type: 'SAVE_PAYMENT_METHOD', payload: selectedPaymentMethod });
+    Cookies.set(
+      'cart',
+      JSON.stringify({
+        ...cart,
+        paymentMethod: selectedPaymentMethod,
+      })
+    );
     submitHandler3(
       fullName,
       phone,
@@ -347,11 +386,20 @@ export default function ShippingScreen() {
       postalCode,
       notes,
       email,
-      password
+      password,
+      selectedPaymentMethod
     );
   };
 
   const handleContinueSubmit = (data) => {
+    dispatch({ type: 'SAVE_PAYMENT_METHOD', payload: selectedPaymentMethod });
+    Cookies.set(
+      'cart',
+      JSON.stringify({
+        ...cart,
+        paymentMethod: selectedPaymentMethod,
+      })
+    );
     submitHandler(data);
   };
 
@@ -721,6 +769,38 @@ export default function ShippingScreen() {
               <p className="text-red-500">Las notas son requeridas.</p>
             )}
           </div>
+          <div className="mb-4 flex flex-col gap-2">
+            <div className="text-2xl font-bold text-black">Método de pago</div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 justify-items-center items-center">
+              <div className="flex gap-2">
+                <input
+                  name="paymentMethod"
+                  className="p-2 outline-none focus:ring-0"
+                  id="Mercadopago"
+                  type="radio"
+                  checked={selectedPaymentMethod === 'Mercadopago'}
+                  onChange={() => setSelectedPaymentMethod('Mercadopago')}
+                />
+                <label className="p-2" htmlFor="Mercadopago">
+                  <Image src={Mercadopago} alt="Mercadopago" width={250} />
+                </label>
+              </div>
+              <div className="flex gap-2">
+                <input
+                  name="paymentMethod"
+                  className="p-2 outline-none focus:ring-0"
+                  id="Contraentrega"
+                  type="radio"
+                  checked={selectedPaymentMethod === 'Contraentrega'}
+                  onChange={() => setSelectedPaymentMethod('Contraentrega')}
+                />
+                <label className="p-2" htmlFor="Contraentrega">
+                  <Image src={Contraentrega} alt="Contraentrega" width={250} />
+                </label>
+              </div>
+            </div>
+          </div>
+
           <div className="mb-4 flex gap-2 items center">
             <input
               type="checkbox"
