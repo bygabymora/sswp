@@ -52,9 +52,6 @@ export default function ForgotPassword() {
       )
       .then(
         (result) => {
-          toast.success(
-            'Te hemos enviado un email con un código para recuperar tu contraseña'
-          );
           console.log(result.text);
         },
         (error) => {
@@ -94,6 +91,9 @@ export default function ForgotPassword() {
   const submitHandler = (e) => {
     sendEmail(e);
     router.push('/Recovery');
+    toast.success(
+      'Te hemos enviado un email con un código para recuperar tu contraseña'
+    );
   };
 
   return (
