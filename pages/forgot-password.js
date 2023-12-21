@@ -46,7 +46,7 @@ export default function ForgotPassword() {
     emailjs
       .sendForm(
         'service_45krz9b',
-        'template_28d1wyx',
+        'template_r8ylan9',
         form.current,
         'LuJZSocJe5a_St7dQ'
       )
@@ -144,7 +144,7 @@ export default function ForgotPassword() {
 
         <div className="mb-4">
           <button className="primary-button" type="submit">
-            Recupera tu contraseña
+            Enviar
           </button>
         </div>
       </form>
