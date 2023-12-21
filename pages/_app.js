@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     // Ensure code runs only in the browser
     if (typeof window !== 'undefined') {
       const { initFacebookPixel } = require('../utils/facebookPixel');
-      initFacebookPixel('462439775168143');
+      initFacebookPixel('1095788621792612');
     }
   }, []);
   return (
