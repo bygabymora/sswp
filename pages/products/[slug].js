@@ -190,7 +190,7 @@ export default function ProductScreen(props) {
                   onClick={buyNowHandler}
                   disabled={product.countInStock === 0 || isOutOfStock}
                 >
-                  {isOutOfStock ? 'Fuera de inventario' : 'Comprar ahora'}
+                  {isOutOfStock ? 'Fuera de inventario' : '¡Comprar ahora!'}
                 </button>
               </div>
               {showPopup && (
@@ -309,6 +309,14 @@ export default function ProductScreen(props) {
           </div>
         </div>
       </div>
+      <button
+        className="primary-button cart-button"
+        type="button"
+        onClick={buyNowHandler}
+        disabled={product.countInStock === 0 || isOutOfStock}
+      >
+        {isOutOfStock ? 'Fuera de inventario' : '¡Comprar ahora!'}
+      </button>
       <div className="py-2">
         <Link href={'/products'} className="flex gap-4 items-center font-bold">
           <IoArrowBackCircleSharp className="text-xl" />
@@ -317,6 +325,14 @@ export default function ProductScreen(props) {
       </div>
       <br />
       <Testimonios />
+      <button
+        className="primary-button cart-button"
+        type="button"
+        onClick={buyNowHandler}
+        disabled={product.countInStock === 0 || isOutOfStock}
+      >
+        {isOutOfStock ? 'Fuera de inventario' : '¡Comprar ahora!'}
+      </button>
     </Layout>
   );
 }
