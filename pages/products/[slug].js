@@ -92,6 +92,10 @@ export default function ProductScreen(props) {
 
   return (
     <Layout title={product.name}>
+      <div className="font-bold items-center text-black text-center">
+        {' '}
+        👏 PAGAS CUANDO RECIBES EL PRODUCTO👏{' '}
+      </div>
       {(product.slug === 'Psujetadoresbrochex4' ||
         product.slug === 'Psujetadoresliguerox4' ||
         product.slug === 'Psujetadoresx4' ||
