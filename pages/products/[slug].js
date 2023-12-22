@@ -92,12 +92,6 @@ export default function ProductScreen(props) {
 
   return (
     <Layout title={product.name}>
-      <div className="py-2">
-        <Link href={'/products'} className="flex gap-4 items-center font-bold">
-          <IoArrowBackCircleSharp className="text-xl" />
-          <div>Descubre todos nuestros productos y promociones.</div>
-        </Link>
-      </div>
       {(product.slug === 'Psujetadoresbrochex4' ||
         product.slug === 'Psujetadoresliguerox4' ||
         product.slug === 'Psujetadoresx4' ||
@@ -186,14 +180,6 @@ export default function ProductScreen(props) {
                 </div>
               </div>
               <div className="mb-2 flex justify-between gap-1">
-                <button
-                  className="primary-button cart-button"
-                  type="button"
-                  onClick={addToCartHandler}
-                  disabled={product.countInStock === 0 || isOutOfStock}
-                >
-                  {isOutOfStock ? 'Fuera de inventario' : 'Añadir al carrito'}
-                </button>
                 <button
                   className="primary-button cart-button"
                   type="button"
@@ -318,6 +304,12 @@ export default function ProductScreen(props) {
             </div>
           </div>
         </div>
+      </div>
+      <div className="py-2">
+        <Link href={'/products'} className="flex gap-4 items-center font-bold">
+          <IoArrowBackCircleSharp className="text-xl" />
+          <div>Descubre todos nuestros productos y promociones.</div>
+        </Link>
       </div>
       <br />
       <Testimonios />
